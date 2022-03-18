@@ -69,15 +69,6 @@ const DesktopSidebarContent = () => {
 
                 <DesktopSidebarLinkItem
                     icon={
-                        activePath === '/sales' ?
-                            <Assessment sx={{color: 'secondary.main'}} />:
-                            <AssessmentOutlined sx={{color: 'text.primary'}} />
-                    }
-                    label="Sales"
-                    path="/sales"
-                    activePath={activePath} />
-                <DesktopSidebarLinkItem
-                    icon={
                         activePath === '/testimonials' ?
                             <Payment sx={{color: 'secondary.main'}} />:
                             <PaymentOutlined sx={{color: 'text.primary'}} />

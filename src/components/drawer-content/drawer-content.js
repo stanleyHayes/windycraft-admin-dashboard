@@ -122,23 +122,6 @@ const DrawerContent = () => {
                             }}/> :
                             <DashboardOutlined sx={{color: 'white'}}/>
                     }
-                    label="Sales"
-                    path="/sales"
-                    activePath={activePath}
-                />
-                <SideBarLinkItem
-                    icon={
-                        activePath === '/' ?
-                            <Dashboard sx={{
-                                color: "text.primary",
-                                borderRadius: 1,
-                                padding: 0.4,
-                                width: 24,
-                                height: 24,
-                                backgroundColor: '#F9A34F40'
-                            }}/> :
-                            <DashboardOutlined sx={{color: 'white'}}/>
-                    }
                     label="Testimonials"
                     path="/testimonials"
                     activePath={activePath}

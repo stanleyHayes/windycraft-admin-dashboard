@@ -39,7 +39,7 @@ const lightTheme = createTheme({
         fontFamily: 'GoogleSansRegular, EuclidCircularA,  PlusJakartaSansExtraBold'
     },
     shape: {
-        borderRadius: 0
+        borderRadius: 32
     }
 });
 
@@ -79,7 +79,7 @@ const darkTheme = createTheme({
         fontFamily: 'GoogleSansRegular, EuclidCircularA, PlusJakartaSansExtraBold'
     },
     shape: {
-        borderRadius: 0
+        borderRadius: 32
     }
 });
 

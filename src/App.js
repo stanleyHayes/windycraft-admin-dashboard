@@ -14,7 +14,6 @@ import FAQPage from "./pages/faqs/faqs-page";
 import ProfilePage from "./pages/profile/profile-page";
 import TestimonialsPage from "./pages/testimonials/testimonials-page";
 import ValuesPage from "./pages/values/values-page";
-import SalesPage from "./pages/sales/sales-page";
 import QuotesPage from "./pages/quotes/quotes-page";
 import MessagesPage from "./pages/messages/messages-page";
 import ChangePasswordPage from "./pages/account/change-password-page";
@@ -41,7 +40,6 @@ function App() {
                     <Route exact={true} path="/profile" component={ProfilePage}/>
                     <Route exact={true} path="/messages" component={MessagesPage}/>
                     <Route exact={true} path="/quotes" component={QuotesPage}/>
-                    <Route exact={true} path="/sales" component={SalesPage}/>
                     <Route exact={true} path="/testimonials" component={TestimonialsPage}/>
                     <Route exact={true} path="/values" component={ValuesPage}/>
                     <Route exact={true} path="/account" component={AccountPage}/>
