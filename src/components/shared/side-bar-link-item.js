@@ -5,7 +5,7 @@ import {makeStyles} from "@mui/styles";
 import {useDispatch} from "react-redux";
 import {UI_ACTION_CREATORS} from "../../redux/ui/ui-action-creators";
 
-const SideBarLinkItem = ({path, icon, label}) => {
+const SideBarLinkItem = ({path, icon, label, activePath}) => {
     const useStyles = makeStyles(theme => {
         return {
             link: {
@@ -27,17 +27,42 @@ const SideBarLinkItem = ({path, icon, label}) => {
 
     return (
         <Link onClick={handleClick} to={path} className={classes.link}>
-            <Grid container={true} justifyContent="space-between" alignItems="center">
+            <Grid
+                sx={{
+                    backgroundColor: activePath === path ? 'rgba(249,163,79,0.25)' : 'primary.main',
+                    borderRightWidth: activePath === path ? 5 : 0,
+                    borderRightColor: activePath === path && 'secondary.main',
+                    borderRightStyle: activePath === path ? 'solid' : 'none',
+                    padding: 0.5
+                }}
+                container={true} justifyContent="space-between" alignItems="center">
                 <Grid item={true} xs={10}>
-                    <Stack direction="row" spacing={2}>
-                        <Box>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                        <Box
+                            sx={{
+                                fontSize: 24,
+                                borderRadius: 0.2,
+                                backgroundColor: 'rgba(249,163,79,0.25)',
+                                color: 'primary.main',
+                                padding: .4,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
                             {icon}
                         </Box>
-                        <Typography sx={{color: 'secondary.main'}} fontWeight="bold" variant="body1">{label}</Typography>
+                        <Typography
+                            sx={{color: 'secondary.main'}}
+                            variant="body1">
+                            {label}
+                        </Typography>
                     </Stack>
                 </Grid>
                 <Grid item={true} xs={2}>
-                    <ChevronRight color="secondary" />
+                    <Stack justifyContent="flex-end" direction="row" alignItems="center">
+                        <ChevronRight color="secondary"/>
+                    </Stack>
                 </Grid>
             </Grid>
         </Link>

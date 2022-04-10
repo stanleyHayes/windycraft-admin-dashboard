@@ -34,7 +34,13 @@ const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={true}>
             <DialogContent>
-                <Typography variant="h5" gutterBottom={true}>New FAQ</Typography>
+                <Typography
+                    sx={{textTransform: 'uppercase'}}
+                    align="center"
+                    variant="h5"
+                    gutterBottom={true}>
+                    New FAQ
+                </Typography>
                 <form>
                     <Stack direction="column" spacing={2}>
                         <TextField

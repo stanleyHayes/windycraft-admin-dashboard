@@ -1,46 +1,46 @@
 export const clients = [
     {
-        image: "/assets/demo-team.png",
+        image: "/assets/images/demo-team.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },
     {
-        image: "/assets/download.png",
+        image: "/assets/images/download.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },
     {
-        image: "/assets/flower-symbol.png",
+        image: "/assets/images/flower-symbol.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },
     {
-        image: "/assets/middle.png",
+        image: "/assets/images/middle.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },
     {
-        image: "/assets/phoenix-art.png",
+        image: "/assets/images/phoenix-art.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },
     {
-        image: "/assets/silhouette-wings.png",
+        image: "/assets/images/silhouette-wings.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },
     {
-        image: "/assets/universal-studios.png",
+        image: "/assets/images/universal-studios.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },
     {
-        image: "/assets/phoenix-art.png",
+        image: "/assets/images/phoenix-art.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },
     {
-        image: "/assets/middle.png",
+        image: "/assets/images/middle.png",
         name: 'Diam nonumy',
         website: "Diam nonumy eirmod tempor invidunt utlabore et dolore magna aliquyam erat.",
     },

@@ -67,7 +67,7 @@ const darkTheme = createTheme({
             main: '#f9a34f',
         },
         background: {
-            default: '#323232',
+            default: '#222222',
             paper: '#303030',
         },
         text: {
@@ -79,7 +79,7 @@ const darkTheme = createTheme({
         fontFamily: 'GoogleSansRegular, EuclidCircularA, PlusJakartaSansExtraBold'
     },
     shape: {
-        borderRadius: 32
+        borderRadius: 4
     }
 });
 

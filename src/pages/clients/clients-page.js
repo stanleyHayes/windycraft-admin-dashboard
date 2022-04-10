@@ -1,32 +1,17 @@
 import Layout from "../../components/layout/layout";
-import {
-    Avatar,
-    Button,
-    Container,
-    Divider,
-    Grid,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography
-} from "@mui/material";
-import {Add, Delete, Edit, Visibility} from "@mui/icons-material";
+import {Box, Button, Container, Divider, Grid, Typography} from "@mui/material";
+import {Add} from "@mui/icons-material";
 import {useState} from "react";
 import AddClientDialog from "../../components/dialogs/add/add-client-dialog";
-import {brown, green, red} from "@mui/material/colors";
 import {useSelector} from "react-redux";
 import {selectClients} from "../../redux/clients/client-reducer";
+import Client from "../../components/shared/client";
 
 const ClientsPage = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const {clients, clientLoading, clientError} = useSelector(selectClients);
 
-    return (
-        <Layout>
+    return (<Layout>
             <Container
                 sx={{
                     py: 4
@@ -39,11 +24,12 @@ const ClientsPage = () => {
                         <Button
                             onClick={() => setDialogOpen(true)}
                             sx={{
+                                textTransform: 'capitalize',
                                 backgroundColor: 'secondary.main',
-                                color: 'white',
+                                color: 'primary.main',
                                 '&:hover': {
                                     backgroundColor: 'secondary.dark',
-                                    color: 'white'
+                                    color: 'primary.main'
                                 }
                             }}
                             size="medium"
@@ -56,63 +42,24 @@ const ClientsPage = () => {
                 </Grid>
                 <Divider variant="fullWidth" sx={{my: 2}}/>
 
-                <TableContainer component={Paper}>
-                    <Table size="medium">
-                        <TableHead>
-                            <TableCell>#</TableCell>
-                            <TableCell>Image</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {clients && clients.length === 0 ? (
-                                <TableRow>
-                                    <TableCell align="center">No Clients Available</TableCell>
-                                </TableRow>
-                            ) : (
-                                clients.map((client, index) => {
-                                    return (
-                                        <TableRow hover={true} key={index}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>
-                                                <Avatar
-                                                    sx={{objectFit: 'cover'}}/>
-                                            </TableCell>
-                                            <TableCell scope="row">{client.name}</TableCell>
-                                            <TableCell>
-                                                <Grid
-                                                    container={true}
-                                                    justifyContent="flex-end"
-                                                    alignItems="center">
-                                                    <Grid item={true}>
-                                                        <Visibility sx={{color: green['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Edit sx={{color: brown['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete sx={{color: red['400']}}/>
-                                                    </Grid>
-                                                </Grid>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Grid container={true} spacing={2}>
+                    {clients && clients.length === 0 ? (<Box>
+                            <Typography variant="h6" align="center">
+                                No Clients Available
+                            </Typography>
+                        </Box>) : (clients.map((client, index) => {
+                            return (<Grid xs={12} md={6} lg={4} item={true} hover={true} key={index}>
+                                    <Client client={client}/>
+                                </Grid>)
+                        }))}
+                </Grid>
 
-                {
-                    dialogOpen &&
-                    <AddClientDialog
-                        open={dialogOpen}
-                        handleClose={() => setDialogOpen(false)}
-                    />
-                }
+                {dialogOpen && <AddClientDialog
+                    open={dialogOpen}
+                    handleClose={() => setDialogOpen(false)}
+                />}
             </Container>
-        </Layout>
-    )
+        </Layout>)
 }
 
 export default ClientsPage;

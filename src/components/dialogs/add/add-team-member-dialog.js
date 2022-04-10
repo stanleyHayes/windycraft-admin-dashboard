@@ -1,5 +1,7 @@
-import {Button, Dialog, DialogActions, DialogContent, Stack, TextField, Typography} from "@mui/material";
+import {Box, Button, Dialog, DialogActions, DialogContent, Stack, TextField, Typography} from "@mui/material";
 import {useState} from "react";
+import ImageUploader from "react-images-upload";
+import {orange} from "@mui/material/colors";
 
 const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
     const [teamMember, setTeamMember] = useState({});
@@ -34,9 +36,29 @@ const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={true}>
             <DialogContent>
-                <Typography variant="h5" gutterBottom={true}>New Team Member</Typography>
+                <Typography
+                    sx={{textTransform: 'uppercase'}}
+                    align="center"
+                    variant="h5"
+                    gutterBottom={true}>
+                    New Team Member
+                </Typography>
                 <form>
                     <Stack direction="column" spacing={2}>
+
+                        <Box>
+                            <ImageUploader
+                                withIcon={true}
+                                withLabel={true}
+                                withPreview={true}
+                                buttonText="Choose Client Logo"
+                                imgExtension={['.jpg', '.png', '.jpeg']}
+                                singleImage={true}
+                                name="image"
+                                buttonStyles={{backgroundColor: orange[400]}}
+                            />
+                        </Box>
+
                         <TextField
                             fullWidth={true}
                             margin="none"

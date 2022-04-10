@@ -32,10 +32,19 @@ const FAQPage = () => {
 
     return (
         <Layout>
-            <Container
-                sx={{
-                    py: 4
-                }}>
+            {faqLoading && <LinearProgress color="secondary" variant="query"/>}
+            <Container sx={{py: 4}}>
+                {
+                    faqError &&
+                    (
+                        <Alert severity="error" variant="standard">
+                            <AlertTitle>Error</AlertTitle>
+                            <Typography variant="h6" align="center">
+                                {faqError}
+                            </Typography>
+                        </Alert>
+                    )
+                }
                 <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md="auto">
                         <Typography variant="h4">FAQ</Typography>
@@ -44,11 +53,12 @@ const FAQPage = () => {
                     <Grid item={true} xs={12} md="auto">
                         <Button
                             sx={{
+                                textTransform: 'capitalize',
                                 backgroundColor: 'secondary.main',
-                                color: 'white',
+                                color: 'primary.main',
                                 '&:hover': {
                                     backgroundColor: 'secondary.dark',
-                                    color: 'white'
+                                    color: 'primary.main'
                                 }
                             }}
                             onClick={() => setDialogOpen(true)}

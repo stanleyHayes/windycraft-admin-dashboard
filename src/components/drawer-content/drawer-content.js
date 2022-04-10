@@ -1,10 +1,5 @@
 import {Button, Container, Divider, Grid, Stack} from "@mui/material";
-import {
-    Close,
-    Dashboard,
-    DashboardOutlined
-
-} from "@mui/icons-material";
+import {Close, Dashboard, DashboardOutlined} from "@mui/icons-material";
 import {UI_ACTION_CREATORS} from "../../redux/ui/ui-action-creators";
 import {useDispatch, useSelector} from "react-redux";
 import SideBarLinkItem from "../shared/side-bar-link-item";
@@ -39,20 +34,20 @@ const DrawerContent = () => {
             <Stack
                 mt={2}
                 direction="column"
-                divider={<Divider/>}
                 spacing={1}>
                 <SideBarLinkItem
                     activePath={activePath}
                     icon={
                         activePath === '/' ?
-                            <Dashboard sx={{
-                                color: "text.primary",
-                                borderRadius: 1,
-                                padding: 0.4,
-                                width: 24,
-                                height: 24,
-                                backgroundColor: '#F9A34F40'
-                            }}/> :
+                            <Dashboard
+                                sx={{
+                                    color: "text.primary",
+                                    borderRadius: 1,
+                                    padding: 0.4,
+                                    width: 24,
+                                    height: 24,
+                                    backgroundColor: '#F9A34F40'
+                                }}/> :
                             <DashboardOutlined sx={{color: 'white'}}/>
                     }
                     label="Dashboard"

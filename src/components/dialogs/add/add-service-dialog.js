@@ -34,7 +34,13 @@ const AddServiceDialog = ({open, handleClose, handleServiceAdd}) => {
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={true}>
             <DialogContent>
-                <Typography variant="h5" gutterBottom={true}>New Service</Typography>
+                <Typography
+                    sx={{textTransform: 'uppercase'}}
+                    align="center"
+                    variant="h5"
+                    gutterBottom={true}>
+                    New Service
+                </Typography>
                 <form>
                     <Stack direction="column" spacing={2}>
                         <TextField

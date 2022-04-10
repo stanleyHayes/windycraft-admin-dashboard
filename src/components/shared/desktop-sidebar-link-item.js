@@ -23,7 +23,8 @@ const DesktopSidebarLinkItem = ({activePath, path, icon, label}) => {
             className={classes.link}>
             <Grid
                 sx={{
-                    backgroundColor: 'primary.main', pt: 1,
+                    backgroundColor: activePath === path ? 'rgba(249,163,79,0.25)' : 'primary.main',
+                    pt: 1,
                     borderRightWidth: activePath === path ? 5 : 0,
                     borderRightColor: activePath === path && 'secondary.main',
                     borderRightStyle: activePath === path ? 'solid' : 'none',

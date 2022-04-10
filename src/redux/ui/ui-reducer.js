@@ -1,7 +1,7 @@
 import {UI_ACTION_TYPES} from "./ui-action-types";
 
 const INITIAL_STATE ={
-    themeVariant: '',
+    themeVariant: 'dark',
     activePath: '/',
     isToggled: false
 };

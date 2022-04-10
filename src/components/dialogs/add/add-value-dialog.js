@@ -34,7 +34,13 @@ const AddValueDialog = ({open, handleClose, handleValueAdd}) => {
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={true}>
             <DialogContent>
-                <Typography variant="h5" gutterBottom={true}>New Value</Typography>
+                <Typography
+                    sx={{textTransform: 'uppercase'}}
+                    align="center"
+                    variant="h5"
+                    gutterBottom={true}>
+                    New Value
+                </Typography>
                 <form>
                     <Stack direction="column" spacing={2}>
                         <TextField
@@ -91,6 +97,7 @@ const AddValueDialog = ({open, handleClose, handleValueAdd}) => {
                         '&:hover': {
                             borderColor: 'secondary.light',
                             backgroundColor: 'secondary.dark',
+                            color: 'white'
                         }
                     }}
                     onClick={handleClose}

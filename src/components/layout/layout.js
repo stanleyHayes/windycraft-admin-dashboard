@@ -21,8 +21,29 @@ const Layout = ({children}) => {
             footer: {},
             content: {
                 flex: 1,
-                paddingTop: 96,
-                backgroundColor: theme.palette.background.default
+                paddingTop: 32,
+                '&::-webkit-scrollbar': {
+                    width: 0
+                },
+                '&::-webkit-scrollbar-track': {
+                    backgroundColor: 'red'
+                },
+                '&::-webkit-scrollbar-button': {
+                    backgroundColor: 'green'
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    borderRadius: 32,
+                    backgroundColor: 'secondary.main',
+                    minHeight: 24,
+                    width: 2
+                },
+                '&::-webkit-scrollbar-track-piece': {},
+                '&::-webkit-scrollbar-corner': {},
+                height: '100vh',
+                maxHeight: '100vh',
+                overflowY: 'scroll',
+                paddingBottom: 32,
+                flexGrow: 1,
             }
         }
     });
@@ -43,19 +64,18 @@ const Layout = ({children}) => {
                     display: 'flex',
                     flexDirection: {xs: 'column', md: 'row'},
                     minHeight: '93vh',
+                    maxHeight: '100vh',
                     backgroundColor: 'background.default',
-                    paddingTop: {xs: 6.5, md: 0.1}
+                    paddingTop: {xs: 6.5, md: 0.1},
                 }}>
                 <Box
                     sx={{
-                        display: {xs: 'none', md: 'block'}
+                        display: {xs: 'none', md: 'block'},
+                        maxHeight: '100vh', height: '100vh'
                     }}>
                     <DesktopDrawerContent/>
                 </Box>
-                <Box
-                    sx={{
-                        flexGrow: 1
-                    }}>
+                <Box className={classes.content}>
                     {children}
                 </Box>
             </Box>

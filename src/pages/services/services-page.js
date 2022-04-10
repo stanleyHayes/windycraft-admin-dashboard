@@ -37,22 +37,24 @@ const ServicesPage = () => {
 
     return (
         <Layout>
-            <Container
-                sx={{
-                    py: 4
-                }}>
-                <Grid container={true} justifyContent="space-between" alignItems="center">
+            <Container sx={{py: 4}}>
+                <Grid
+                    spacing={2}
+                    container={true}
+                    justifyContent="space-between"
+                    alignItems="center">
                     <Grid item={true} md="auto" xs={12}>
                         <Typography variant="h4">Services</Typography>
                     </Grid>
                     <Grid item={true} md="auto" xs={12}>
                         <Button
                             sx={{
+                                textTransform: 'capitalize',
                                 backgroundColor: 'secondary.main',
-                                color: 'white',
+                                color: 'primary.main',
                                 '&:hover': {
                                     backgroundColor: 'secondary.dark',
-                                    color: 'white'
+                                    color: 'primary.main'
                                 }
                             }}
                             onClick={() => setDialogOpen(true)}
