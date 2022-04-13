@@ -1,6 +1,6 @@
 import Layout from "../../components/layout/layout";
 import {
-    Alert, AlertTitle,
+    Alert, AlertTitle, Box,
     Container,
     Divider,
     Grid, LinearProgress,
@@ -80,58 +80,76 @@ const TestimonialsPage = () => {
                 {testimonialLoading && <LinearProgress variant="query" color="secondary"/>}
                 {testimonialError && <Alert severity="error"><AlertTitle>{testimonialError}</AlertTitle></Alert>}
 
-                <TableContainer component={Paper} elevation={0}>
-                    <Table size="medium">
-                        <TableHead>
-                            <TableCell>#</TableCell>
-                            <TableCell>Sender</TableCell>
-                            <TableCell>Rating</TableCell>
-                            <TableCell>Review</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {testimonials && testimonials.length === 0 ? (
+                {testimonials && testimonials.length === 0 ? (
+                    <Box>
+                        <TableContainer component={Paper}>
+                            <Table size="medium">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell>Sender</TableCell>
+                                        <TableCell>Rating</TableCell>
+                                        <TableCell>Review</TableCell>
+                                        <TableCell>Actions</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                        <Typography variant="h6" align="center">
+                            No Testimonials Available
+                        </Typography>
+                    </Box>
+                ) : (
+                    <TableContainer component={Paper}>
+                        <Table size="medium">
+                            <TableHead>
                                 <TableRow>
-                                    <TableCell align="center">No Testimonials Available</TableCell>
+                                    <TableCell>#</TableCell>
+                                    <TableCell>Sender</TableCell>
+                                    <TableCell>Rating</TableCell>
+                                    <TableCell>Review</TableCell>
+                                    <TableCell>Actions</TableCell>
                                 </TableRow>
-                            ) : (
-                                testimonials.map((testimonial, index) => {
-                                    return (
-                                        <TableRow hover={true} key={index}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{`${testimonial.firstName} ${testimonial.lastName}`}</TableCell>
-                                            <TableCell>
-                                                <Rating
-                                                    value={testimonial.rating}
-                                                    size="small"
-                                                    precision={0.1}
-                                                    readOnly={true}/>
-                                            </TableCell>
-                                            <TableCell>{testimonial.review}</TableCell>
-                                            <TableCell>
-                                                <Grid
-                                                    container={true}
-                                                    justifyContent="space-between"
-                                                    alignItems="center">
-                                                    <Grid item={true}>
-                                                        <Visibility sx={{color: green['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Edit sx={{color: brown['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete sx={{color: red['400']}}/>
-                                                    </Grid>
-                                                </Grid>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    testimonials.map((testimonial, index) => {
+                                            return (
+                                                <TableRow hover={true} key={index}>
+                                                    <TableCell>{index + 1}</TableCell>
+                                                    <TableCell>{`${testimonial.firstName} ${testimonial.lastName}`}</TableCell>
+                                                    <TableCell>
+                                                        <Rating
+                                                            value={testimonial.rating}
+                                                            size="small"
+                                                            precision={0.1}
+                                                            readOnly={true}/>
+                                                    </TableCell>
+                                                    <TableCell>{testimonial.review}</TableCell>
+                                                    <TableCell>
+                                                        <Grid
+                                                            container={true}
+                                                            justifyContent="space-between"
+                                                            alignItems="center">
+                                                            <Grid item={true}>
+                                                                <Visibility sx={{color: green['400']}}/>
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Edit sx={{color: brown['400']}}/>
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Delete sx={{color: red['400']}}/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }
+                                    )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
             </Container>
         </Layout>
     )

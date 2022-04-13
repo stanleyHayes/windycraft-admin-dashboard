@@ -16,7 +16,7 @@ const ClientsPage = () => {
                 sx={{
                     py: 4
                 }}>
-                <Grid container={true} justifyContent="space-between">
+                <Grid spacing={2} container={true} justifyContent="space-between">
                     <Grid item={true} md="auto" xs={12}>
                         <Typography variant="h4">Clients</Typography>
                     </Grid>
@@ -48,7 +48,7 @@ const ClientsPage = () => {
                                 No Clients Available
                             </Typography>
                         </Box>) : (clients.map((client, index) => {
-                            return (<Grid xs={12} md={6} lg={4} item={true} hover={true} key={index}>
+                            return (<Grid xs={12} md={6} lg={4} item={true} key={index}>
                                     <Client client={client}/>
                                 </Grid>)
                         }))}

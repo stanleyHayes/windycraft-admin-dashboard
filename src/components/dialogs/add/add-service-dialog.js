@@ -1,5 +1,6 @@
-import {Button, Dialog, DialogActions, DialogContent, Stack, TextField, Typography} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, Grid, Stack, TextField, Typography} from "@mui/material";
 import {useState} from "react";
+import {Grade} from "@mui/icons-material";
 
 const AddServiceDialog = ({open, handleClose, handleServiceAdd}) => {
     const [service, setService] = useState({});
@@ -32,9 +33,10 @@ const AddServiceDialog = ({open, handleClose, handleServiceAdd}) => {
     }
 
     return (
-        <Dialog open={open} onClose={handleClose} fullWidth={true}>
+        <Dialog open={open} onClose={handleClose} fullWidth={false}>
             <DialogContent>
                 <Typography
+                    mb={2}
                     sx={{textTransform: 'uppercase'}}
                     align="center"
                     variant="h5"
@@ -70,13 +72,37 @@ const AddServiceDialog = ({open, handleClose, handleServiceAdd}) => {
                             minRows={4}
                             size="small"
                         />
-
+                    </Stack>
+                </form>
+            </DialogContent>
+            <DialogActions>
+                <Grid container={true} spacing={1} alignItems="center">
+                    <Grid item={true} xs={12} md={6}>
+                        <Button
+                            sx={{
+                                textTransform: 'capitalize',
+                                color: 'secondary.main',
+                                borderWidth: 2,
+                                borderColor: 'secondary.main',
+                                backgroundColor: 'primary.main',
+                                '&:hover': {
+                                    borderColor: 'secondary.light',
+                                    backgroundColor: 'secondary.dark',
+                                }
+                            }}
+                            fullWidth={true}
+                            onClick={handleClose}
+                            size="large"
+                            variant="outlined">Close</Button>
+                    </Grid>
+                    <Grid item={true} xs={12} md={6}>
                         <Button
                             fullWidth={true}
                             onClick={handleAddClick}
                             size="large"
                             sx={{
-                                color: 'white',
+                                textTransform: 'capitalize',
+                                color: 'black',
                                 backgroundColor: 'secondary.main',
                                 '&:hover': {
                                     borderColor: 'secondary.light',
@@ -84,24 +110,8 @@ const AddServiceDialog = ({open, handleClose, handleServiceAdd}) => {
                                 }
                             }}
                             variant="outlined">Add</Button>
-                    </Stack>
-                </form>
-            </DialogContent>
-            <DialogActions>
-                <Button
-                    sx={{
-                        color: 'text.primary',
-                        borderWidth: 1,
-                        borderColor: 'secondary.main',
-                        backgroundColor: 'primary.main',
-                        '&:hover': {
-                            borderColor: 'secondary.light',
-                            backgroundColor: 'secondary.dark',
-                        }
-                    }}
-                    onClick={handleClose}
-                    size="small"
-                    variant="outlined">Close</Button>
+                    </Grid>
+                </Grid>
             </DialogActions>
         </Dialog>
     )

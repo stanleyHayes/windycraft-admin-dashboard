@@ -15,7 +15,6 @@ import {useState} from "react";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 const ResetPasswordPage = () => {
-
     const [user, setUser] = useState({});
     const [visiblePassword, setVisiblePassword] = useState(false);
     const [confirmVisiblePassword, setVisibleConfirmPassword] = useState(false);
@@ -39,7 +38,6 @@ const ResetPasswordPage = () => {
                     <Grid item={true} xs={12} md={6} lg={4}>
                         <Card elevation={1} variant="elevation">
                             <CardContent>
-
                                 <Typography
                                     sx={{color: 'white', fontWeight: 'bold'}}
                                     gutterBottom={true}

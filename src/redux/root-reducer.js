@@ -10,6 +10,7 @@ import quoteReducer from "./quotes/quote-reducer";
 import invitationReducer from "./invitations/invitation-reducer";
 import valueReducer from "./values/value-reducer";
 import teamReducer from "./team/team-reducer";
+import dashboardReducer from "./dashboard/dashboard-reducer";
 
 
 const rootReducer = combineReducers({
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     quotes: quoteReducer,
     invitations: invitationReducer,
     values: valueReducer,
-    teams: teamReducer
+    teams: teamReducer,
+    dashboard: dashboardReducer
 });
 
 export default rootReducer;

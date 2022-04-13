@@ -36,7 +36,7 @@ const TeamPage = () => {
                         </Alert>
                     )
                 }
-                <Grid container={true} justifyContent="space-between">
+                <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} md="auto" xs={12}>
                         <Typography variant="h4">Team</Typography>
                     </Grid>

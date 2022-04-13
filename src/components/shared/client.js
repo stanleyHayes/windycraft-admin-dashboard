@@ -1,4 +1,4 @@
-import {Button, Card, CardActions, CardContent, CardMedia, Divider, Grid, Typography} from "@mui/material";
+import {Button, Card, CardContent, CardMedia, Divider, Grid, Typography} from "@mui/material";
 import {red} from "@mui/material/colors";
 
 const Client = ({client}) => {

@@ -1,6 +1,6 @@
 import Layout from "../../components/layout/layout";
 import {
-    Alert, AlertTitle,
+    Alert, AlertTitle, Box,
     Container,
     Divider,
     Grid, LinearProgress,
@@ -73,54 +73,76 @@ const MessagesPage = () => {
                 {messageLoading && <LinearProgress variant="query" color="secondary"/>}
                 {messageError && <Alert severity="error"><AlertTitle>{messageError}</AlertTitle></Alert>}
 
-                <TableContainer component={Paper}>
-                    <Table size="medium">
-                        <TableHead>
-                            <TableCell>#</TableCell>
-                            <TableCell>Sender</TableCell>
-                            <TableCell>Message</TableCell>
-                            <TableCell>Subject</TableCell>
-                            <TableCell>Has Responded</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {messages && messages.length === 0 ? (
-                                <TableRow>
-                                    <TableCell align="center">No Messages Available</TableCell>
-                                </TableRow>
-                            ) : (
-                                messages.map((message, index) => {
-                                    return (
-                                        <TableRow hover={true} key={index}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{`${message.firstName} ${message.lastName}`}</TableCell>
-                                            <TableCell>{message.message}</TableCell>
-                                            <TableCell>{message.subject}</TableCell>
-                                            <TableCell>{message.responded ? 'Yes' : 'No'}</TableCell>
-                                            <TableCell>
-                                                <Grid
-                                                    container={true}
-                                                    justifyContent="space-between"
-                                                    alignItems="center">
-                                                    <Grid item={true}>
-                                                        <Visibility sx={{color: green['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Edit sx={{color: brown['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete sx={{color: red['400']}}/>
-                                                    </Grid>
-                                                </Grid>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                {messages && messages.length === 0 ? (
+                    <Box>
+                        <TableContainer component={Paper}>
+                            <Table size="medium">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell>Sender</TableCell>
+                                        <TableCell>Message</TableCell>
+                                        <TableCell>Subject</TableCell>
+                                        <TableCell>Has Responded</TableCell>
+                                        <TableCell>Actions</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                        <Box>
+                            <Typography variant="h6" align="center">
+                                No Messages Available
+                            </Typography>
+                        </Box>
 
+                    </Box>
+                ) : (
+                    <TableContainer component={Paper}>
+                        <Table size="medium">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>#</TableCell>
+                                    <TableCell>Sender</TableCell>
+                                    <TableCell>Message</TableCell>
+                                    <TableCell>Subject</TableCell>
+                                    <TableCell>Has Responded</TableCell>
+                                    <TableCell>Actions</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    messages.map((message, index) => {
+                                        return (
+                                            <TableRow hover={true} key={index}>
+                                                <TableCell>{index + 1}</TableCell>
+                                                <TableCell>{`${message.firstName} ${message.lastName}`}</TableCell>
+                                                <TableCell>{message.message}</TableCell>
+                                                <TableCell>{message.subject}</TableCell>
+                                                <TableCell>{message.responded ? 'Yes' : 'No'}</TableCell>
+                                                <TableCell>
+                                                    <Grid
+                                                        container={true}
+                                                        justifyContent="space-between"
+                                                        alignItems="center">
+                                                        <Grid item={true}>
+                                                            <Visibility sx={{color: green['400']}}/>
+                                                        </Grid>
+                                                        <Grid item={true}>
+                                                            <Edit sx={{color: brown['400']}}/>
+                                                        </Grid>
+                                                        <Grid item={true}>
+                                                            <Delete sx={{color: red['400']}}/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    }
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
             </Container>
         </Layout>
     )

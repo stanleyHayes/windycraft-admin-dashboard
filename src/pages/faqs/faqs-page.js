@@ -1,6 +1,6 @@
 import Layout from "../../components/layout/layout";
 import {
-    Alert, AlertTitle,
+    Alert, AlertTitle, Box,
     Button,
     Container,
     Divider,
@@ -75,52 +75,68 @@ const FAQPage = () => {
                 {faqLoading && <LinearProgress variant="query" color="secondary"/>}
                 {faqError && <Alert severity="error"><AlertTitle>{faqError}</AlertTitle></Alert>}
 
-                <TableContainer component={Paper}>
-                    <Table size="medium">
-                        <TableHead>
-                            <TableCell>#</TableCell>
-                            <TableCell>Question</TableCell>
-                            <TableCell>Answer</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {faqs && faqs.length === 0 ? (
+                {faqs && faqs.length === 0 ? (
+                    <Box>
+                        <TableContainer component={Paper}>
+                            <Table size="medium">
+                                <TableHead>
+                                    <TableCell>#</TableCell>
+                                    <TableCell>Question</TableCell>
+                                    <TableCell>Answer</TableCell>
+                                    <TableCell>Actions</TableCell>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                        <Box>
+                            <Typography variant="h6" align="center">No FAQs Available</Typography>
+                        </Box>
+                    </Box>
+                ) : (
+                    <TableContainer component={Paper}>
+                        <Table size="medium">
+                            <TableHead>
                                 <TableRow>
-                                    <TableCell align="center">No FAQs Available</TableCell>
+                                    <TableCell>#</TableCell>
+                                    <TableCell>Question</TableCell>
+                                    <TableCell>Answer</TableCell>
+                                    <TableCell>Actions</TableCell>
                                 </TableRow>
-                            ): (
-                                faqs.map((faq, index) => {
-                                    return (
-                                        <TableRow hover={true} key={index}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{faq.question}</TableCell>
-                                            <TableCell>{faq.answer}</TableCell>
-                                            <TableCell>
-                                                <Grid
-                                                    container={true}
-                                                    justifyContent="space-between"
-                                                    alignItems="center">
-                                                    <Grid item={true}>
-                                                        <Visibility
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    faqs.map((faq, index) => {
+                                            return (
+                                                <TableRow hover={true} key={index}>
+                                                    <TableCell>{index + 1}</TableCell>
+                                                    <TableCell>{faq.question}</TableCell>
+                                                    <TableCell>{faq.answer}</TableCell>
+                                                    <TableCell>
+                                                        <Grid
+                                                            container={true}
+                                                            justifyContent="space-between"
+                                                            alignItems="center">
+                                                            <Grid item={true}>
+                                                                <Visibility
 
-                                                        />
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Edit />
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete
-                                                            onClick={() => handleDeleteFAQ(faq)} />
-                                                    </Grid>
-                                                </Grid>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                                                />
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Edit/>
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Delete
+                                                                    onClick={() => handleDeleteFAQ(faq)}/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }
+                                    )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
 
                 {
                     dialogOpen &&

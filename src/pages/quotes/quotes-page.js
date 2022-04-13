@@ -1,7 +1,7 @@
 import Layout from "../../components/layout/layout";
 import {
     Alert,
-    AlertTitle,
+    AlertTitle, Box,
     Container,
     Divider,
     Grid,
@@ -77,53 +77,73 @@ const QuotesPage = () => {
                 {quoteLoading && <LinearProgress variant="query" color="secondary"/>}
                 {quoteError && <Alert severity="error"><AlertTitle>{quoteError}</AlertTitle></Alert>}
 
-                <TableContainer component={Paper} elevation={0}>
-                    <Table size="medium">
-                        <TableHead>
-                            <TableCell>#</TableCell>
-                            <TableCell>Sender</TableCell>
-                            <TableCell>Budget</TableCell>
-                            <TableCell>Information</TableCell>
-                            <TableCell>Start Date</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {quotes && quotes.length === 0 ? (
+                {quotes && quotes.length === 0 ? (
+                    <Box>
+                        <TableContainer component={Paper}>
+                            <Table size="medium">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell>Sender</TableCell>
+                                        <TableCell>Budget</TableCell>
+                                        <TableCell>Information</TableCell>
+                                        <TableCell>Start Date</TableCell>
+                                        <TableCell>Actions</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                        <Typography variant="h6" align="center">
+                            No Quotes Available
+                        </Typography>
+                    </Box>
+                ) : (
+                    <TableContainer component={Paper}>
+                        <Table size="medium">
+                            <TableHead>
                                 <TableRow>
-                                    <TableCell align="center">No Quotes Available</TableCell>
+                                    <TableCell>#</TableCell>
+                                    <TableCell>Sender</TableCell>
+                                    <TableCell>Budget</TableCell>
+                                    <TableCell>Information</TableCell>
+                                    <TableCell>Start Date</TableCell>
+                                    <TableCell>Actions</TableCell>
                                 </TableRow>
-                            ) : (
-                                quotes.map((quote, index) => {
-                                    return (
-                                        <TableRow hover={true} key={index}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{`${quote.firstName} ${quote.lastName}`}</TableCell>
-                                            <TableCell>${quote.budget}</TableCell>
-                                            <TableCell>{quote.information}</TableCell>
-                                            <TableCell>{moment(quote.startDate).fromNow()}</TableCell>
-                                            <TableCell>
-                                                <Grid
-                                                    container={true}
-                                                    justifyContent="space-between"
-                                                    alignItems="center">
-                                                    <Grid item={true}>
-                                                        <Visibility sx={{color: green['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Edit sx={{color: brown['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete sx={{color: red['400']}}/>
-                                                    </Grid>
-                                                </Grid>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    quotes.map((quote, index) => {
+                                            return (
+                                                <TableRow hover={true} key={index}>
+                                                    <TableCell>{index + 1}</TableCell>
+                                                    <TableCell>{`${quote.firstName} ${quote.lastName}`}</TableCell>
+                                                    <TableCell>${quote.budget}</TableCell>
+                                                    <TableCell>{quote.information}</TableCell>
+                                                    <TableCell>{moment(quote.startDate).fromNow()}</TableCell>
+                                                    <TableCell>
+                                                        <Grid
+                                                            container={true}
+                                                            justifyContent="space-between"
+                                                            alignItems="center">
+                                                            <Grid item={true}>
+                                                                <Visibility sx={{color: green['400']}}/>
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Edit sx={{color: brown['400']}}/>
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Delete sx={{color: red['400']}}/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }
+                                    )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
 
                 {
                     dialogOpen &&

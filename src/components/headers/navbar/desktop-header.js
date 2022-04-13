@@ -47,6 +47,7 @@ const DesktopHeader = () => {
         setAnchorEl(null);
     }
 
+
     return (
         <Toolbar variant="regular"
                  sx={{borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: '#e5e5e5'}}>
@@ -73,7 +74,7 @@ const DesktopHeader = () => {
                                 <Typography
                                     sx={{fontWeight: 'bold', color: 'secondary.main'}}
                                     variant="body1">
-                                    {getInitials(authData.name)}
+                                    {authData && authData.name && getInitials(authData.name)}
                                 </Typography>
                             </Avatar>
                         </Grid>

@@ -29,11 +29,12 @@ const NotFoundPage = () => {
                     pb: 8,
                     display: 'flex',
                     alignItems: 'center',
-                    backgroundColor: 'white',
                     minHeight: '86vh'
                 }}>
                 <Container className={classes.container}>
-                    <Typography fontWeight={800} mb={4} variant="h1" align="center">404</Typography>
+                    <Typography fontWeight={800} mb={4} variant="h1" align="center">
+                        404
+                    </Typography>
                     <Typography fontWeight={700} mb={2} variant="h4" align="center">
                         Oops! Page Not Found
                     </Typography>

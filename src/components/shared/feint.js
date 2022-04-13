@@ -1,5 +1,4 @@
 import {Box} from "@mui/material";
-import {orange} from "@mui/material/colors";
 
 const Feint = ({
                    color,
@@ -17,7 +16,7 @@ const Feint = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: 36,
-                borderRadius: '50%',
+                borderRadius: 1,
                 backgroundColor: 'secondary.main',
                 color: 'primary.main',
                 padding: .8

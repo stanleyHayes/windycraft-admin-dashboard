@@ -1,10 +1,10 @@
 import Layout from "../../components/layout/layout";
 import {Avatar, Button, Card, CardContent, Container, Divider, Grid, Stack, Typography} from "@mui/material";
 import {makeStyles} from "@mui/styles";
-import Feint from "../../components/shared/feint";
 import {Call, Edit, Mail, Person} from "@mui/icons-material";
-import {grey, orange} from "@mui/material/colors";
 import Info from "../../components/shared/info";
+import {useSelector} from "react-redux";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
 
 const ProfilePage = () => {
 
@@ -19,10 +19,12 @@ const ProfilePage = () => {
 
     const classes = useStyles();
 
+    const {authData} = useSelector(selectAuth);
+
     return (
         <Layout>
             <Container className={classes.container}>
-                <Grid alignItems="center" justifyContent="space-between" container={true}>
+                <Grid spacing={2} alignItems="center" justifyContent="space-between" container={true}>
                     <Grid item={true} xs={12} md="auto">
                         <Typography variant="h4">Profile</Typography>
                     </Grid>
@@ -59,18 +61,18 @@ const ProfilePage = () => {
                                     mb={2}
                                     variant="body1"
                                     align="center">
-                                    Stanley Hayford
+                                    {authData && authData.name}
                                 </Typography>
                                 <Typography
                                     mb={2}
                                     variant="body2"
                                     align="center">
-                                    hayfordstanley@gmail.com
+                                    {authData && authData.email}
                                 </Typography>
                                 <Typography
                                     variant="body2"
                                     align="center">
-                                    Active
+                                    {authData && authData.status}
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -114,7 +116,7 @@ const ProfilePage = () => {
                                         </Grid>
                                         <Grid item={true} xs={12} md={6}>
                                             <Info
-                                                icon={<Call sx={{color:"primary.main"}}/>}
+                                                icon={<Call sx={{color: "primary.main"}}/>}
                                                 title="Phone"
                                                 value="+2332 7004 8319"
 

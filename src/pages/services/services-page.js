@@ -1,6 +1,6 @@
 import Layout from "../../components/layout/layout";
 import {
-    Alert, AlertTitle,
+    Alert, AlertTitle, Box,
     Button,
     Container,
     Divider,
@@ -69,51 +69,74 @@ const ServicesPage = () => {
                 <Divider variant="fullWidth" sx={{my: 2}}/>
                 {serviceLoading && <LinearProgress variant="query" color="secondary"/>}
                 {serviceError && <Alert severity="error"><AlertTitle>{serviceError}</AlertTitle></Alert>}
-                <TableContainer component={Paper} elevation={0}>
-                    <Table size="medium">
-                        <TableHead>
-                            <TableCell>#</TableCell>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {services && services.length === 0 ? (
+
+                {services && services.length === 0 ? (
+                    <Box>
+                        <TableContainer component={Paper} elevation={1}>
+                            <Table size="medium">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell>Title</TableCell>
+                                        <TableCell>Description</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell>Actions</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                        <Box>
+                            <Typography variant="h6" align="center">No Services Available</Typography>
+                        </Box>
+                    </Box>
+
+
+                ) : (
+                    <TableContainer component={Paper} elevation={1}>
+                        <Table size="medium">
+                            <TableHead>
                                 <TableRow>
-                                    <TableCell align="center">No Services Available</TableCell>
+                                    <TableCell>#</TableCell>
+                                    <TableCell>Title</TableCell>
+                                    <TableCell>Description</TableCell>
+                                    <TableCell>Date</TableCell>
+                                    <TableCell>Actions</TableCell>
                                 </TableRow>
-                            ) : (
-                                services.map((service, index) => {
-                                    return (
-                                        <TableRow hover={true} key={index}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{service.title}</TableCell>
-                                            <TableCell>{service.description}</TableCell>
-                                            <TableCell>{moment().fromNow()}</TableCell>
-                                            <TableCell>
-                                                <Grid
-                                                    container={true}
-                                                    justifyContent="space-between"
-                                                    alignItems="center">
-                                                    <Grid item={true}>
-                                                        <Visibility sx={{color: green['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Edit sx={{color: brown['400']}}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete sx={{color: red['400']}}/>
-                                                    </Grid>
-                                                </Grid>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    services.map((service, index) => {
+                                            return (
+                                                <TableRow hover={true} key={index}>
+                                                    <TableCell>{index + 1}</TableCell>
+                                                    <TableCell>{service.title}</TableCell>
+                                                    <TableCell>{service.description}</TableCell>
+                                                    <TableCell>{moment().fromNow()}</TableCell>
+                                                    <TableCell>
+                                                        <Grid
+                                                            container={true}
+                                                            justifyContent="space-between"
+                                                            alignItems="center">
+                                                            <Grid item={true}>
+                                                                <Visibility sx={{color: green['400']}}/>
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Edit sx={{color: brown['400']}}/>
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Delete sx={{color: red['400']}}/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }
+                                    )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
+
                 {
                     dialogOpen &&
                     <AddServiceDialog
