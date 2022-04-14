@@ -50,7 +50,7 @@ const getServiceRequest = () => {
     }
 }
 
-const getServiceSuccess = (service,message) => {
+const getServiceSuccess = (service, message) => {
     return {
         type: SERVICES_ACTION_TYPES.GET_SERVICE_SUCCESS,
         payload: {message, service}
@@ -75,7 +75,7 @@ const getService = (ID, token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message,data} = response.data;
+            const {message, data} = response.data;
             dispatch(getServiceSuccess(data, message));
         } catch (e) {
             const {message} = e.response.data;
@@ -91,10 +91,10 @@ const getServicesRequest = () => {
     }
 }
 
-const getServicesSuccess = (services, count, message) => {
+const getServicesSuccess = (data, count) => {
     return {
         type: SERVICES_ACTION_TYPES.GET_SERVICES_SUCCESS,
-        payload: {message, services, count}
+        payload: {data, count}
     }
 }
 
@@ -116,8 +116,8 @@ const getServices = token => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getServicesSuccess(data, count, message));
+            const {data, count} = response.data;
+            dispatch(getServicesSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getServicesFailure(message));

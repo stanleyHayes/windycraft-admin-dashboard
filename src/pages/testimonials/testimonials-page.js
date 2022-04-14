@@ -25,11 +25,14 @@ import {
     Edit,
     Visibility
 } from "@mui/icons-material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import moment from "moment";
 import {brown, green, red} from "@mui/material/colors";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectTestimonials} from "../../redux/testimonials/testimonial-reducer";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
+import {MESSAGE_ACTION_CREATORS} from "../../redux/messages/messages-action-creators";
+import {TESTIMONIALS_ACTION_CREATORS} from "../../redux/testimonials/testimonial-action-creators";
 
 const TestimonialsPage = () => {
 
@@ -46,6 +49,14 @@ const TestimonialsPage = () => {
     const handleStatusChange = (event, value) => {
         setStatus(value);
     }
+
+    const {token} = useSelector(selectAuth);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(TESTIMONIALS_ACTION_CREATORS.getTestimonials(token));
+    }, [dispatch, token]);
 
     return (
         <Layout>
@@ -95,9 +106,11 @@ const TestimonialsPage = () => {
                                 </TableHead>
                             </Table>
                         </TableContainer>
-                        <Typography variant="h6" align="center">
-                            No Testimonials Available
-                        </Typography>
+                        <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                            <Typography variant="body2" align="center">
+                                No testimonials available
+                            </Typography>
+                        </Box>
                     </Box>
                 ) : (
                     <TableContainer component={Paper}>

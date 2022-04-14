@@ -12,17 +12,17 @@ const InviteAdminDialog = ({open, handleClose}) => {
     }
 
     const handleSubmit = () => {
-        if(!email){
+        if (!email) {
             setError("Email required");
             return;
-        }else{
+        } else {
             setError("");
         }
 
-        if(!validator.isEmail(email)){
+        if (!validator.isEmail(email)) {
             setError("Email is invalid");
             return;
-        }else{
+        } else {
             setError("");
         }
         console.log(email);
@@ -31,7 +31,7 @@ const InviteAdminDialog = ({open, handleClose}) => {
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogContent>
-                <Typography mb={4} variant="h6" align="center">
+                <Typography mb={2} variant="h6" align="center">
                     Invite Admin
                 </Typography>
 
@@ -51,7 +51,11 @@ const InviteAdminDialog = ({open, handleClose}) => {
                     />
                     <Button
                         onClick={handleSubmit}
-                        sx={{fontWeight: 'bold', color: 'white'}}
+                        sx={{
+                            fontWeight: 'bold',
+                            color: 'secondary.main',
+                            textTransform: 'capitalize'
+                        }}
                         color="primary"
                         disableElevation={true}
                         variant="contained"

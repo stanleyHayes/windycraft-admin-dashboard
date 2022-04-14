@@ -19,11 +19,14 @@ import {
 } from "@mui/material";
 import {Delete, Edit, MarkChatRead, MarkChatReadOutlined, MarkChatUnread, Visibility} from "@mui/icons-material";
 import AddServiceDialog from "../../components/dialogs/add/add-service-dialog";
-import {useState} from "react";
-import {useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {selectQuotes} from "../../redux/quotes/quote-reducer";
 import {brown, green, red} from "@mui/material/colors";
 import moment from "moment";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
+import {SERVICE_ACTION_CREATORS} from "../../redux/services/service-action-creators";
+import {QUOTE_ACTION_CREATORS} from "../../redux/quotes/quote-action-creators";
 
 const QuotesPage = () => {
 
@@ -42,6 +45,13 @@ const QuotesPage = () => {
     const handleAddQuoteDialog = () => {
 
     }
+
+    const {token} = useSelector(selectAuth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(QUOTE_ACTION_CREATORS.getQuotes(token));
+    }, [dispatch, token]);
 
 
     return (
@@ -93,9 +103,11 @@ const QuotesPage = () => {
                                 </TableHead>
                             </Table>
                         </TableContainer>
-                        <Typography variant="h6" align="center">
-                            No Quotes Available
-                        </Typography>
+                        <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                            <Typography variant="body2" align="center">
+                                No quotes available
+                            </Typography>
+                        </Box>
                     </Box>
                 ) : (
                     <TableContainer component={Paper}>

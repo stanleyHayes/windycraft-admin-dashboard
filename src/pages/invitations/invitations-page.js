@@ -1,7 +1,7 @@
 import Layout from "../../components/layout/layout";
 import {
     Alert,
-    AlertTitle,
+    AlertTitle, Box,
     Button,
     Container,
     Divider,
@@ -17,11 +17,15 @@ import {
     Typography
 } from "@mui/material";
 import {Add, Delete, Edit} from "@mui/icons-material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddFAQDialog from "../../components/dialogs/add/add-faq-dialog";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectInvitations} from "../../redux/invitations/invitation-reducer";
 import moment from "moment";
+import InviteAdminDialog from "../../components/dialogs/new/admin-invitation-dialog";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
+import {FAQ_ACTION_CREATORS} from "../../redux/faqs/faq-action-creators";
+import {INVITATION_ACTION_CREATORS} from "../../redux/invitations/invitation-action-creators";
 
 const InvitationsPage = () => {
 
@@ -34,6 +38,15 @@ const InvitationsPage = () => {
     const handleAddFAQ = faq => {
 
     }
+
+    const {token} = useSelector(selectAuth);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(INVITATION_ACTION_CREATORS.getInvitations(token));
+    }, [dispatch, token]);
+
 
     return (
         <Layout>
@@ -52,6 +65,7 @@ const InvitationsPage = () => {
                                 textTransform: 'capitalize',
                                 backgroundColor: 'secondary.main',
                                 color: 'primary.main',
+                                fontWeight: 700,
                                 '&:hover': {
                                     backgroundColor: 'secondary.dark',
                                     color: 'primary.main'
@@ -71,60 +85,82 @@ const InvitationsPage = () => {
                 {invitationLoading && <LinearProgress variant="query" color="secondary"/>}
                 {invitationError && <Alert severity="error"><AlertTitle>{invitationError}</AlertTitle></Alert>}
 
-                <TableContainer component={Paper}>
-                    <Table size="medium">
-                        <TableHead>
-                            <TableCell>#</TableCell>
-                            <TableCell>Inviter</TableCell>
-                            <TableCell>Invitee</TableCell>
-                            <TableCell>Code</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Expiry Created</TableCell>
-                            <TableCell>Date Created</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {invitations && invitations.length === 0 ? (
+                {invitations && invitations.length === 0 ? (
+                    <Box>
+                        <TableContainer component={Paper}>
+                            <Table size="medium">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell>Inviter</TableCell>
+                                        <TableCell>Invitee</TableCell>
+                                        <TableCell>Code</TableCell>
+                                        <TableCell>Status</TableCell>
+                                        <TableCell>Expiry Created</TableCell>
+                                        <TableCell>Date Created</TableCell>
+                                        <TableCell>Actions</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                        <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                            <Typography variant="body2" align="center">
+                                No invitations available
+                            </Typography>
+                        </Box>
+                    </Box>
+                ) : (
+                    <TableContainer component={Paper}>
+                        <Table size="medium">
+                            <TableHead>
                                 <TableRow>
-                                    <TableCell align="center">No Invitations Available</TableCell>
+                                    <TableCell>#</TableCell>
+                                    <TableCell>Inviter</TableCell>
+                                    <TableCell>Invitee</TableCell>
+                                    <TableCell>Code</TableCell>
+                                    <TableCell>Status</TableCell>
+                                    <TableCell>Expiry Created</TableCell>
+                                    <TableCell>Date Created</TableCell>
+                                    <TableCell>Actions</TableCell>
                                 </TableRow>
-                            ) : (
-                                invitations.map((invitation, index) => {
-                                    return (
-                                        <TableRow hover={true} key={index}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{invitation.inviter.name}</TableCell>
-                                            <TableCell>{invitation.email}</TableCell>
-                                            <TableCell>{invitation.code}</TableCell>
-                                            <TableCell>{invitation.status}</TableCell>
-                                            <TableCell>{moment(invitation.expiryDate).fromNow()}</TableCell>
-                                            <TableCell>{moment(invitation.updatedAt).fromNow()}</TableCell>
-                                            <TableCell>
-                                                <Grid
-                                                    container={true}
-                                                    justifyContent="flex-end"
-                                                    alignItems="center">
-                                                    <Grid item={true}>
-                                                        <Edit/>
+                            </TableHead>
+                            <TableBody>
+                                {invitations.map((invitation, index) => {
+                                        return (
+                                            <TableRow hover={true} key={index}>
+                                                <TableCell>{index + 1}</TableCell>
+                                                <TableCell>{invitation.inviter.name}</TableCell>
+                                                <TableCell>{invitation.email}</TableCell>
+                                                <TableCell>{invitation.code}</TableCell>
+                                                <TableCell>{invitation.status}</TableCell>
+                                                <TableCell>{moment(invitation.expiryDate).fromNow()}</TableCell>
+                                                <TableCell>{moment(invitation.updatedAt).fromNow()}</TableCell>
+                                                <TableCell>
+                                                    <Grid
+                                                        container={true}
+                                                        justifyContent="flex-end"
+                                                        alignItems="center">
+                                                        <Grid item={true}>
+                                                            <Edit/>
+                                                        </Grid>
+                                                        <Grid item={true}>
+                                                            <Delete
+                                                                onClick={() => handleDeleteFAQ(invitation)}/>
+                                                        </Grid>
                                                     </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete
-                                                            onClick={() => handleDeleteFAQ(invitation)}/>
-                                                    </Grid>
-                                                </Grid>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    }
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
 
                 {
                     dialogOpen &&
-                    <AddFAQDialog
-                        handleValueAdd={handleAddFAQ}
+                    <InviteAdminDialog
                         open={dialogOpen}
                         handleClose={() => setDialogOpen(false)}
                     />

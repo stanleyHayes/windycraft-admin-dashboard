@@ -1,10 +1,12 @@
 import Layout from "../../components/layout/layout";
 import {Avatar, Button, Card, CardContent, Container, Divider, Grid, Stack, Typography} from "@mui/material";
 import {makeStyles} from "@mui/styles";
-import {Call, Edit, Mail, Person} from "@mui/icons-material";
+import {CalendarToday, Call, Edit, Mail, Person} from "@mui/icons-material";
 import Info from "../../components/shared/info";
 import {useSelector} from "react-redux";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
+import moment from "moment";
+import {UTILS} from "../../utils/constants/utils";
 
 const ProfilePage = () => {
 
@@ -31,6 +33,7 @@ const ProfilePage = () => {
                     <Grid item={true} xs={12} md="auto">
                         <Button
                             sx={{
+                                fontWeight: 700,
                                 textTransform: 'capitalize',
                                 color: "primary.main",
                                 backgroundColor: "secondary.main"
@@ -52,10 +55,13 @@ const ProfilePage = () => {
                         <Card elevation={0} sx={{mb: 2}}>
                             <CardContent>
                                 <Stack mb={2} direction="row" justifyContent="center">
-                                    <Avatar
-                                        sx={{width: 110, height: 110}}
-                                        src="/assets/images/profile.jpg"
-                                    />
+                                    <Avatar sx={{width: 110, height: 110}}>
+                                        <Typography
+                                            variant="h4"
+                                            align="center">
+                                            {UTILS.getInitials(authData.name)}
+                                        </Typography>
+                                    </Avatar>
                                 </Stack>
                                 <Typography
                                     mb={2}
@@ -110,7 +116,7 @@ const ProfilePage = () => {
                                             <Info
                                                 icon={<Mail sx={{color: "primary.main"}}/>}
                                                 title="Email"
-                                                value="dev.stanley.hayford@gmail.com"
+                                                value={authData.email}
 
                                             />
                                         </Grid>
@@ -118,22 +124,22 @@ const ProfilePage = () => {
                                             <Info
                                                 icon={<Call sx={{color: "primary.main"}}/>}
                                                 title="Phone"
-                                                value="+2332 7004 8319"
+                                                value={authData.phone}
 
                                             />
                                         </Grid>
                                         <Grid item={true} xs={12} md={6}>
                                             <Info
-                                                icon={<Call sx={{color: "primary.main"}}/>}
-                                                title="Emergency Phone"
-                                                value="+2335 5518 0048"
+                                                icon={<CalendarToday sx={{color: "primary.main"}}/>}
+                                                title="Joined"
+                                                value={moment(authData.createdAt).fromNow()}
                                             />
                                         </Grid>
                                         <Grid item={true} xs={12} md={6}>
                                             <Info
                                                 icon={<Person sx={{color: "primary.main"}}/>}
                                                 title="Username"
-                                                value="sahayford"
+                                                value={authData.username}
 
                                             />
                                         </Grid>

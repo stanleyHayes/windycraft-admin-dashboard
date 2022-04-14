@@ -50,7 +50,7 @@ const getMessageRequest = () => {
     }
 }
 
-const getMessageSuccess = (data,message) => {
+const getMessageSuccess = (data, message) => {
     return {
         type: MESSAGES_ACTION_TYPES.GET_MESSAGE_SUCCESS,
         payload: {message, data}
@@ -75,7 +75,7 @@ const getClient = (ID, token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message,data} = response.data;
+            const {message, data} = response.data;
             dispatch(getMessageSuccess(data, message));
         } catch (e) {
             const {message} = e.response.data;
@@ -91,10 +91,10 @@ const getMessagesRequest = () => {
     }
 }
 
-const getMessagesSuccess = (messages, count, message) => {
+const getMessagesSuccess = (data, count) => {
     return {
         type: MESSAGES_ACTION_TYPES.GET_MESSAGES_SUCCESS,
-        payload: {message, messages, count}
+        payload: {data, count}
     }
 }
 
@@ -111,13 +111,13 @@ const getMessages = token => {
             dispatch(getMessagesRequest());
             const response = await axios({
                 method: 'GET',
-                url: `${CONSTANTS.URL_BASE_SERVER}/clients`,
+                url: `${CONSTANTS.URL_BASE_SERVER}/messages`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getMessagesSuccess(data, count, message));
+            const {data, count} = response.data;
+            dispatch(getMessagesSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getMessagesFailure(message));

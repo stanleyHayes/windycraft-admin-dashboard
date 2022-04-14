@@ -8,7 +8,7 @@ const createQuoteRequest = () => {
     }
 }
 
-const createQuoteSuccess = (quote,message) => {
+const createQuoteSuccess = (quote, message) => {
     return {
         type: QUOTE_ACTION_TYPES.CREATE_QUOTE_SUCCESS,
         payload: {message, quote}
@@ -47,7 +47,7 @@ const getQuoteRequest = () => {
     }
 }
 
-const getQuoteSuccess = (quote,message) => {
+const getQuoteSuccess = (quote, message) => {
     return {
         type: QUOTE_ACTION_TYPES.GET_QUOTE_SUCCESS,
         payload: {message, quote}
@@ -72,7 +72,7 @@ const getQuote = (ID, token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message,data} = response.data;
+            const {message, data} = response.data;
             dispatch(getQuoteSuccess(data, message));
         } catch (e) {
             const {message} = e.response.data;
@@ -88,10 +88,10 @@ const getQuotesRequest = () => {
     }
 }
 
-const getQuotesSuccess = (quotes, count, message) => {
+const getQuotesSuccess = (data, count) => {
     return {
         type: QUOTE_ACTION_TYPES.GET_QUOTES_SUCCESS,
-        payload: {message, quotes, count}
+        payload: {data, count}
     }
 }
 
@@ -113,8 +113,8 @@ const getQuotes = token => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getQuotesSuccess(data, count, message));
+            const {data, count} = response.data;
+            dispatch(getQuotesSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getQuotesFailure(message));
@@ -156,7 +156,7 @@ const updateQuote = (quote, ID, token) => {
                 }
             });
             const {message, data} = response.data;
-            dispatch(updateQuoteSuccess(data,message));
+            dispatch(updateQuoteSuccess(data, message));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(updateQuoteFailure(message));

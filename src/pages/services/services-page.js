@@ -16,12 +16,15 @@ import {
     Typography
 } from "@mui/material";
 import {Add, Delete, Edit, Visibility} from "@mui/icons-material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddServiceDialog from "../../components/dialogs/add/add-service-dialog";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectServices} from "../../redux/services/service-reducer";
 import moment from "moment";
 import {brown, green, red} from "@mui/material/colors";
+import {ADMIN_ACTION_CREATORS} from "../../redux/admins/admin-action-creators";
+import {SERVICE_ACTION_CREATORS} from "../../redux/services/service-action-creators";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
 
 const ServicesPage = () => {
 
@@ -35,9 +38,16 @@ const ServicesPage = () => {
 
     }
 
+    const {token} = useSelector(selectAuth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(SERVICE_ACTION_CREATORS.getServices(token));
+    }, [dispatch, token]);
+
     return (
         <Layout>
-            <Container sx={{py: 4}}>
+            <Container sx={{py: 4, mt: {md: 8}}}>
                 <Grid
                     spacing={2}
                     container={true}
@@ -52,6 +62,7 @@ const ServicesPage = () => {
                                 textTransform: 'capitalize',
                                 backgroundColor: 'secondary.main',
                                 color: 'primary.main',
+                                fontWeight: 600,
                                 '&:hover': {
                                     backgroundColor: 'secondary.dark',
                                     color: 'primary.main'
@@ -85,8 +96,10 @@ const ServicesPage = () => {
                                 </TableHead>
                             </Table>
                         </TableContainer>
-                        <Box>
-                            <Typography variant="h6" align="center">No Services Available</Typography>
+                        <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                            <Typography variant="body2" align="center">
+                                No services available
+                            </Typography>
                         </Box>
                     </Box>
 

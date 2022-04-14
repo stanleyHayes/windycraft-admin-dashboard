@@ -91,10 +91,10 @@ const getClientsRequest = () => {
     }
 }
 
-const getClientsSuccess = (clients, count, message) => {
+const getClientsSuccess = (data, count) => {
     return {
         type: CLIENTS_ACTION_TYPES.GET_CLIENTS_SUCCESS,
-        payload: {message, clients, count}
+        payload: { data, count}
     }
 }
 
@@ -116,8 +116,8 @@ const getClients = token => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getClientsSuccess(data, count, message));
+            const { data, count} = response.data;
+            dispatch(getClientsSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getClientsFailure(message));

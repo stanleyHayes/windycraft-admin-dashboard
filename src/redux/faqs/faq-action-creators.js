@@ -50,7 +50,7 @@ const getFAQRequest = () => {
     }
 }
 
-const getFAQSuccess = (faq,message) => {
+const getFAQSuccess = (faq, message) => {
     return {
         type: FAQS_ACTION_TYPES.GET_FAQ_SUCCESS,
         payload: {message, faq}
@@ -75,7 +75,7 @@ const getFAQ = (ID, token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message,data} = response.data;
+            const {message, data} = response.data;
             dispatch(getFAQSuccess(data, message));
         } catch (e) {
             const {message} = e.response.data;
@@ -91,10 +91,10 @@ const getFAQsRequest = () => {
     }
 }
 
-const getFAQsSuccess = (faqs, count, message) => {
+const getFAQsSuccess = (data, count) => {
     return {
         type: FAQS_ACTION_TYPES.GET_FAQS_SUCCESS,
-        payload: {message, faqs, count}
+        payload: {data, count}
     }
 }
 
@@ -116,8 +116,8 @@ const getFAQs = token => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getFAQsSuccess(data, count, message));
+            const {data, count} = response.data;
+            dispatch(getFAQsSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getFAQsFailure(message));
@@ -210,4 +210,4 @@ const deleteFAQ = (ID, token) => {
 }
 
 
-export const CLIENTS_ACTION_CREATORS = {createFAQ, deleteFAQ, updateFAQ, getFAQs, getFAQ};
+export const FAQ_ACTION_CREATORS = {createFAQ, deleteFAQ, updateFAQ, getFAQs, getFAQ};

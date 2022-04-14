@@ -88,10 +88,10 @@ const getInvitationsRequest = () => {
     }
 }
 
-const getInvitationsSuccess = (invitations, count, message) => {
+const getInvitationsSuccess = (data, count) => {
     return {
         type: INVITATIONS_ACTION_TYPES.GET_INVITATIONS_SUCCESS,
-        payload: {message, invitations, count}
+        payload: {data, count}
     }
 }
 
@@ -113,8 +113,8 @@ const getInvitations = token => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getInvitationsSuccess(data, count, message));
+            const {data, count} = response.data;
+            dispatch(getInvitationsSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getInvitationsFailure(message));

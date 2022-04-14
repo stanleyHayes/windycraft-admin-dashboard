@@ -1,13 +1,37 @@
-import {services} from "./service-data";
+import {SERVICES_ACTION_TYPES} from "./service-action-types";
 
 const INITIAL_STATE = {
-  services: [...services],
-  serviceLoading: false,
-  serviceError: null
+    services: [],
+    serviceLoading: false,
+    serviceError: null,
+    totalServices: 0
 };
 
 const serviceReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
+
+        case SERVICES_ACTION_TYPES.GET_SERVICES_REQUEST:
+            return {
+                ...state,
+                serviceError: null,
+                serviceLoading: true
+            }
+
+        case SERVICES_ACTION_TYPES.GET_SERVICES_SUCCESS:
+            return {
+                ...state,
+                serviceError: null,
+                serviceLoading: false,
+                services: action.payload.data,
+                totalServices: action.payload.count
+            }
+
+        case SERVICES_ACTION_TYPES.GET_SERVICES_FAIL:
+            return {
+                ...state,
+                serviceError: action.payload,
+                serviceLoading: false
+            }
         default:
             return state;
     }

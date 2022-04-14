@@ -47,7 +47,7 @@ const getTestimonialRequest = () => {
     }
 }
 
-const getTestimonialSuccess = (testimonial,message) => {
+const getTestimonialSuccess = (testimonial, message) => {
     return {
         type: TESTIMONIALS_ACTION_TYPES.GET_TESTIMONIAL_SUCCESS,
         payload: {message, testimonial}
@@ -72,7 +72,7 @@ const getTestimonial = (ID, token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message,data} = response.data;
+            const {message, data} = response.data;
             dispatch(getTestimonialSuccess(data, message));
         } catch (e) {
             const {message} = e.response.data;
@@ -88,10 +88,10 @@ const getTestimonialsRequest = () => {
     }
 }
 
-const getTestimonialsSuccess = (testimonials, count, message) => {
+const getTestimonialsSuccess = (data, count) => {
     return {
         type: TESTIMONIALS_ACTION_TYPES.GET_TESTIMONIALS_SUCCESS,
-        payload: {message, testimonials, count}
+        payload: {data, count}
     }
 }
 
@@ -113,8 +113,8 @@ const getTestimonials = token => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getTestimonialsSuccess(data, count, message));
+            const {data, count} = response.data;
+            dispatch(getTestimonialsSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getTestimonialsFailure(message));
@@ -206,4 +206,10 @@ const deleteTestimonial = (ID, token) => {
 }
 
 
-export const TESTIMONIALS_ACTION_CREATORS = {createTestimonial, deleteTestimonial, updateTestimonial, getTestimonials, getTestimonial};
+export const TESTIMONIALS_ACTION_CREATORS = {
+    createTestimonial,
+    deleteTestimonial,
+    updateTestimonial,
+    getTestimonials,
+    getTestimonial
+};

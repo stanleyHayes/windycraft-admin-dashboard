@@ -16,10 +16,13 @@ import {
     Typography
 } from "@mui/material";
 import {Delete, Edit, MarkChatRead, MarkChatReadOutlined, MarkChatUnread, Visibility} from "@mui/icons-material";
-import {useState} from "react";
-import {useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {selectMessages} from "../../redux/messages/messages-reducer";
 import {brown, green, red} from "@mui/material/colors";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
+import {FAQ_ACTION_CREATORS} from "../../redux/faqs/faq-action-creators";
+import {MESSAGE_ACTION_CREATORS} from "../../redux/messages/messages-action-creators";
 
 const MessagesPage = () => {
 
@@ -36,12 +39,19 @@ const MessagesPage = () => {
 
     }
 
+    const {token} = useSelector(selectAuth);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(MESSAGE_ACTION_CREATORS.getMessages(token));
+    }, [dispatch, token]);
+
+
     return (
         <Layout>
             <Container
-                sx={{
-                    py: 4
-                }}>
+                sx={{py: 4, mt: {md: 8}}}>
                 <Grid
                     container={true}
                     justifyContent="space-between"
@@ -83,18 +93,17 @@ const MessagesPage = () => {
                                         <TableCell>Sender</TableCell>
                                         <TableCell>Message</TableCell>
                                         <TableCell>Subject</TableCell>
-                                        <TableCell>Has Responded</TableCell>
+                                        <TableCell>Responded</TableCell>
                                         <TableCell>Actions</TableCell>
                                     </TableRow>
                                 </TableHead>
                             </Table>
                         </TableContainer>
-                        <Box>
-                            <Typography variant="h6" align="center">
-                                No Messages Available
+                        <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                            <Typography variant="body2" align="center">
+                                No messages available
                             </Typography>
                         </Box>
-
                     </Box>
                 ) : (
                     <TableContainer component={Paper}>

@@ -13,10 +13,12 @@ import {
     Typography
 } from "@mui/material";
 import {Add, Delete, Edit, Visibility} from "@mui/icons-material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddFAQDialog from "../../components/dialogs/add/add-faq-dialog";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectFAQs} from "../../redux/faqs/faq-reducer";
+import {FAQ_ACTION_CREATORS} from "../../redux/faqs/faq-action-creators";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
 
 const FAQPage = () => {
 
@@ -30,10 +32,19 @@ const FAQPage = () => {
 
     }
 
+    const {token} = useSelector(selectAuth);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(FAQ_ACTION_CREATORS.getFAQs(token));
+    }, [dispatch, token]);
+
+
     return (
         <Layout>
             {faqLoading && <LinearProgress color="secondary" variant="query"/>}
-            <Container sx={{py: 4}}>
+            <Container sx={{py: 4, mt: {md: 8}}}>
                 {
                     faqError &&
                     (
@@ -56,6 +67,7 @@ const FAQPage = () => {
                                 textTransform: 'capitalize',
                                 backgroundColor: 'secondary.main',
                                 color: 'primary.main',
+                                fontWeight: 700,
                                 '&:hover': {
                                     backgroundColor: 'secondary.dark',
                                     color: 'primary.main'
@@ -87,8 +99,10 @@ const FAQPage = () => {
                                 </TableHead>
                             </Table>
                         </TableContainer>
-                        <Box>
-                            <Typography variant="h6" align="center">No FAQs Available</Typography>
+                        <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                            <Typography variant="body2" align="center">
+                                No FAQs available
+                            </Typography>
                         </Box>
                     </Box>
                 ) : (

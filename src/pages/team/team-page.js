@@ -1,11 +1,13 @@
 import Layout from "../../components/layout/layout";
 import {Alert, AlertTitle, Box, Button, Container, Divider, Grid, LinearProgress, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddTeamMemberDialog from "../../components/dialogs/add/add-team-member-dialog";
 import Team from "../../components/shared/team";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectTeams} from "../../redux/team/team-reducer";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
+import {TEAMS_ACTION_CREATORS} from "../../redux/team/team-action-creators";
 
 const TeamPage = () => {
 
@@ -19,6 +21,13 @@ const TeamPage = () => {
     }
 
     const {teams, teamLoading, teamError} = useSelector(selectTeams);
+
+    const {token} = useSelector(selectAuth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(TEAMS_ACTION_CREATORS.getTeams(token));
+    }, [dispatch, token]);
 
 
     return (
@@ -45,6 +54,7 @@ const TeamPage = () => {
                             sx={{
                                 textTransform: 'capitalize',
                                 backgroundColor: 'secondary.main',
+                                fontWeight: 700,
                                 color: 'primary.main',
                                 '&:hover': {
                                     backgroundColor: 'secondary.dark',
@@ -63,15 +73,23 @@ const TeamPage = () => {
                 <Divider variant="fullWidth" sx={{my: 2}}/>
 
                 <Box>
-                    <Grid container={true} spacing={2}>
-                        {teams.map((team, index) => {
-                            return (
-                                <Grid key={index} item={true} xs={12} md={4}>
-                                    <Team team={team}/>
-                                </Grid>
-                            )
-                        })}
-                    </Grid>
+                    {teams && teams.length === 0 ? (
+                        <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                            <Typography variant="body2" align="center">
+                                No Team available
+                            </Typography>
+                        </Box>
+                    ): (
+                        <Grid container={true} spacing={2}>
+                            {teams.map((team, index) => {
+                                return (
+                                    <Grid key={index} item={true} xs={12} md={4}>
+                                        <Team team={team}/>
+                                    </Grid>
+                                )
+                            })}
+                        </Grid>
+                    )}
                 </Box>
                 {
                     dialogOpen &&
