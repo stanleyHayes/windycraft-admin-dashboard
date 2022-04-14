@@ -17,8 +17,8 @@ import {
     Typography
 } from "@mui/material";
 import {makeStyles} from "@mui/styles";
-import {useState} from "react";
-import {useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {Alert, AlertTitle} from "@mui/lab";
 import moment from "moment";
 import {Edit, Visibility} from "@mui/icons-material";
@@ -27,6 +27,8 @@ import {selectAdmin} from "../../redux/admins/admin-reducer";
 import User from "../../components/shared/user";
 import {useNavigate} from "react-router";
 import InviteAdminDialog from "../../components/dialogs/new/admin-invitation-dialog";
+import {ADMIN_ACTION_CREATORS} from "../../redux/admins/admin-action-creators";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
 
 const AdminsPage = () => {
 
@@ -40,6 +42,8 @@ const AdminsPage = () => {
     });
 
     const {admins, adminError, adminLoading} = useSelector(selectAdmin);
+    const {token} = useSelector(selectAuth);
+
     const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
     const classes = useStyles();
     const navigate = useNavigate();
@@ -47,28 +51,28 @@ const AdminsPage = () => {
 
     const renderStatus = status => {
         switch (status) {
-            case 'Pending':
+            case 'pending':
                 return (
                     <Button
                         disableElevation={true}
-                        sx={{backgroundColor: grey[400], color: 'white', textTransform: 'capitalize'}}
+                        sx={{backgroundColor: grey[600], color: 'white', textTransform: 'capitalize'}}
                         size="small"
                         variant="contained">{status}</Button>
                 )
-            case 'Active':
+            case 'active':
                 return (
                     <Button
                         disableElevation={true}
-                        sx={{backgroundColor: green[400], color: 'white', textTransform: 'capitalize'}}
+                        sx={{backgroundColor: green[600], color: 'white', textTransform: 'capitalize'}}
                         size="small"
                         variant="contained">{status}</Button>
                 );
-            case 'Suspended':
+            case 'suspended':
                 return (
                     <Button
                         disableElevation={true}
                         size="small"
-                        sx={{backgroundColor: red[400], color: 'white', textTransform: 'capitalize'}}
+                        sx={{backgroundColor: red[600], color: 'white', textTransform: 'capitalize'}}
                         variant="contained">{status}</Button>
                 );
             default:
@@ -76,11 +80,18 @@ const AdminsPage = () => {
                     <Button
                         disableElevation={true}
                         size="small"
-                        sx={{backgroundColor: grey[400], color: 'white', textTransform: 'capitalize'}}
+                        sx={{backgroundColor: grey[600], color: 'white', textTransform: 'capitalize'}}
                         variant="contained">{status}</Button>
                 );
         }
     }
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(ADMIN_ACTION_CREATORS.getAdmins(token));
+    }, [dispatch, token]);
+
     return (
         <Layout>
             {adminLoading && <LinearProgress color="secondary" variant="query"/>}
@@ -163,7 +174,7 @@ const AdminsPage = () => {
                             </Grid>
                             <Grid item={true} md={6} xs={12}>
                                 <Button
-                                    onClick={() => navigate('/new/admin')}
+                                    onClick={() => navigate('/admin/new')}
                                     disableElevation={true}
                                     size="medium"
                                     color="primary"
@@ -200,24 +211,20 @@ const AdminsPage = () => {
                             </TableHead>
                             <TableBody>
                                 {
-                                    admins && admins.length > 0 && admins.map((admin, index) => {
+                                    admins  && admins.map((admin, index) => {
                                         return (
                                             <TableRow
                                                 hover={true}
                                                 key={index}>
                                                 <TableCell align="center">{index + 1}</TableCell>
                                                 <TableCell align="center">
-                                                    <User
-                                                        lastName={admin.lastName}
-                                                        firstName={admin.firstName}
-                                                        image={admin.image}
-                                                    />
+                                                    <User name={admin.name}/>
                                                 </TableCell>
                                                 <TableCell align="center">{admin.email}</TableCell>
                                                 <TableCell align="center">{admin.username}</TableCell>
-                                                <TableCell align="center">{admin.phoneNumber}</TableCell>
+                                                <TableCell align="center">{admin.phone}</TableCell>
                                                 <TableCell
-                                                    align="center">{renderStatus(admin.accountStatus.status)}</TableCell>
+                                                    align="center">{renderStatus(admin.status)}</TableCell>
                                                 <TableCell align="center">
                                                     {moment(admin.updatedAt).fromNow()}
                                                 </TableCell>
@@ -258,9 +265,6 @@ const AdminsPage = () => {
                     admins && admins.length === 0 &&
                     (
                         <Box my={4}>
-                            <Typography variant="h6" align="center">
-                                No Admins available
-                            </Typography>
                             <TableContainer component={Paper} elevation={0}>
                                 <Table size="small" sx={{minWidth: 650}} aria-label="admins table">
                                     <TableHead>
@@ -277,6 +281,11 @@ const AdminsPage = () => {
                                     </TableHead>
                                 </Table>
                             </TableContainer>
+                            <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                                <Typography variant="body2" align="center">
+                                    No Admins available
+                                </Typography>
+                            </Box>
                         </Box>
                     )
                 }
