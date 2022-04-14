@@ -10,13 +10,13 @@ import {
     Face,
     FaceOutlined,
     Group,
-    GroupOutlined,
+    GroupOutlined, Groups, GroupsOutlined,
     MultipleStop,
     MultipleStopOutlined,
     Payment,
     PaymentOutlined,
     Send,
-    SendOutlined
+    SendOutlined, VerifiedUser, VerifiedUserOutlined
 } from "@mui/icons-material";
 import {makeStyles} from "@mui/styles";
 
@@ -46,7 +46,7 @@ const DesktopSidebarContent = () => {
                 '&::-webkit-scrollbar-corner': {},
                 backgroundColor: 'primary.main',
                 height: '100vh',
-                maxHeight: '100vh',
+                minHeight: '100vh',
                 overflowY: 'scroll',
                 position: 'fixed',
                 top: 65,
@@ -75,6 +75,17 @@ const DesktopSidebarContent = () => {
                     label="Dashboard"
                     path="/"
                     activePath={activePath}/>
+
+                <DesktopSidebarLinkItem
+                    icon={
+                        activePath === '/admins' ?
+                            <VerifiedUser sx={{color: 'secondary.main'}}/> :
+                            <VerifiedUserOutlined sx={{color: 'text.primary'}}/>
+                    }
+                    label="Admins"
+                    path="/admins"
+                    activePath={activePath}/>
+
                 <DesktopSidebarLinkItem
                     icon={
                         activePath === '/services' ?
@@ -108,8 +119,8 @@ const DesktopSidebarContent = () => {
                 <DesktopSidebarLinkItem
                     icon={
                         activePath === '/invitations' ?
-                            <Group sx={{color: 'secondary.main'}}/> :
-                            <GroupOutlined sx={{color: 'text.primary'}}/>
+                            <Groups sx={{color: 'secondary.main'}}/> :
+                            <GroupsOutlined sx={{color: 'text.primary'}}/>
                     }
                     label="Invitations"
                     path="/invitations"

@@ -22,6 +22,10 @@ import ClientsPage from "./pages/clients/clients-page";
 import {CssBaseline} from "@mui/material";
 import InvitationsPage from "./pages/invitations/invitations-page";
 import NotFoundPage from "./pages/404/404-page";
+import AdminsPage from "./pages/admins/admins-page";
+import CreateAdminPage from "./pages/admins/create-admin-page";
+import AdminDetailPage from "./pages/admins/admin-detail-page";
+import UpdateAdminPage from "./pages/admins/update-admin-page";
 
 function App() {
 
@@ -47,6 +51,10 @@ function App() {
                 <Route exact={true} path="/team" element={<TeamPage/>}/>
                 <Route exact={true} path="/clients" element={<ClientsPage/>}/>
                 <Route exact={true} path="/invitations" element={<InvitationsPage/>}/>
+                <Route exact={true} path="/admins" element={<AdminsPage/>}/>
+                <Route exact={true} path="/admin/new" element={<CreateAdminPage/>}/>
+                <Route exact={true} path="/admins/:adminID" element={<AdminDetailPage/>}/>
+                <Route exact={true} path="/admins/:adminID/update" element={<UpdateAdminPage/>}/>
                 <Route exact={true} path="*" element={<NotFoundPage/>}/>
             </Routes>
         </ThemeProvider>

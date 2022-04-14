@@ -11,6 +11,7 @@ import invitationReducer from "./invitations/invitation-reducer";
 import valueReducer from "./values/value-reducer";
 import teamReducer from "./team/team-reducer";
 import dashboardReducer from "./dashboard/dashboard-reducer";
+import adminReducer from "./admins/admin-reducer";
 
 
 const rootReducer = combineReducers({
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     invitations: invitationReducer,
     values: valueReducer,
     teams: teamReducer,
-    dashboard: dashboardReducer
+    dashboard: dashboardReducer,
+    admins: adminReducer
 });
 
 export default rootReducer;

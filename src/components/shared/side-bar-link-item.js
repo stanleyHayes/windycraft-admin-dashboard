@@ -54,7 +54,7 @@ const SideBarLinkItem = ({path, icon, label, activePath}) => {
                         </Box>
                         <Typography
                             sx={{color: 'secondary.main'}}
-                            variant="body1">
+                            variant="body2">
                             {label}
                         </Typography>
                     </Stack>

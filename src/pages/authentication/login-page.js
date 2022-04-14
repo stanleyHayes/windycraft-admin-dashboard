@@ -219,7 +219,8 @@ const SignInPage = () => {
                                     },
                                     '&:active': {
                                         color: 'secondary.main'
-                                    }
+                                    },
+                                    py: 1.5
                                 }}
                                 size="large"
                                 onSubmit={handleSubmit}
