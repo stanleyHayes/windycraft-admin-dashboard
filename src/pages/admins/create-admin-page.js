@@ -1,6 +1,5 @@
 import Layout from "../../components/layout/layout";
 import {
-    Box,
     Button,
     Card,
     CardContent,
@@ -14,9 +13,7 @@ import {
     InputAdornment,
     InputLabel,
     LinearProgress,
-    MenuItem,
     OutlinedInput,
-    Select,
     Stack,
     TextField,
     Typography
@@ -24,43 +21,30 @@ import {
 import {makeStyles} from "@mui/styles";
 import {useState} from "react";
 import {useSelector} from "react-redux";
-import {Alert, AlertTitle, DatePicker} from "@mui/lab";
+import {Alert, AlertTitle} from "@mui/lab";
 import {ChevronLeft, Visibility, VisibilityOff} from "@mui/icons-material";
 import {useNavigate} from "react-router";
 import {selectAdmin} from "../../redux/admins/admin-reducer";
 
-const CreateUserPage = () => {
+const CreateAdminPage = () => {
 
     const [admin, setAdmin] = useState({});
     const [error, setError] = useState({});
 
     const [visiblePassword, setVisiblePassword] = useState(false);
-    const [transactionPermission, setTransactionPermission] = useState({
-        transactionCreate: true,
-        transactionRead: true,
-        transactionUpdate: false,
-        transactionDelete: false
+
+    const [faqPermission, setFAQPermission] = useState({
+        faqCreate: true,
+        faqRead: true,
+        faqUpdate: false,
+        faqDelete: false
     });
 
-    const [userPermission, setUserPermission] = useState({
-        userCreate: true,
-        userRead: true,
-        userUpdate: false,
-        userDelete: false
-    });
-
-    const [adminPermission, setAdminPermission] = useState({
-        adminCreate: true,
-        adminRead: true,
-        adminUpdate: false,
-        adminDelete: false
-    });
-
-    const [fundingPermission, setFundingPermission] = useState({
-        fundingCreate: true,
-        fundingRead: true,
-        fundingUpdate: false,
-        fundingDelete: false
+    const [clientPermission, setClientPermission] = useState({
+        clientCreate: true,
+        clientRead: true,
+        clientUpdate: false,
+        clientDelete: false
     });
 
     const [invitationPermission, setInvitationPermission] = useState({
@@ -70,6 +54,55 @@ const CreateUserPage = () => {
         invitationDelete: false
     });
 
+    const [adminPermission, setAdminPermission] = useState({
+        adminCreate: true,
+        adminRead: true,
+        adminUpdate: false,
+        adminDelete: false
+    });
+
+    const [messagePermission, setMessagePermission] = useState({
+        messageCreate: true,
+        messageRead: true,
+        messageUpdate: false,
+        messageDelete: false
+    });
+
+    const [quotePermission, setQuotePermission] = useState({
+        quoteCreate: true,
+        quoteRead: true,
+        quoteUpdate: false,
+        quoteDelete: false
+    });
+
+    const [valuePermission, setValuePermission] = useState({
+        valueCreate: true,
+        valueRead: true,
+        valueUpdate: false,
+        valueDelete: false
+    });
+
+    const [servicePermission, setServicePermission] = useState({
+        serviceCreate: true,
+        serviceRead: true,
+        serviceUpdate: false,
+        serviceDelete: false
+    });
+
+    const [teamPermission, setTeamPermission] = useState({
+        teamCreate: true,
+        teamRead: true,
+        teamUpdate: false,
+        teamDelete: false
+    });
+
+    const [testimonialPermission, setTestimonialPermission] = useState({
+        testimonialCreate: true,
+        testimonialRead: true,
+        testimonialUpdate: false,
+        testimonialDelete: false
+    });
+
     const [permissionPermission, setPermissionPermission] = useState({
         permissionCreate: true,
         permissionRead: true,
@@ -77,28 +110,22 @@ const CreateUserPage = () => {
         permissionDelete: false
     });
 
-    const [requestPermission, setRequestPermission] = useState({
-        requestCreate: true,
-        requestRead: true,
-        requestUpdate: false,
-        requestDelete: false
-    });
-
-    const {transactionCreate, transactionRead, transactionUpdate, transactionDelete} = transactionPermission;
-    const {userCreate, userRead, userUpdate, userDelete} = userPermission;
+    const {faqCreate, faqRead, faqUpdate, faqDelete} = faqPermission;
+    const {clientCreate, clientRead, clientUpdate, clientDelete} = clientPermission;
+    const {invitationCreate, invitationRead, invitationUpdate, invitationDelete} = invitationPermission;
     const {adminCreate, adminRead, adminUpdate, adminDelete} = adminPermission;
-    const {fundingCreate, fundingRead, fundingUpdate, fundingDelete} = fundingPermission;
-    const {invitationCreate, invitationRead,invitationUpdate, invitationDelete} = invitationPermission;
+    const {messageCreate, messageRead, messageUpdate, messageDelete} = messagePermission;
+    const {quoteCreate, quoteRead, quoteUpdate, quoteDelete} = quotePermission;
+    const {valueCreate, valueRead, valueUpdate, valueDelete} = valuePermission;
+    const {serviceCreate, serviceRead, serviceUpdate, serviceDelete} = servicePermission;
+    const {teamCreate, teamRead, teamUpdate, teamDelete} = teamPermission;
+    const {testimonialCreate, testimonialRead, testimonialUpdate, testimonialDelete} = testimonialPermission;
     const {permissionCreate, permissionRead, permissionUpdate, permissionDelete} = permissionPermission;
-    const {requestCreate, requestRead, requestUpdate, requestDelete} = requestPermission;
     const {
-        firstName,
-        lastName,
+        name,
         email,
         username,
         password,
-        dateOfBirth,
-        gender,
         phoneNumber,
         emergencyPhoneNumber,
     } = admin;
@@ -107,9 +134,56 @@ const CreateUserPage = () => {
         setAdmin({...admin, [event.target.name]: event.target.value});
     }
 
-    const handlePermissionChange = event => {
-        setTransactionPermission({...transactionPermission, [event.target.name]: event.target.checked})
+    const handleFAQPermissionChange = event => {
+        setFAQPermission({...faqPermission, [event.target.name]: event.target.checked})
     }
+
+    const handleClientPermissionChange = event => {
+        setClientPermission({...clientPermission, [event.target.name]: event.target.checked})
+    }
+
+
+    const handleInvitationPermissionChange = event => {
+        setInvitationPermission({...invitationPermission, [event.target.name]: event.target.checked})
+    }
+
+
+    const handleAdminPermissionChange = event => {
+        setAdminPermission({...adminPermission, [event.target.name]: event.target.checked})
+    }
+
+    const handleMessagePermissionChange = event => {
+        setMessagePermission({...messagePermission, [event.target.name]: event.target.checked})
+    }
+
+    const handleQuotePermissionChange = event => {
+        setQuotePermission({...quotePermission, [event.target.name]: event.target.checked})
+    }
+
+
+    const handleValuePermissionChange = event => {
+        setValuePermission({...valuePermission, [event.target.name]: event.target.checked})
+    }
+
+
+    const handleServicePermissionChange = event => {
+        setServicePermission({...servicePermission, [event.target.name]: event.target.checked})
+    }
+
+    const handleTeamPermissionChange = event => {
+        setTeamPermission({...teamPermission, [event.target.name]: event.target.checked})
+    }
+
+
+    const handleTestimonialPermissionChange = event => {
+        setTestimonialPermission({...testimonialPermission, [event.target.name]: event.target.checked})
+    }
+
+
+    const handlePermissionPermissionChange = event => {
+        setPermissionPermission({...permissionPermission, [event.target.name]: event.target.checked})
+    }
+
 
     const useStyles = makeStyles(theme => {
         return {
@@ -154,7 +228,7 @@ const CreateUserPage = () => {
                                 textTransform: 'capitalize',
                                 fontSize: 16
                             }}
-                            color="primary"
+                            color="secondary"
                             mb={4}
                             size="large"
                             startIcon={<ChevronLeft fontSize="medium"/>} variant="text">
@@ -179,32 +253,19 @@ const CreateUserPage = () => {
                                 </Typography>
                                 <Stack direction="column" spacing={2}>
                                     <TextField
-                                        label="First Name"
+                                        label="Name"
                                         fullWidth={true}
                                         name="firstName"
                                         required={true}
                                         variant="outlined"
-                                        value={firstName}
-                                        error={Boolean(error.firstName)}
-                                        helperText={error.firstName}
+                                        value={name}
+                                        error={Boolean(error.name)}
+                                        helperText={error.name}
                                         type="text"
-                                        size="small"
+                                        size="medium"
                                         onChange={handleChange}
                                     />
 
-                                    <TextField
-                                        label="Last name"
-                                        fullWidth={true}
-                                        name="lastName"
-                                        required={true}
-                                        variant="outlined"
-                                        value={lastName}
-                                        error={Boolean(error.lastName)}
-                                        helperText={error.lastName}
-                                        type="text"
-                                        size="small"
-                                        onChange={handleChange}
-                                    />
 
                                     <TextField
                                         label="Email"
@@ -216,7 +277,7 @@ const CreateUserPage = () => {
                                         error={Boolean(error.email)}
                                         helperText={error.email}
                                         type="email"
-                                        size="small"
+                                        size="medium"
                                         onChange={handleChange}
                                     />
 
@@ -230,25 +291,9 @@ const CreateUserPage = () => {
                                         error={Boolean(error.username)}
                                         helperText={error.username}
                                         type="text"
-                                        size="small"
+                                        size="medium"
                                         onChange={handleChange}
                                     />
-
-                                    <FormControl fullWidth>
-                                        <InputLabel htmlFor="gender-label">Gender</InputLabel>
-                                        <Select
-                                            labelId="gender-label"
-                                            label="Gender"
-                                            name="gender"
-                                            id="gender"
-                                            onChange={handleChange}
-                                            fullWidth={true}
-                                            value={gender}>
-                                            <MenuItem value="">Select Gender</MenuItem>
-                                            <MenuItem value="Male">Male</MenuItem>
-                                            <MenuItem value="Female">Female</MenuItem>
-                                        </Select>
-                                    </FormControl>
 
 
                                     <TextField
@@ -261,7 +306,7 @@ const CreateUserPage = () => {
                                         error={Boolean(error.phone)}
                                         helperText={error.phone}
                                         type="tel"
-                                        size="small"
+                                        size="medium"
                                         onChange={handleChange}
                                     />
 
@@ -275,29 +320,10 @@ const CreateUserPage = () => {
                                         error={Boolean(error.emergencyPhone)}
                                         helperText={error.emergencyPhone}
                                         type="tel"
-                                        size="small"
+                                        size="medium"
                                         onChange={handleChange}
                                     />
 
-                                    <Box>
-                                        <DatePicker
-                                            rawValue={dateOfBirth}
-                                            label="Date of birth"
-                                            value={dateOfBirth}
-                                            onChange={(date) => {
-                                                setAdmin({...admin, 'dateOfBirth': date})
-                                            }}
-                                            renderInput={
-                                                (params) =>
-                                                    <TextField
-                                                        variant="outlined"
-                                                        fullWidth={true}
-                                                        placeholder="Date of birth"
-                                                        margin="normal"
-                                                        label="Start Date" {...params} />}
-                                            date={dateOfBirth}
-                                        />
-                                    </Box>
 
                                     <FormControl variant="outlined">
                                         <InputLabel htmlFor="password">Password</InputLabel>
@@ -319,8 +345,7 @@ const CreateUserPage = () => {
                                                         aria-label="toggle password visibility"
                                                         onClick={() => setVisiblePassword(!visiblePassword)}
                                                         onMouseDown={() => setVisiblePassword(!visiblePassword)}
-                                                        edge="end"
-                                                    >
+                                                        edge="end">
                                                         {visiblePassword ? <VisibilityOff/> : <Visibility/>}
                                                     </IconButton>
                                                 </InputAdornment>
@@ -328,7 +353,13 @@ const CreateUserPage = () => {
                                         />
                                     </FormControl>
 
-                                    <Button size="large" variant="contained">Create Admin</Button>
+                                    <Button
+                                        sx={{
+                                            color: 'secondary.main',
+                                            textTransform: 'capitalize'
+                                        }}
+                                        size="large" variant="contained">
+                                        Create Admin</Button>
                                 </Stack>
                             </CardContent>
                         </Card>
@@ -343,7 +374,7 @@ const CreateUserPage = () => {
                                 <Stack
                                     spacing={0.5}
                                     direction="column"
-                                    divider={<Divider light={true} variant="fullWidth" />}>
+                                    divider={<Divider light={true} variant="fullWidth"/>}>
 
                                     <Grid
                                         spacing={1}
@@ -351,15 +382,15 @@ const CreateUserPage = () => {
                                         justifyContent="flex-start"
                                         alignItems="center">
                                         <Grid xs={12} item={true}>
-                                            <Typography variant="body1">Transaction</Typography>
+                                            <Typography variant="body1">FAQ</Typography>
                                         </Grid>
                                         <Grid xs={6} md="auto" item={true}>
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="transactionCreate"
-                                                        onChange={handlePermissionChange}
-                                                        checked={transactionCreate}
+                                                        name="faqCreate"
+                                                        onChange={handleFAQPermissionChange}
+                                                        checked={faqCreate}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Create</Typography>}
@@ -369,9 +400,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="transactionRead"
-                                                        onChange={handlePermissionChange}
-                                                        checked={transactionRead}
+                                                        name="faqRead"
+                                                        onChange={handleFAQPermissionChange}
+                                                        checked={faqRead}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Read</Typography>}
@@ -381,9 +412,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="transactionUpdate"
-                                                        onChange={handlePermissionChange}
-                                                        checked={transactionUpdate}
+                                                        name="faqUpdate"
+                                                        onChange={handleFAQPermissionChange}
+                                                        checked={faqUpdate}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Update</Typography>}
@@ -393,9 +424,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="transactionDelete"
-                                                        onChange={handlePermissionChange}
-                                                        checked={transactionDelete}
+                                                        name="faqDelete"
+                                                        onChange={handleFAQPermissionChange}
+                                                        checked={faqDelete}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Delete</Typography>}
@@ -410,15 +441,15 @@ const CreateUserPage = () => {
                                         justifyContent="flex-start"
                                         alignItems="center">
                                         <Grid xs={12} item={true}>
-                                            <Typography variant="body1">User</Typography>
+                                            <Typography variant="body1">Client</Typography>
                                         </Grid>
                                         <Grid xs={6} md="auto" item={true}>
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="userCreate"
-                                                        onChange={handlePermissionChange}
-                                                        checked={userCreate}
+                                                        name="clientCreate"
+                                                        onChange={handleClientPermissionChange}
+                                                        checked={clientCreate}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Create</Typography>}
@@ -428,9 +459,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="userRead"
-                                                        onChange={handlePermissionChange}
-                                                        checked={userRead}
+                                                        name="clientRead"
+                                                        onChange={handleClientPermissionChange}
+                                                        checked={clientRead}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Read</Typography>}
@@ -440,9 +471,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="userUpdate"
-                                                        onChange={handlePermissionChange}
-                                                        checked={userUpdate}
+                                                        name="clientUpdate"
+                                                        onChange={handleClientPermissionChange}
+                                                        checked={clientUpdate}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Update</Typography>}
@@ -452,9 +483,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="userDelete"
-                                                        onChange={handlePermissionChange}
-                                                        checked={userDelete}
+                                                        name="clientDelete"
+                                                        onChange={handleClientPermissionChange}
+                                                        checked={clientDelete}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Delete</Typography>}
@@ -475,7 +506,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="adminCreate"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handleAdminPermissionChange}
                                                         checked={adminCreate}
                                                     />
                                                 }
@@ -487,7 +518,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="adminRead"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handleClientPermissionChange}
                                                         checked={adminRead}
                                                     />
                                                 }
@@ -499,7 +530,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="adminUpdate"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handleClientPermissionChange}
                                                         checked={adminUpdate}
                                                     />
                                                 }
@@ -511,7 +542,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="adminDelete"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handleClientPermissionChange}
                                                         checked={adminDelete}
                                                     />
                                                 }
@@ -526,15 +557,15 @@ const CreateUserPage = () => {
                                         justifyContent="flex-start"
                                         alignItems="center">
                                         <Grid xs={12} item={true}>
-                                            <Typography variant="body1">Funding</Typography>
+                                            <Typography variant="body1">Message</Typography>
                                         </Grid>
                                         <Grid xs={6} md="auto" item={true}>
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="fundingCreate"
-                                                        onChange={handlePermissionChange}
-                                                        checked={fundingCreate}
+                                                        name="messageCreate"
+                                                        onChange={handleMessagePermissionChange}
+                                                        checked={messageCreate}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Create</Typography>}
@@ -544,9 +575,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="fundingRead"
-                                                        onChange={handlePermissionChange}
-                                                        checked={fundingRead}
+                                                        name="messageRead"
+                                                        onChange={handleMessagePermissionChange}
+                                                        checked={messageRead}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Read</Typography>}
@@ -556,9 +587,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="fundingUpdate"
-                                                        onChange={handlePermissionChange}
-                                                        checked={fundingUpdate}
+                                                        name="messageUpdate"
+                                                        onChange={handleMessagePermissionChange}
+                                                        checked={messageUpdate}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Update</Typography>}
@@ -568,9 +599,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="fundingDelete"
-                                                        onChange={handlePermissionChange}
-                                                        checked={fundingDelete}
+                                                        name="messageDelete"
+                                                        onChange={handleMessagePermissionChange}
+                                                        checked={messageDelete}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Delete</Typography>}
@@ -591,7 +622,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="invitationCreate"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handleInvitationPermissionChange}
                                                         checked={invitationCreate}
                                                     />
                                                 }
@@ -603,7 +634,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="invitationRead"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handleInvitationPermissionChange}
                                                         checked={invitationRead}
                                                     />
                                                 }
@@ -615,7 +646,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="invitationUpdate"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handleInvitationPermissionChange}
                                                         checked={invitationUpdate}
                                                     />
                                                 }
@@ -627,7 +658,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="invitationDelete"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handleInvitationPermissionChange}
                                                         checked={invitationDelete}
                                                     />
                                                 }
@@ -649,7 +680,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="permissionCreate"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handlePermissionPermissionChange}
                                                         checked={permissionCreate}
                                                     />
                                                 }
@@ -661,7 +692,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="permissionRead"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handlePermissionPermissionChange}
                                                         checked={permissionRead}
                                                     />
                                                 }
@@ -673,7 +704,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="permissionUpdate"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handlePermissionPermissionChange}
                                                         checked={permissionUpdate}
                                                     />
                                                 }
@@ -685,7 +716,7 @@ const CreateUserPage = () => {
                                                 control={
                                                     <Checkbox
                                                         name="permissionDelete"
-                                                        onChange={handlePermissionChange}
+                                                        onChange={handlePermissionPermissionChange}
                                                         checked={permissionDelete}
                                                     />
                                                 }
@@ -700,15 +731,15 @@ const CreateUserPage = () => {
                                         justifyContent="flex-start"
                                         alignItems="center">
                                         <Grid xs={12} item={true}>
-                                            <Typography variant="body1">Request</Typography>
+                                            <Typography variant="body1">Quote</Typography>
                                         </Grid>
                                         <Grid xs={6} md="auto" item={true}>
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="permissionCreate"
-                                                        onChange={handlePermissionChange}
-                                                        checked={permissionCreate}
+                                                        name="quoteCreate"
+                                                        onChange={handleQuotePermissionChange}
+                                                        checked={quoteCreate}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Create</Typography>}
@@ -718,9 +749,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="permissionRead"
-                                                        onChange={handlePermissionChange}
-                                                        checked={permissionRead}
+                                                        name="quoteRead"
+                                                        onChange={handleQuotePermissionChange}
+                                                        checked={quoteRead}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Read</Typography>}
@@ -730,9 +761,9 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="permissionUpdate"
-                                                        onChange={handlePermissionChange}
-                                                        checked={permissionUpdate}
+                                                        name="quoteUpdate"
+                                                        onChange={handleQuotePermissionChange}
+                                                        checked={quoteUpdate}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Update</Typography>}
@@ -742,9 +773,241 @@ const CreateUserPage = () => {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
-                                                        name="permissionDelete"
-                                                        onChange={handlePermissionChange}
-                                                        checked={permissionDelete}
+                                                        name="quoteDelete"
+                                                        onChange={handleQuotePermissionChange}
+                                                        checked={quoteDelete}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Delete</Typography>}
+                                            />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid
+                                        spacing={1}
+                                        container={true}
+                                        justifyContent="flex-start"
+                                        alignItems="center">
+                                        <Grid xs={12} item={true}>
+                                            <Typography variant="body1">Value</Typography>
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="valueCreate"
+                                                        onChange={handleValuePermissionChange}
+                                                        checked={valueCreate}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Create</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="valueRead"
+                                                        onChange={handleValuePermissionChange}
+                                                        checked={valueRead}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Read</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="valueUpdate"
+                                                        onChange={handleValuePermissionChange}
+                                                        checked={valueUpdate}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Update</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="valueDelete"
+                                                        onChange={handleValuePermissionChange}
+                                                        checked={valueDelete}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Delete</Typography>}
+                                            />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid
+                                        spacing={1}
+                                        container={true}
+                                        justifyContent="flex-start"
+                                        alignItems="center">
+                                        <Grid xs={12} item={true}>
+                                            <Typography variant="body1">Service</Typography>
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="serviceCreate"
+                                                        onChange={handleServicePermissionChange}
+                                                        checked={serviceCreate}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Create</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="serviceRead"
+                                                        onChange={handleServicePermissionChange}
+                                                        checked={serviceRead}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Read</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="serviceUpdate"
+                                                        onChange={handleServicePermissionChange}
+                                                        checked={serviceUpdate}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Update</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="serviceDelete"
+                                                        onChange={handleServicePermissionChange}
+                                                        checked={serviceDelete}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Delete</Typography>}
+                                            />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid
+                                        spacing={1}
+                                        container={true}
+                                        justifyContent="flex-start"
+                                        alignItems="center">
+                                        <Grid xs={12} item={true}>
+                                            <Typography variant="body1">Team</Typography>
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="teamCreate"
+                                                        onChange={handleTeamPermissionChange}
+                                                        checked={teamCreate}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Create</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="teamRead"
+                                                        onChange={handleTeamPermissionChange}
+                                                        checked={teamRead}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Read</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="teamUpdate"
+                                                        onChange={handleTeamPermissionChange}
+                                                        checked={teamUpdate}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Update</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="teamDelete"
+                                                        onChange={handleTeamPermissionChange}
+                                                        checked={teamDelete}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Delete</Typography>}
+                                            />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid
+                                        spacing={1}
+                                        container={true}
+                                        justifyContent="flex-start"
+                                        alignItems="center">
+                                        <Grid xs={12} item={true}>
+                                            <Typography variant="body1">Testimonial</Typography>
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="testimonialCreate"
+                                                        onChange={handleTestimonialPermissionChange}
+                                                        checked={testimonialCreate}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Create</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="testimonialRead"
+                                                        onChange={handleTestimonialPermissionChange}
+                                                        checked={testimonialRead}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Read</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="testimonialUpdate"
+                                                        onChange={handleTestimonialPermissionChange}
+                                                        checked={testimonialUpdate}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2">Update</Typography>}
+                                            />
+                                        </Grid>
+                                        <Grid xs={6} md="auto" item={true}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="testimonialDelete"
+                                                        onChange={handleTestimonialPermissionChange}
+                                                        checked={quoteDelete}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Delete</Typography>}
@@ -764,4 +1027,4 @@ const CreateUserPage = () => {
     )
 }
 
-export default CreateUserPage;
+export default CreateAdminPage;

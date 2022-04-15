@@ -42,7 +42,6 @@ const AdminsPage = () => {
     });
 
     const {admins, adminError, adminLoading} = useSelector(selectAdmin);
-    const {token} = useSelector(selectAuth);
 
     const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
     const classes = useStyles();
@@ -86,6 +85,7 @@ const AdminsPage = () => {
         }
     }
 
+    const {token} = useSelector(selectAuth);
     const dispatch = useDispatch();
 
     useEffect(() => {

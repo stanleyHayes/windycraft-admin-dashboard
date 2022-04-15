@@ -26,6 +26,7 @@ import AdminsPage from "./pages/admins/admins-page";
 import CreateAdminPage from "./pages/admins/create-admin-page";
 import AdminDetailPage from "./pages/admins/admin-detail-page";
 import UpdateAdminPage from "./pages/admins/update-admin-page";
+import EditProfilePage from "./pages/account/edit-profile-page";
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
                 <Route exact={true} path="/auth/reset-password" element={<ResetPasswordPage/>}/>
                 <Route exact={true} path="/faqs" element={<FAQPage/>}/>
                 <Route exact={true} path="/profile" element={<ProfilePage/>}/>
+                <Route exact={true} path="/edit-profile" element={<EditProfilePage/>}/>
                 <Route exact={true} path="/messages" element={<MessagesPage/>}/>
                 <Route exact={true} path="/quotes" element={<QuotesPage/>}/>
                 <Route exact={true} path="/testimonials" element={<TestimonialsPage/>}/>

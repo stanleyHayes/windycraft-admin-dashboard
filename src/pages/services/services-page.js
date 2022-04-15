@@ -15,28 +15,22 @@ import {
     TableRow,
     Typography
 } from "@mui/material";
-import {Add, Delete, Edit, Visibility} from "@mui/icons-material";
+import {Add, Delete, Edit} from "@mui/icons-material";
 import {useEffect, useState} from "react";
 import AddServiceDialog from "../../components/dialogs/add/add-service-dialog";
 import {useDispatch, useSelector} from "react-redux";
 import {selectServices} from "../../redux/services/service-reducer";
 import moment from "moment";
-import {brown, green, red} from "@mui/material/colors";
-import {ADMIN_ACTION_CREATORS} from "../../redux/admins/admin-action-creators";
+import {brown,  red} from "@mui/material/colors";
 import {SERVICE_ACTION_CREATORS} from "../../redux/services/service-action-creators";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
+import UpdateServiceDialog from "../../components/dialogs/update/update-service-dialog";
 
 const ServicesPage = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedService, setSelectedService] = useState(null);
     const {services, serviceLoading, serviceError} = useSelector(selectServices);
-
-    const handleDeleteService = () => {
-    }
-
-    const handleAddServiceDialog = () => {
-
-    }
 
     const {token} = useSelector(selectAuth);
     const dispatch = useDispatch();
@@ -45,9 +39,15 @@ const ServicesPage = () => {
         dispatch(SERVICE_ACTION_CREATORS.getServices(token));
     }, [dispatch, token]);
 
+    const handleSelectedService = service => {
+
+    }
+
     return (
         <Layout>
+            {serviceLoading && <LinearProgress variant="query" color="secondary"/>}
             <Container sx={{py: 4, mt: {md: 8}}}>
+                {serviceError && <Alert severity="error"><AlertTitle>{serviceError}</AlertTitle></Alert>}
                 <Grid
                     spacing={2}
                     container={true}
@@ -78,18 +78,15 @@ const ServicesPage = () => {
                     </Grid>
                 </Grid>
                 <Divider variant="fullWidth" sx={{my: 2}}/>
-                {serviceLoading && <LinearProgress variant="query" color="secondary"/>}
-                {serviceError && <Alert severity="error"><AlertTitle>{serviceError}</AlertTitle></Alert>}
 
                 {services && services.length === 0 ? (
                     <Box>
-                        <TableContainer component={Paper} elevation={1}>
+                        <TableContainer component={Paper} elevation={0}>
                             <Table size="medium">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>#</TableCell>
                                         <TableCell>Title</TableCell>
-                                        <TableCell>Description</TableCell>
                                         <TableCell>Date</TableCell>
                                         <TableCell>Actions</TableCell>
                                     </TableRow>
@@ -105,13 +102,12 @@ const ServicesPage = () => {
 
 
                 ) : (
-                    <TableContainer component={Paper} elevation={1}>
+                    <TableContainer component={Paper}>
                         <Table size="medium">
                             <TableHead>
                                 <TableRow>
                                     <TableCell>#</TableCell>
                                     <TableCell>Title</TableCell>
-                                    <TableCell>Description</TableCell>
                                     <TableCell>Date</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
@@ -123,21 +119,29 @@ const ServicesPage = () => {
                                                 <TableRow hover={true} key={index}>
                                                     <TableCell>{index + 1}</TableCell>
                                                     <TableCell>{service.title}</TableCell>
-                                                    <TableCell>{service.description}</TableCell>
-                                                    <TableCell>{moment().fromNow()}</TableCell>
+                                                    <TableCell>{moment(service.createdAt).fromNow()}</TableCell>
                                                     <TableCell>
                                                         <Grid
+                                                            spacing={1}
                                                             container={true}
-                                                            justifyContent="space-between"
+                                                            justifyContent="flex-start"
                                                             alignItems="center">
                                                             <Grid item={true}>
-                                                                <Visibility sx={{color: green['400']}}/>
+                                                                <Edit
+                                                                    onClick={() => setSelectedService(service)}
+                                                                    sx={{
+                                                                        color: brown['400'],
+                                                                        fontSize: 20,
+                                                                        cursor: 'pointer'
+                                                                    }}/>
                                                             </Grid>
                                                             <Grid item={true}>
-                                                                <Edit sx={{color: brown['400']}}/>
-                                                            </Grid>
-                                                            <Grid item={true}>
-                                                                <Delete sx={{color: red['400']}}/>
+                                                                <Delete
+                                                                    sx={{
+                                                                        color: red['400'],
+                                                                        fontSize: 20,
+                                                                        cursor: 'pointer'
+                                                                    }}/>
                                                             </Grid>
                                                         </Grid>
                                                     </TableCell>
@@ -155,6 +159,15 @@ const ServicesPage = () => {
                     <AddServiceDialog
                         open={dialogOpen}
                         handleClose={() => setDialogOpen(false)}
+                    />
+                }
+
+                {
+                    Boolean(selectedService) &&
+                    <UpdateServiceDialog
+                        selectedService={selectedService}
+                        open={Boolean(selectedService)}
+                        handleClose={() => setSelectedService(null)}
                     />
                 }
             </Container>

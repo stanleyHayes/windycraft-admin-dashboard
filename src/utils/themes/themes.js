@@ -36,7 +36,7 @@ const lightTheme = createTheme({
         }
     },
     typography: {
-        fontFamily: 'GoogleSansRegular, EuclidCircularA,  PlusJakartaSansExtraBold'
+        fontFamily: 'Chakra Petch, GoogleSansRegular, EuclidCircularA,  PlusJakartaSansExtraBold'
     },
     shape: {
         borderRadius: 32
@@ -76,7 +76,7 @@ const darkTheme = createTheme({
         }
     },
     typography: {
-        fontFamily: 'GoogleSansRegular, EuclidCircularA, PlusJakartaSansExtraBold'
+        fontFamily: 'Chakra Petch, GoogleSansRegular, EuclidCircularA, PlusJakartaSansExtraBold'
     },
     shape: {
         borderRadius: 4

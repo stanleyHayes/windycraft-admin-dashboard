@@ -55,22 +55,27 @@ const DesktopHeader = () => {
                 <Grid container={true} alignItems="center" justifyContent="space-around">
                     <Grid item={true} lg={3}>
                         <Link to="/" className={classes.link}>
-                            <Typography sx={{color: 'text.primary'}} variant="h4">
-                                Windy Craft
+                            <Typography sx={{color: 'secondary.main'}} variant="h4">
+                                Super Craft GH
                             </Typography>
                         </Link>
                     </Grid>
 
-                    <Grid alignItems="center" container={true} lg={9} spacing={2} justifyContent="flex-end">
+                    <Grid
+                        alignItems="center"
+                        container={true}
+                        lg={9}
+                        spacing={2}
+                        justifyContent="flex-end">
                         <Grid item={true}>
                             <Avatar
                                 sx={{
                                     borderWidth: 2,
                                     borderStyle: 'solid',
                                     borderColor: 'secondary.main',
-                                    backgroundColor: 'primary.main'
+                                    backgroundColor: '#F9A34F40'
                                 }}
-                                variant="rounded">
+                                variant="circular">
                                 <Typography
                                     sx={{fontWeight: 'bold', color: 'secondary.main'}}
                                     variant="body1">
@@ -80,16 +85,22 @@ const DesktopHeader = () => {
                         </Grid>
                         <Grid item={true}>
                             <Button
+                                sx={{textTransform: 'capitalize'}}
                                 color="secondary"
                                 onClick={handleMenuClick}
                                 endIcon={<KeyboardArrowDown color="secondary"/>}
                                 size="large" variant="text">
                                 {authData.name}
                             </Button>
-                            <Menu open={menuOpen} onClose={handleMenuClose} anchorEl={anchorEl}>
+                            <Menu elevation={1} open={menuOpen} onClose={handleMenuClose} anchorEl={anchorEl}>
                                 <MenuItem>
                                     <Link to="/profile" className={classes.dropDownLink}>
-                                        <Button variant="text" size="large">Profile</Button>
+                                        <Button color="secondary" variant="text" size="large">Profile</Button>
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem>
+                                    <Link to="/change-password" className={classes.dropDownLink}>
+                                        <Button color="secondary" variant="text" size="large">Change Password</Button>
                                     </Link>
                                 </MenuItem>
                             </Menu>
@@ -102,6 +113,7 @@ const DesktopHeader = () => {
                                     variant="outlined"
                                     sx={{
                                         borderWidth: 2,
+                                        textTransform: 'capitalize'
                                     }}>
                                     Logout
                                 </Button>

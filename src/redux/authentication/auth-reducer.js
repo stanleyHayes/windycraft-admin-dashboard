@@ -1,7 +1,9 @@
 import {AUTH_ACTION_TYPES} from "./auth-action-types";
 
 const INITIAL_STATE = {
-    authData: {},
+    authData: {
+
+    },
     authLoading: false,
     authError: null,
     token: null

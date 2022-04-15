@@ -8,10 +8,10 @@ const createServiceRequest = () => {
     }
 }
 
-const createServiceSuccess = (service, message) => {
+const createServiceSuccess = (service) => {
     return {
         type: SERVICES_ACTION_TYPES.CREATE_SERVICE_SUCCESS,
-        payload: {message, service}
+        payload:  service
     }
 }
 
@@ -22,7 +22,7 @@ const createServiceFailure = message => {
     }
 }
 
-const createService = (service, token) => {
+const createService = (service, token, handleClose) => {
     return async dispatch => {
         try {
             dispatch(createServiceRequest());
@@ -36,6 +36,7 @@ const createService = (service, token) => {
             });
             const {message, data} = response.data;
             dispatch(createServiceSuccess(data, message));
+            handleClose();
         } catch (e) {
             const {message} = e.response.data;
             dispatch(createServiceFailure(message));
@@ -132,10 +133,10 @@ const updateServiceRequest = () => {
     }
 }
 
-const updateServiceSuccess = (service, message) => {
+const updateServiceSuccess = (service) => {
     return {
         type: SERVICES_ACTION_TYPES.UPDATE_SERVICE_SUCCESS,
-        payload: {message, service}
+        payload: service
     }
 }
 
@@ -146,7 +147,7 @@ const updateServiceFailure = message => {
     }
 }
 
-const updateService = (service, ID, token) => {
+const updateService = (service, ID, token, handleClose) => {
     return async dispatch => {
         try {
             dispatch(updateServiceRequest());
@@ -160,6 +161,7 @@ const updateService = (service, ID, token) => {
             });
             const {message, data} = response.data;
             dispatch(updateServiceSuccess(data, message));
+            handleClose();
         } catch (e) {
             const {message} = e.response.data;
             dispatch(updateServiceFailure(message));

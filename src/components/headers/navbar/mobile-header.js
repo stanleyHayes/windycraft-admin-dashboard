@@ -1,10 +1,12 @@
-import {Grid, Toolbar, Typography} from "@mui/material";
-import {Menu} from "@mui/icons-material";
+import {Avatar, Button, Grid, MenuItem, Toolbar, Typography, Menu} from "@mui/material";
+import {KeyboardArrowDown, Menu as MUIIcon} from "@mui/icons-material";
 import {UI_ACTION_CREATORS} from "../../../redux/ui/ui-action-creators";
 import {Link} from "react-router-dom";
 import {makeStyles} from "@mui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {selectAuth} from "../../../redux/authentication/auth-reducer";
+import {useState} from "react";
+import Feint from "../../shared/feint";
 
 const MobileHeader = () => {
 
@@ -12,6 +14,11 @@ const MobileHeader = () => {
         return {
             link: {
                 textDecoration: 'none'
+            },
+            dropDownLink: {
+                textDecoration: 'none',
+                display: 'block',
+                width: '100%'
             }
         }
     });
@@ -19,21 +26,69 @@ const MobileHeader = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleMenuClick = event => {
+        setMenuOpen(true);
+        setAnchorEl(event.currentTarget);
+    }
+
+    const handleMenuClose = () => {
+        setMenuOpen(false);
+        setAnchorEl(null);
+    }
+
 
     return (
         <Toolbar variant="regular">
-            <Grid container={true} alignItems="center" spacing={2}>
+            <Grid container={true} alignItems="center" justifyContent="space-between">
                 <Grid item={true}>
-                    <Menu
-                        sx={{color: 'secondary.main'}}
-                        onClick={() => dispatch(UI_ACTION_CREATORS.openSidebar())} />
+                    <MUIIcon
+                        sx={{
+                            borderRadius: 1,
+                            padding: 0.4,
+                            color: 'secondary.main',
+                            fontSize: 32,
+                            backgroundColor: '#F9A34F40'
+                        }}
+                        onClick={() => dispatch(UI_ACTION_CREATORS.openSidebar())}/>
                 </Grid>
                 <Grid item={true}>
                     <Link to="/" className={classes.link}>
                         <Typography sx={{color: 'secondary.main'}} variant="h6">
-                            Windy Craft
+                            Super Craft GH
                         </Typography>
                     </Link>
+                </Grid>
+                <Grid item={true}>
+                    <KeyboardArrowDown
+                        sx={{
+                            borderRadius: 1,
+                            padding: 0.4,
+                            color: 'secondary.main',
+                            fontSize: 32,
+                            backgroundColor: '#F9A34F40'
+                        }}
+                        onClick={handleMenuClick}
+                    />
+                    <Menu elevation={1} open={menuOpen} onClose={handleMenuClose} anchorEl={anchorEl}>
+                        <MenuItem>
+                            <Link to="/profile" className={classes.dropDownLink}>
+                                <Button color="secondary" variant="text" size="large">Profile</Button>
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to="/change-password" className={classes.dropDownLink}>
+                                <Button color="secondary" variant="text" size="large">Change Password</Button>
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Button color="secondary" variant="text" size="large">
+                                Logout
+                            </Button>
+                        </MenuItem>
+                    </Menu>
                 </Grid>
             </Grid>
         </Toolbar>

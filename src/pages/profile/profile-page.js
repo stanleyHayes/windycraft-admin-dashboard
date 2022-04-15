@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
 import moment from "moment";
 import {UTILS} from "../../utils/constants/utils";
+import {Link} from "react-router-dom";
 
 const ProfilePage = () => {
 
@@ -15,6 +16,9 @@ const ProfilePage = () => {
             container: {
                 paddingTop: 32,
                 paddingBottom: 32
+            },
+            link: {
+                textDecoration: 'none'
             }
         }
     });
@@ -31,6 +35,7 @@ const ProfilePage = () => {
                         <Typography variant="h4">Profile</Typography>
                     </Grid>
                     <Grid item={true} xs={12} md="auto">
+                        <Link to="/edit-profile" className={classes.link}>
                         <Button
                             sx={{
                                 fontWeight: 700,
@@ -45,6 +50,8 @@ const ProfilePage = () => {
                             size="large">
                             Update Profile
                         </Button>
+
+                        </Link>
                     </Grid>
                 </Grid>
 
@@ -55,8 +62,9 @@ const ProfilePage = () => {
                         <Card elevation={0} sx={{mb: 2}}>
                             <CardContent>
                                 <Stack mb={2} direction="row" justifyContent="center">
-                                    <Avatar sx={{width: 110, height: 110}}>
+                                    <Avatar sx={{width: 110, height: 110, backgroundColor: '#F9A34F40'}}>
                                         <Typography
+                                            sx={{color: 'secondary.main'}}
                                             variant="h4"
                                             align="center">
                                             {UTILS.getInitials(authData.name)}
@@ -117,7 +125,6 @@ const ProfilePage = () => {
                                                 icon={<Mail sx={{color: "primary.main"}}/>}
                                                 title="Email"
                                                 value={authData.email}
-
                                             />
                                         </Grid>
                                         <Grid item={true} xs={12} md={6}>
@@ -125,7 +132,6 @@ const ProfilePage = () => {
                                                 icon={<Call sx={{color: "primary.main"}}/>}
                                                 title="Phone"
                                                 value={authData.phone}
-
                                             />
                                         </Grid>
                                         <Grid item={true} xs={12} md={6}>
@@ -140,7 +146,6 @@ const ProfilePage = () => {
                                                 icon={<Person sx={{color: "primary.main"}}/>}
                                                 title="Username"
                                                 value={authData.username}
-
                                             />
                                         </Grid>
                                     </Grid>

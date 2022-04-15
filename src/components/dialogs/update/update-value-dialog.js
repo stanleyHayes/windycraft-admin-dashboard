@@ -16,11 +16,11 @@ import {selectValues} from "../../../redux/values/value-reducer";
 import {selectAuth} from "../../../redux/authentication/auth-reducer";
 import {VALUES_ACTION_CREATORS} from "../../../redux/values/value-action-creators";
 
-const AddValueDialog = ({open, handleClose}) => {
-    const [value, setValue] = useState({});
+const UpdateValueDialog = ({open, handleClose, selectedValue}) => {
+    const [value, setValue] = useState({...selectedValue});
     const [error, setError] = useState({});
 
-    const {title, description} = value;
+    const {title} = value;
 
     const handleValueChange = (event) => {
         setValue({...value, [event.target.name]: event.target.value});
@@ -35,13 +35,6 @@ const AddValueDialog = ({open, handleClose}) => {
             return;
         } else {
             setError({error, title: null});
-        }
-
-        if (!description) {
-            setError({error, description: 'Field Required'});
-            return;
-        } else {
-            setError({error, description: null});
         }
         dispatch(VALUES_ACTION_CREATORS.createValue(value, token, handleClose));
     }
@@ -58,7 +51,7 @@ const AddValueDialog = ({open, handleClose}) => {
                     align="center"
                     variant="h5"
                     gutterBottom={true}>
-                    New Value
+                    Update Value
                 </Typography>
                 <form>
                     <Stack direction="column" spacing={2}>
@@ -72,20 +65,6 @@ const AddValueDialog = ({open, handleClose}) => {
                             helperText={error.title}
                             onChange={handleValueChange}
                             value={title}
-                            size="medium"
-                            minRows={3}
-                        />
-
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Description"
-                            name="description"
-                            variant="outlined"
-                            error={Boolean(error.description)}
-                            helperText={error.description}
-                            onChange={handleValueChange}
-                            value={description}
                             size="medium"
                             minRows={3}
                             multiline={true}
@@ -128,7 +107,7 @@ const AddValueDialog = ({open, handleClose}) => {
                                     backgroundColor: 'secondary.dark',
                                 }
                             }}
-                            variant="outlined">Add</Button>
+                            variant="outlined">Update</Button>
                     </Grid>
                 </Grid>
             </DialogActions>
@@ -136,4 +115,4 @@ const AddValueDialog = ({open, handleClose}) => {
     )
 }
 
-export default AddValueDialog;
+export default UpdateValueDialog;

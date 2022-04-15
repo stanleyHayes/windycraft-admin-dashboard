@@ -12,83 +12,84 @@ import {
 } from "@mui/material";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectValues} from "../../../redux/values/value-reducer";
+import {FAQ_ACTION_CREATORS} from "../../../redux/faqs/faq-action-creators";
 import {selectAuth} from "../../../redux/authentication/auth-reducer";
-import {VALUES_ACTION_CREATORS} from "../../../redux/values/value-action-creators";
+import {selectFAQs} from "../../../redux/faqs/faq-reducer";
 
-const AddValueDialog = ({open, handleClose}) => {
-    const [value, setValue] = useState({});
+const UpdateFAQDialog = ({open, handleClose, selectedFAQ}) => {
+    const [faq, setFAQ] = useState({...selectedFAQ});
     const [error, setError] = useState({});
 
-    const {title, description} = value;
+    const {question, answer} = faq;
 
     const handleValueChange = (event) => {
-        setValue({...value, [event.target.name]: event.target.value});
+        setFAQ({...faq, [event.target.name]: event.target.value});
     }
 
     const dispatch = useDispatch();
     const {token} = useSelector(selectAuth);
-
     const handleAddClick = () => {
-        if (!title) {
-            setError({error, title: 'Field Required'});
+        if (!question) {
+            setError({error, question: 'Field Required'});
             return;
         } else {
-            setError({error, title: null});
+            setError({error, question: null});
         }
 
-        if (!description) {
-            setError({error, description: 'Field Required'});
+        if (!answer) {
+            setError({error, answer: 'Field Required'});
             return;
         } else {
-            setError({error, description: null});
+            setError({error, answer: null});
         }
-        dispatch(VALUES_ACTION_CREATORS.createValue(value, token, handleClose));
+        dispatch(FAQ_ACTION_CREATORS.updateFAQ(faq, faq._id, token, handleClose))
     }
 
-    const {valueError, valueLoading} = useSelector(selectValues);
+    const {faqLoading, faqError} = useSelector(selectFAQs);
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={false}>
-            {valueLoading && <LinearProgress variant="query" color="secondary"/>}
+            {faqLoading && <LinearProgress variant="query" color="secondary"/>}
+
             <DialogContent>
-                {valueError && <Alert severity="error"><AlertTitle>{valueError}</AlertTitle></Alert>}
+                {faqError && <Alert severity="error"><AlertTitle>{faqError}</AlertTitle></Alert>}
                 <Typography
                     sx={{textTransform: 'uppercase'}}
                     align="center"
                     variant="h5"
                     gutterBottom={true}>
-                    New Value
+                    New FAQ
                 </Typography>
                 <form>
                     <Stack direction="column" spacing={2}>
                         <TextField
                             fullWidth={true}
                             margin="none"
-                            label="Title"
-                            name="title"
+                            label="Question"
+                            name="question"
                             variant="outlined"
-                            error={Boolean(error.title)}
-                            helperText={error.title}
+                            error={Boolean(error.question)}
+                            helperText={error.question}
                             onChange={handleValueChange}
-                            value={title}
+                            value={question}
+                            minRows={2}
+                            multiline={true}
                             size="medium"
-                            minRows={3}
                         />
 
                         <TextField
                             fullWidth={true}
                             margin="none"
-                            label="Description"
-                            name="description"
+                            label="Answer"
+                            name="answer"
                             variant="outlined"
-                            error={Boolean(error.description)}
-                            helperText={error.description}
+                            error={Boolean(error.answer)}
+                            helperText={error.answer}
                             onChange={handleValueChange}
-                            value={description}
-                            size="medium"
-                            minRows={3}
+                            value={answer}
                             multiline={true}
+                            minRows={4}
+                            size="medium"
                         />
                     </Stack>
                 </form>
@@ -128,7 +129,7 @@ const AddValueDialog = ({open, handleClose}) => {
                                     backgroundColor: 'secondary.dark',
                                 }
                             }}
-                            variant="outlined">Add</Button>
+                            variant="outlined">Update</Button>
                     </Grid>
                 </Grid>
             </DialogActions>
@@ -136,4 +137,4 @@ const AddValueDialog = ({open, handleClose}) => {
     )
 }
 
-export default AddValueDialog;
+export default UpdateFAQDialog;

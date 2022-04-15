@@ -8,10 +8,10 @@ const createValueRequest = () => {
     }
 }
 
-const createValueSuccess = (value, message) => {
+const createValueSuccess = (value) => {
     return {
         type: VALUES_ACTION_TYPES.CREATE_VALUE_SUCCESS,
-        payload: {message, value}
+        payload: value
     }
 }
 
@@ -22,17 +22,21 @@ const createValueFailure = message => {
     }
 }
 
-const createValue = (value) => {
+const createValue = (value, token, handleClose) => {
     return async dispatch => {
         try {
             dispatch(createValueRequest());
             const response = await axios({
                 method: 'POST',
                 url: `${CONSTANTS.URL_BASE_SERVER}/values`,
-                data: value
+                data: value,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-            const {message, data} = response.data;
-            dispatch(createValueSuccess(data, message));
+            const {data} = response.data;
+            dispatch(createValueSuccess(data));
+            handleClose();
         } catch (e) {
             const {message} = e.response.data;
             dispatch(createValueFailure(message));
@@ -47,7 +51,7 @@ const getValueRequest = () => {
     }
 }
 
-const getValueSuccess = (value,message) => {
+const getValueSuccess = (value, message) => {
     return {
         type: VALUES_ACTION_TYPES.GET_VALUE_SUCCESS,
         payload: {message, value}
@@ -88,10 +92,10 @@ const getValuesRequest = () => {
     }
 }
 
-const getValuesSuccess = (values, count, message) => {
+const getValuesSuccess = (data, count) => {
     return {
         type: VALUES_ACTION_TYPES.GET_VALUES_SUCCESS,
-        payload: {message, values, count}
+        payload: {data, count}
     }
 }
 
@@ -113,8 +117,8 @@ const getValues = token => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getValuesSuccess(data, count, message));
+            const {data, count} = response.data;
+            dispatch(getValuesSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getValuesFailure(message));

@@ -6,28 +6,28 @@ import {
     DialogContent,
     Grid,
     LinearProgress,
-    Stack,
     TextField,
     Typography
 } from "@mui/material";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectValues} from "../../../redux/values/value-reducer";
+import {SERVICE_ACTION_CREATORS} from "../../../redux/services/service-action-creators";
 import {selectAuth} from "../../../redux/authentication/auth-reducer";
-import {VALUES_ACTION_CREATORS} from "../../../redux/values/value-action-creators";
+import {selectServices} from "../../../redux/services/service-reducer";
 
-const AddValueDialog = ({open, handleClose}) => {
-    const [value, setValue] = useState({});
+const UpdateServiceDialog = ({open, handleClose, selectedService}) => {
+    const [service, setService] = useState({...selectedService});
     const [error, setError] = useState({});
 
-    const {title, description} = value;
-
-    const handleValueChange = (event) => {
-        setValue({...value, [event.target.name]: event.target.value});
-    }
+    const {title} = service;
 
     const dispatch = useDispatch();
     const {token} = useSelector(selectAuth);
+    const {serviceLoading, serviceError} = useSelector(selectServices);
+
+    const handleServiceChange = (event) => {
+        setService({...service, [event.target.name]: event.target.value});
+    }
 
     const handleAddClick = () => {
         if (!title) {
@@ -36,61 +36,37 @@ const AddValueDialog = ({open, handleClose}) => {
         } else {
             setError({error, title: null});
         }
-
-        if (!description) {
-            setError({error, description: 'Field Required'});
-            return;
-        } else {
-            setError({error, description: null});
-        }
-        dispatch(VALUES_ACTION_CREATORS.createValue(value, token, handleClose));
+        dispatch(SERVICE_ACTION_CREATORS.updateService(service, service._id, token, handleClose));
     }
-
-    const {valueError, valueLoading} = useSelector(selectValues);
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={false}>
-            {valueLoading && <LinearProgress variant="query" color="secondary"/>}
+            {serviceLoading && <LinearProgress variant="query" color="secondary"/>}
             <DialogContent>
-                {valueError && <Alert severity="error"><AlertTitle>{valueError}</AlertTitle></Alert>}
+                {serviceError && <Alert severity="error"><AlertTitle>{serviceError}</AlertTitle></Alert>}
                 <Typography
+                    mb={2}
                     sx={{textTransform: 'uppercase'}}
                     align="center"
                     variant="h5"
                     gutterBottom={true}>
-                    New Value
+                    Update Service
                 </Typography>
-                <form>
-                    <Stack direction="column" spacing={2}>
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Title"
-                            name="title"
-                            variant="outlined"
-                            error={Boolean(error.title)}
-                            helperText={error.title}
-                            onChange={handleValueChange}
-                            value={title}
-                            size="medium"
-                            minRows={3}
-                        />
-
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Description"
-                            name="description"
-                            variant="outlined"
-                            error={Boolean(error.description)}
-                            helperText={error.description}
-                            onChange={handleValueChange}
-                            value={description}
-                            size="medium"
-                            minRows={3}
-                            multiline={true}
-                        />
-                    </Stack>
+                <form onSubmit={handleAddClick}>
+                    <TextField
+                        fullWidth={true}
+                        margin="none"
+                        label="Title"
+                        name="title"
+                        variant="outlined"
+                        error={Boolean(error.title)}
+                        helperText={error.title}
+                        onChange={handleServiceChange}
+                        value={title}
+                        size="medium"
+                        multiline={true}
+                        minRows={3}
+                    />
                 </form>
             </DialogContent>
             <DialogActions>
@@ -111,7 +87,7 @@ const AddValueDialog = ({open, handleClose}) => {
                             fullWidth={true}
                             onClick={handleClose}
                             size="large"
-                            variant="outlined">Close</Button>
+                            variant="outlined">Cancel</Button>
                     </Grid>
                     <Grid item={true} xs={12} md={6}>
                         <Button
@@ -128,7 +104,7 @@ const AddValueDialog = ({open, handleClose}) => {
                                     backgroundColor: 'secondary.dark',
                                 }
                             }}
-                            variant="outlined">Add</Button>
+                            variant="outlined">Update</Button>
                     </Grid>
                 </Grid>
             </DialogActions>
@@ -136,4 +112,4 @@ const AddValueDialog = ({open, handleClose}) => {
     )
 }
 
-export default AddValueDialog;
+export default UpdateServiceDialog;

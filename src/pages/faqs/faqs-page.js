@@ -19,18 +19,19 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectFAQs} from "../../redux/faqs/faq-reducer";
 import {FAQ_ACTION_CREATORS} from "../../redux/faqs/faq-action-creators";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
+import {brown, red} from "@mui/material/colors";
+import UpdateServiceDialog from "../../components/dialogs/update/update-service-dialog";
+import UpdateFAQDialog from "../../components/dialogs/update/update-faq-dialog";
 
 const FAQPage = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedFAQ, setSelectedFAQ] = useState(false);
     const {faqs, faqLoading, faqError} = useSelector(selectFAQs);
 
     const handleDeleteFAQ = () => {
     }
 
-    const handleAddFAQ = faq => {
-
-    }
 
     const {token} = useSelector(selectAuth);
 
@@ -84,9 +85,6 @@ const FAQPage = () => {
                 </Grid>
                 <Divider variant="fullWidth" sx={{my: 2}}/>
 
-                {faqLoading && <LinearProgress variant="query" color="secondary"/>}
-                {faqError && <Alert severity="error"><AlertTitle>{faqError}</AlertTitle></Alert>}
-
                 {faqs && faqs.length === 0 ? (
                     <Box>
                         <TableContainer component={Paper}>
@@ -130,16 +128,21 @@ const FAQPage = () => {
                                                             justifyContent="space-between"
                                                             alignItems="center">
                                                             <Grid item={true}>
-                                                                <Visibility
-
-                                                                />
-                                                            </Grid>
-                                                            <Grid item={true}>
-                                                                <Edit/>
+                                                                <Edit
+                                                                    onClick={() => setSelectedFAQ(faq)}
+                                                                    sx={{
+                                                                        color: brown['400'],
+                                                                        fontSize: 20,
+                                                                        cursor: 'pointer'
+                                                                    }}/>
                                                             </Grid>
                                                             <Grid item={true}>
                                                                 <Delete
-                                                                    onClick={() => handleDeleteFAQ(faq)}/>
+                                                                    sx={{
+                                                                        color: red['400'],
+                                                                        fontSize: 20,
+                                                                        cursor: 'pointer'
+                                                                    }}/>
                                                             </Grid>
                                                         </Grid>
                                                     </TableCell>
@@ -155,9 +158,17 @@ const FAQPage = () => {
                 {
                     dialogOpen &&
                     <AddFAQDialog
-                        handleValueAdd={handleAddFAQ}
                         open={dialogOpen}
                         handleClose={() => setDialogOpen(false)}
+                    />
+                }
+
+                {
+                    Boolean(selectedFAQ) &&
+                    <UpdateFAQDialog
+                        selectedFAQ={selectedFAQ}
+                        open={Boolean(selectedFAQ)}
+                        handleClose={() => setSelectedFAQ(null)}
                     />
                 }
             </Container>

@@ -36,13 +36,6 @@ import {TESTIMONIALS_ACTION_CREATORS} from "../../redux/testimonials/testimonial
 
 const TestimonialsPage = () => {
 
-    const handleDeleteService = () => {
-    }
-
-    const handleAddServiceDialog = () => {
-
-    }
-
     const [status, setStatus] = useState('ALL');
     const {testimonials, testimonialLoading, testimonialError} = useSelector(selectTestimonials);
 
@@ -93,7 +86,7 @@ const TestimonialsPage = () => {
 
                 {testimonials && testimonials.length === 0 ? (
                     <Box>
-                        <TableContainer component={Paper}>
+                        <TableContainer elevation={0} component={Paper}>
                             <Table size="medium">
                                 <TableHead>
                                     <TableRow>
@@ -113,7 +106,7 @@ const TestimonialsPage = () => {
                         </Box>
                     </Box>
                 ) : (
-                    <TableContainer component={Paper}>
+                    <TableContainer elevation={0} component={Paper}>
                         <Table size="medium">
                             <TableHead>
                                 <TableRow>

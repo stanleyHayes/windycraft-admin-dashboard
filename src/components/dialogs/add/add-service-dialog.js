@@ -1,40 +1,49 @@
-import {Button, Dialog, DialogActions, DialogContent, Grid, Stack, TextField, Typography} from "@mui/material";
+import {
+    Alert, AlertTitle,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    Grid,
+    LinearProgress,
+    TextField,
+    Typography
+} from "@mui/material";
 import {useState} from "react";
-import {Grade} from "@mui/icons-material";
+import {useDispatch, useSelector} from "react-redux";
+import {SERVICE_ACTION_CREATORS} from "../../../redux/services/service-action-creators";
+import {selectAuth} from "../../../redux/authentication/auth-reducer";
+import {selectServices} from "../../../redux/services/service-reducer";
 
-const AddServiceDialog = ({open, handleClose, handleServiceAdd}) => {
+const AddServiceDialog = ({open, handleClose}) => {
     const [service, setService] = useState({});
     const [error, setError] = useState({});
 
-    const {title, description} = service;
+    const {title} = service;
+
+    const dispatch = useDispatch();
+    const {token} = useSelector(selectAuth);
+    const {serviceLoading, serviceError} = useSelector(selectServices);
 
     const handleServiceChange = (event) => {
         setService({...service, [event.target.name]: event.target.value});
     }
 
     const handleAddClick = () => {
-        if(!title){
+        if (!title) {
             setError({error, title: 'Field Required'});
             return;
-        }else {
+        } else {
             setError({error, title: null});
         }
-
-        if(!description){
-            setError({error, description: 'Field Required'});
-            return;
-        }else {
-            setError({error, description: null});
-        }
-
-        handleServiceAdd(service)
-
-        handleClose();
+        dispatch(SERVICE_ACTION_CREATORS.createService(service, token, handleClose));
     }
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={false}>
+            {serviceLoading && <LinearProgress variant="query" color="secondary"/>}
             <DialogContent>
+                {serviceError && <Alert severity="error"><AlertTitle>{serviceError}</AlertTitle></Alert>}
                 <Typography
                     mb={2}
                     sx={{textTransform: 'uppercase'}}
@@ -43,36 +52,21 @@ const AddServiceDialog = ({open, handleClose, handleServiceAdd}) => {
                     gutterBottom={true}>
                     New Service
                 </Typography>
-                <form>
-                    <Stack direction="column" spacing={2}>
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Title"
-                            name="title"
-                            variant="outlined"
-                            error={Boolean(error.title)}
-                            helperText={error.title}
-                            onChange={handleServiceChange}
-                            value={title}
-                            size="small"
-                        />
-
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Description"
-                            name="description"
-                            variant="outlined"
-                            error={Boolean(error.description)}
-                            helperText={error.description}
-                            onChange={handleServiceChange}
-                            value={description}
-                            multiline={true}
-                            minRows={4}
-                            size="small"
-                        />
-                    </Stack>
+                <form onSubmit={handleAddClick}>
+                    <TextField
+                        fullWidth={true}
+                        margin="none"
+                        label="Title"
+                        name="title"
+                        variant="outlined"
+                        error={Boolean(error.title)}
+                        helperText={error.title}
+                        onChange={handleServiceChange}
+                        value={title}
+                        size="medium"
+                        multiline={true}
+                        minRows={3}
+                    />
                 </form>
             </DialogContent>
             <DialogActions>
@@ -97,6 +91,7 @@ const AddServiceDialog = ({open, handleClose, handleServiceAdd}) => {
                     </Grid>
                     <Grid item={true} xs={12} md={6}>
                         <Button
+                            onSubmit={handleAddClick}
                             fullWidth={true}
                             onClick={handleAddClick}
                             size="large"

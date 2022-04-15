@@ -147,7 +147,7 @@ const updateFAQFailure = message => {
     }
 }
 
-const updateFAQ = (faq, ID, token) => {
+const updateFAQ = (faq, ID, token, handleClose) => {
     return async dispatch => {
         try {
             dispatch(updateFAQRequest());
@@ -161,6 +161,7 @@ const updateFAQ = (faq, ID, token) => {
             });
             const {message, data} = response.data;
             dispatch(updateFAQSuccess(data, message));
+            handleClose();
         } catch (e) {
             const {message} = e.response.data;
             dispatch(updateFAQFailure(message));

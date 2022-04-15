@@ -51,7 +51,7 @@ const MessagesPage = () => {
     return (
         <Layout>
             <Container
-                sx={{py: 4, mt: {md: 8}}}>
+                sx={{py: 4}}>
                 <Grid
                     container={true}
                     justifyContent="space-between"
@@ -85,7 +85,7 @@ const MessagesPage = () => {
 
                 {messages && messages.length === 0 ? (
                     <Box>
-                        <TableContainer component={Paper}>
+                        <TableContainer elevation={0} component={Paper}>
                             <Table size="medium">
                                 <TableHead>
                                     <TableRow>
@@ -106,7 +106,7 @@ const MessagesPage = () => {
                         </Box>
                     </Box>
                 ) : (
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} elevation={0}>
                         <Table size="medium">
                             <TableHead>
                                 <TableRow>

@@ -32,6 +32,29 @@ const serviceReducer = (state = INITIAL_STATE, action) => {
                 serviceError: action.payload,
                 serviceLoading: false
             }
+
+        case SERVICES_ACTION_TYPES.CREATE_SERVICE_REQUEST:
+            return {
+                ...state,
+                serviceError: null,
+                serviceLoading: true
+            }
+
+        case SERVICES_ACTION_TYPES.CREATE_SERVICE_SUCCESS:
+            return {
+                ...state,
+                serviceError: null,
+                serviceLoading: false,
+                services: [...state.services, action.payload],
+                totalServices: state.services.length + 1
+            }
+
+        case SERVICES_ACTION_TYPES.CREATE_SERVICE_FAIL:
+            return {
+                ...state,
+                serviceError: action.payload,
+                serviceLoading: false
+            }
         default:
             return state;
     }
