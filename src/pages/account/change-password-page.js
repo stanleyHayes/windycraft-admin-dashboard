@@ -1,7 +1,6 @@
-import {Box, Button, Card, CardContent, Container, Divider, Grid, Stack, TextField, Typography} from "@mui/material";
+import { Button, Card, CardContent, Container, Divider, Grid, Stack, TextField, Typography} from "@mui/material";
 import {useState} from "react";
 import Layout from "../../components/layout/layout";
-import {makeStyles} from "@mui/styles";
 
 const ChangePasswordPage = () => {
 

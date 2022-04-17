@@ -9,7 +9,6 @@ import {
     Stack, TextField,
     Typography
 } from "@mui/material";
-import {makeStyles} from "@mui/styles";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
@@ -119,7 +118,6 @@ const EditProfile = () => {
                                         placeholder="Enter username"
                                         onChange={handleUserChange}
                                     />
-
 
                                     <TextField
                                         label="Phone"

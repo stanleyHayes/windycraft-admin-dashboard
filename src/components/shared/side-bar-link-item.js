@@ -31,8 +31,8 @@ const SideBarLinkItem = ({path, icon, label, activePath}) => {
                 sx={{
                     backgroundColor: activePath === path ? 'rgba(249,163,79,0.25)' : 'primary.main',
                     borderRightWidth: activePath === path ? 5 : 0,
-                    borderRightColor: activePath === path && 'secondary.main',
-                    borderRightStyle: activePath === path ? 'solid' : 'none',
+                    borderRightColor: activePath === path ? 'secondary.main': false,
+                    borderRightStyle: activePath === path ? 'solid' : false,
                     padding: 0.5
                 }}
                 container={true} justifyContent="space-between" alignItems="center">

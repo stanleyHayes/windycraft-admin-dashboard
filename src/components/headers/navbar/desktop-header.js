@@ -92,7 +92,11 @@ const DesktopHeader = () => {
                                 size="large" variant="text">
                                 {authData.name}
                             </Button>
-                            <Menu elevation={1} open={menuOpen} onClose={handleMenuClose} anchorEl={anchorEl}>
+                            <Menu
+                                elevation={1}
+                                open={menuOpen}
+                                onClose={handleMenuClose}
+                                anchorEl={anchorEl}>
                                 <MenuItem>
                                     <Link to="/profile" className={classes.dropDownLink}>
                                         <Button color="secondary" variant="text" size="large">Profile</Button>
