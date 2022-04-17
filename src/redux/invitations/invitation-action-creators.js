@@ -301,6 +301,7 @@ const acceptInvitation = (invitation, ID) => {
             });
             const {message, data} = response.data;
             dispatch(acceptInvitationSuccess(data, message));
+            dispatch(nextPage());
         } catch (e) {
             const {message} = e.response.data;
             dispatch(acceptInvitationFailure(message));
@@ -337,8 +338,8 @@ const rejectInvitation = (ID) => {
                 method: 'PUT',
                 url: `${CONSTANTS.URL_BASE_SERVER}/invitations/${ID}/reject`,
             });
-            const {message, data} = response.data;
-            dispatch(rejectInvitationSuccess(data, message));
+            const {data} = response.data;
+            dispatch(rejectInvitationSuccess(data));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(rejectInvitationFailure(message));

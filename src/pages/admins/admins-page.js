@@ -196,7 +196,7 @@ const AdminsPage = () => {
                 {
                     admins && admins.length > 0 &&
                     <TableContainer component={Paper} elevation={0}>
-                        <Table sx={{minWidth: 650}} size="small" aria-label="transactions table">
+                        <Table sx={{minWidth: 650}} size="medium" aria-label="transactions table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="center">#</TableCell>
@@ -266,7 +266,7 @@ const AdminsPage = () => {
                     (
                         <Box my={4}>
                             <TableContainer component={Paper} elevation={0}>
-                                <Table size="small" sx={{minWidth: 650}} aria-label="admins table">
+                                <Table size="medium" sx={{minWidth: 650}} aria-label="admins table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="center">#</TableCell>

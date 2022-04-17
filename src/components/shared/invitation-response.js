@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectInvitations} from "../../redux/invitations/invitation-reducer";
 import {INVITATION_ACTION_CREATORS} from "../../redux/invitations/invitation-action-creators";
 
-const InvitationResponse = () => {
+const InvitationResponse = ({invitationID}) => {
 
    const dispatch = useDispatch();
 
@@ -43,7 +43,7 @@ const InvitationResponse = () => {
                                 }
                             }}
                             fullWidth={true}
-                            onClick={handleRejectClick}
+                            onClick={() => dispatch(INVITATION_ACTION_CREATORS.rejectInvitation(invitationID))}
                             size="large"
                             variant="outlined">Reject</Button>
                     </Grid>

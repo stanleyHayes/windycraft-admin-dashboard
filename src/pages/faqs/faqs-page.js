@@ -1,15 +1,20 @@
 import Layout from "../../components/layout/layout";
 import {
-    Alert, AlertTitle, Box,
+    Alert,
+    AlertTitle,
+    Box,
     Button,
     Container,
     Divider,
-    Grid, LinearProgress,
+    Grid,
+    LinearProgress,
     Paper,
     Table,
     TableBody,
-    TableCell, TableContainer,
-    TableHead, TableRow,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
     Typography
 } from "@mui/material";
 import {Add, Delete, Edit} from "@mui/icons-material";
@@ -28,10 +33,6 @@ const FAQPage = () => {
     const [selectedFAQ, setSelectedFAQ] = useState(false);
     const {faqs, faqLoading, faqError} = useSelector(selectFAQs);
 
-    const handleDeleteFAQ = () => {
-
-    }
-
 
     const {token} = useSelector(selectAuth);
 
@@ -42,21 +43,15 @@ const FAQPage = () => {
     }, [dispatch, token]);
 
 
-    return (
-        <Layout>
+    return (<Layout>
             {faqLoading && <LinearProgress color="secondary" variant="query"/>}
             <Container sx={{py: 4, mt: {md: 8}}}>
-                {
-                    faqError &&
-                    (
-                        <Alert severity="error" variant="standard">
-                            <AlertTitle>Error</AlertTitle>
-                            <Typography variant="h6" align="center">
-                                {faqError}
-                            </Typography>
-                        </Alert>
-                    )
-                }
+                {faqError && (<Alert severity="error" variant="standard">
+                        <AlertTitle>Error</AlertTitle>
+                        <Typography variant="h6" align="center">
+                            {faqError}
+                        </Typography>
+                    </Alert>)}
                 <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md="auto">
                         <Typography variant="h4">FAQ</Typography>
@@ -70,8 +65,7 @@ const FAQPage = () => {
                                 color: 'primary.main',
                                 fontWeight: 700,
                                 '&:hover': {
-                                    backgroundColor: 'secondary.dark',
-                                    color: 'primary.main'
+                                    backgroundColor: 'secondary.dark', color: 'primary.main'
                                 }
                             }}
                             onClick={() => setDialogOpen(true)}
@@ -85,8 +79,7 @@ const FAQPage = () => {
                 </Grid>
                 <Divider variant="fullWidth" sx={{my: 2}}/>
 
-                {faqs && faqs.length === 0 ? (
-                    <Box>
+                {faqs && faqs.length === 0 ? (<Box>
                         <TableContainer component={Paper}>
                             <Table size="medium">
                                 <TableHead>
@@ -104,9 +97,7 @@ const FAQPage = () => {
                                 No FAQs available
                             </Typography>
                         </Box>
-                    </Box>
-                ) : (
-                    <TableContainer component={Paper}>
+                    </Box>) : (<TableContainer component={Paper}>
                         <Table size="medium">
                             <TableHead>
                                 <TableRow>
@@ -117,65 +108,49 @@ const FAQPage = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {
-                                    faqs && faqs.map((faq, index) => {
-                                            return (
-                                                <TableRow hover={true} key={index}>
-                                                    <TableCell>{index + 1}</TableCell>
-                                                    <TableCell>{faq.question}</TableCell>
-                                                    <TableCell>{faq.answer}</TableCell>
-                                                    <TableCell>
-                                                        <Grid
-                                                            container={true}
-                                                            justifyContent="space-between"
-                                                            alignItems="center">
-                                                            <Grid item={true}>
-                                                                <Edit
-                                                                    onClick={() => setSelectedFAQ(faq)}
-                                                                    sx={{
-                                                                        color: brown['400'],
-                                                                        fontSize: 20,
-                                                                        cursor: 'pointer'
-                                                                    }}/>
-                                                            </Grid>
-                                                            <Grid item={true}>
-                                                                <Delete
-                                                                    sx={{
-                                                                        color: red['400'],
-                                                                        fontSize: 20,
-                                                                        cursor: 'pointer'
-                                                                    }}/>
-                                                            </Grid>
-                                                        </Grid>
-                                                    </TableCell>
-                                                </TableRow>
-                                            )
-                                        }
-                                    )}
+                                {faqs && faqs.map((faq, index) => {
+                                    return (<TableRow hover={true} key={index}>
+                                            <TableCell>{index + 1}</TableCell>
+                                            <TableCell>{faq.question}</TableCell>
+                                            <TableCell>{faq.answer}</TableCell>
+                                            <TableCell>
+                                                <Grid
+                                                    container={true}
+                                                    justifyContent="space-between"
+                                                    alignItems="center">
+                                                    <Grid item={true}>
+                                                        <Edit
+                                                            onClick={() => setSelectedFAQ(faq)}
+                                                            sx={{
+                                                                color: brown['400'], fontSize: 20, cursor: 'pointer'
+                                                            }}/>
+                                                    </Grid>
+                                                    <Grid item={true}>
+                                                        <Delete
+                                                            sx={{
+                                                                color: red['400'], fontSize: 20, cursor: 'pointer'
+                                                            }}/>
+                                                    </Grid>
+                                                </Grid>
+                                            </TableCell>
+                                        </TableRow>)
+                                })}
                             </TableBody>
                         </Table>
-                    </TableContainer>
-                )}
+                    </TableContainer>)}
 
-                {
-                    dialogOpen &&
-                    <AddFAQDialog
-                        open={dialogOpen}
-                        handleClose={() => setDialogOpen(false)}
-                    />
-                }
+                {dialogOpen && <AddFAQDialog
+                    open={dialogOpen}
+                    handleClose={() => setDialogOpen(false)}
+                />}
 
-                {
-                    Boolean(selectedFAQ) &&
-                    <UpdateFAQDialog
-                        selectedFAQ={selectedFAQ}
-                        open={Boolean(selectedFAQ)}
-                        handleClose={() => setSelectedFAQ(null)}
-                    />
-                }
+                {Boolean(selectedFAQ) && <UpdateFAQDialog
+                    selectedFAQ={selectedFAQ}
+                    open={Boolean(selectedFAQ)}
+                    handleClose={() => setSelectedFAQ(null)}
+                />}
             </Container>
-        </Layout>
-    )
+        </Layout>)
 }
 
 export default FAQPage;

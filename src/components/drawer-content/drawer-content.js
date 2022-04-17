@@ -1,4 +1,4 @@
-import {Button, Container, Divider, Grid, Stack} from "@mui/material";
+import {Button, Container, Grid, Stack} from "@mui/material";
 import {
     Close,
     Dashboard,
@@ -144,6 +144,24 @@ const DrawerContent = () => {
 
                 <SideBarLinkItem
                     icon={
+                        activePath === '/invitations' ?
+                            <Group sx={{
+                                color: "text.primary",
+                                borderRadius: 1,
+                                padding: 0.4,
+                                width: 24,
+                                height: 24,
+                                backgroundColor: '#F9A34F40'
+                            }}/> :
+                            <GroupOutlined sx={{color: 'white'}}/>
+                    }
+                    label="Invitations"
+                    path="/invitations"
+                    activePath={activePath}
+                />
+
+                <SideBarLinkItem
+                    icon={
                         activePath === '/values' ?
                             <Group sx={{
                                 color: "text.primary",
@@ -200,13 +218,13 @@ const DrawerContent = () => {
                         activePath === '/' ?
                             <MultipleStop
                                 sx={{
-                                color: "text.primary",
-                                borderRadius: 1,
-                                padding: 0.4,
-                                width: 24,
-                                height: 24,
-                                backgroundColor: '#F9A34F40'
-                            }}/> :
+                                    color: "text.primary",
+                                    borderRadius: 1,
+                                    padding: 0.4,
+                                    width: 24,
+                                    height: 24,
+                                    backgroundColor: '#F9A34F40'
+                                }}/> :
                             <MultipleStopOutlined sx={{color: 'white'}}/>
                     }
                     label="Team"

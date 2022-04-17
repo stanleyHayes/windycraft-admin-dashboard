@@ -24,7 +24,7 @@ const InvitationResponsePage = () => {
             case 1:
                 return <InvitationForm invitationID={invitationID} code={code}/>;
             case 2:
-                return <InvitationAcknowledgment/>;
+                return <InvitationAcknowledgment code={code}/>;
             default:
                 return <InvitationResponse invitationID={invitationID}/>;
         }

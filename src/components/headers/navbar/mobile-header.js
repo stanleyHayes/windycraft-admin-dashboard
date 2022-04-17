@@ -1,12 +1,10 @@
-import {Avatar, Button, Grid, MenuItem, Toolbar, Typography, Menu} from "@mui/material";
+import {Button, Grid, MenuItem, Toolbar, Typography, Menu} from "@mui/material";
 import {ExitToApp, Face, KeyboardArrowDown, LockOutlined, Menu as MUIIcon} from "@mui/icons-material";
 import {UI_ACTION_CREATORS} from "../../../redux/ui/ui-action-creators";
 import {Link} from "react-router-dom";
 import {makeStyles} from "@mui/styles";
-import {useDispatch, useSelector} from "react-redux";
-import {selectAuth} from "../../../redux/authentication/auth-reducer";
+import {useDispatch} from "react-redux";
 import {useState} from "react";
-import Feint from "../../shared/feint";
 
 const MobileHeader = () => {
 

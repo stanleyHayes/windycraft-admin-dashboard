@@ -1,7 +1,7 @@
 import {
     Alert, AlertTitle,
     Box,
-    Button, Card, CardContent,
+    Button, Card, CardContent, CircularProgress,
     FormControl, Grid,
     IconButton, InputAdornment, InputLabel, LinearProgress, OutlinedInput,
     Stack,
@@ -14,16 +14,17 @@ import {selectInvitations} from "../../redux/invitations/invitation-reducer";
 import ImageUploader from "react-images-upload";
 import {INVITATION_ACTION_CREATORS} from "../../redux/invitations/invitation-action-creators";
 import validator from "validator/es";
+import {LoadingButton} from "@mui/lab";
 
-const InvitationForm = () => {
+const InvitationForm = ({code, invitationID}) => {
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({code});
     const [error, setError] = useState({});
 
     const [visiblePassword, setVisiblePassword] = useState(false);
     const [visibleConfirmPassword, setVisibleConfirmPassword] = useState(false);
     const {invitationError, invitationLoading} = useSelector(selectInvitations);
-    const {email, phone, emergencyPhoneNumber, username, name, password, code, image, confirmPassword} = user;
+    const {email, phone, emergencyPhoneNumber, username, name, password,  image, confirmPassword} = user;
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -33,7 +34,7 @@ const InvitationForm = () => {
         event.preventDefault();
 
         if (!image) {
-            setError({error, image: 'Field required'});
+            setError({error, image: 'Select image'});
             return;
         } else {
             setError({error, image: null});
@@ -132,6 +133,8 @@ const InvitationForm = () => {
         } else {
             setError({error, confirmPassword: null, password: null});
         }
+
+        dispatch(INVITATION_ACTION_CREATORS.acceptInvitation({...user}, invitationID));
     }
 
     const handleImageSelect = (files, pictures) => {
@@ -144,6 +147,13 @@ const InvitationForm = () => {
         <Card elevation={1}>
             {invitationLoading && <LinearProgress variant="query" color="secondary"/>}
             <CardContent>
+                {
+                    error.image && (
+                        <Alert sx={{my: 3}} severity="error" color="error" variant="standard">
+                            <AlertTitle>{error.image}</AlertTitle>
+                        </Alert>
+                    )
+                }
                 {
                     invitationError && (
                         <Alert sx={{my: 3}} severity="error" color="error" variant="standard">
@@ -251,6 +261,7 @@ const InvitationForm = () => {
                         required={true}
                         variant="outlined"
                         value={code}
+                        disabled={true}
                         error={Boolean(error.code)}
                         helperText={error.code}
                         type="number"
@@ -342,6 +353,34 @@ const InvitationForm = () => {
 
                 <Grid container={true} spacing={1} alignItems="center">
                     <Grid item={true} xs={12} md={6}>
+                        <LoadingButton
+                            sx={{
+                                fontWeight: 'bold',
+                                textTransform: 'capitalize',
+                                backgroundColor: 'primary.main',
+                                color: 'secondary.main',
+                                '&:hover': {
+                                    color: 'secondary.main'
+                                },
+                                '&:focus': {
+                                    color: 'secondary.main'
+                                },
+                                '&:active': {
+                                    color: 'secondary.main'
+                                },
+                            }}
+                            size="large"
+                            startIcon={invitationLoading && <CircularProgress color="secondary" size="small" />}
+                            onSubmit={handleSubmit}
+                            onClick={handleSubmit}
+                            fullWidth={true}
+                            disableElevation={true}
+                            disabled={invitationLoading}
+                            variant="outlined">
+                            Accept Invitation
+                        </LoadingButton>
+                    </Grid>
+                    <Grid item={true} xs={12} md={6}>
                         <Button
                             sx={{
                                 textTransform: 'capitalize',
@@ -360,33 +399,6 @@ const InvitationForm = () => {
                             onClick={() => dispatch(INVITATION_ACTION_CREATORS.previousPage())}
                             size="large"
                             variant="outlined">Previous</Button>
-                    </Grid>
-                    <Grid item={true} xs={12} md={6}>
-                        <Button
-                            sx={{
-                                fontWeight: 'bold',
-                                textTransform: 'capitalize',
-                                backgroundColor: 'primary.main',
-                                color: 'secondary.main',
-                                '&:hover': {
-                                    color: 'secondary.main'
-                                },
-                                '&:focus': {
-                                    color: 'secondary.main'
-                                },
-                                '&:active': {
-                                    color: 'secondary.main'
-                                },
-                            }}
-                            size="large"
-                            onSubmit={handleSubmit}
-                            onClick={handleSubmit}
-                            fullWidth={true}
-                            disableElevation={true}
-                            disabled={invitationLoading}
-                            variant="outlined">
-                            Accept Invitation
-                        </Button>
                     </Grid>
                 </Grid>
 

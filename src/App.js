@@ -54,7 +54,7 @@ function App() {
                 <Route exact={true} path="/team" element={<TeamPage/>}/>
                 <Route exact={true} path="/clients" element={<ClientsPage/>}/>
                 <Route exact={true} path="/invitations" element={<InvitationsPage/>}/>
-                <Route exact={true} path="/invitations/:invitationID/:otp" element={<InvitationResponsePage/>}/>
+                <Route exact={true} path="/invitations/:invitationID/:code" element={<InvitationResponsePage/>}/>
                 <Route exact={true} path="/admins" element={<AdminsPage/>}/>
                 <Route exact={true} path="/admin/new" element={<CreateAdminPage/>}/>
                 <Route exact={true} path="/admins/:adminID" element={<AdminDetailPage/>}/>

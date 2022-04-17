@@ -75,6 +75,82 @@ const invitationReducer = (state = INITIAL_STATE, action) => {
                 invitationLoading: false
             }
 
+
+        case INVITATIONS_ACTION_TYPES.REJECT_INVITATION_REQUEST:
+            return {
+                ...state,
+                invitationError: null,
+                invitationLoading: true
+            }
+
+        case INVITATIONS_ACTION_TYPES.REJECT_INVITATION_SUCCESS:
+            return {
+                ...state,
+                invitationError: null,
+                invitationLoading: false,
+                invitations: [...state.invitations.map(invitation => {
+                    if (invitation._id === action.payload._id) return {...action.payload}
+                    return invitation;
+                })]
+            }
+
+        case INVITATIONS_ACTION_TYPES.REJECT_INVITATION_FAIL:
+            return {
+                ...state,
+                invitationError: action.payload,
+                invitationLoading: false
+            }
+
+        case INVITATIONS_ACTION_TYPES.ACCEPT_INVITATION_REQUEST:
+            return {
+                ...state,
+                invitationError: null,
+                invitationLoading: true
+            }
+
+        case INVITATIONS_ACTION_TYPES.ACCEPT_INVITATION_SUCCESS:
+            return {
+                ...state,
+                invitationError: null,
+                invitationLoading: false,
+                invitations: [...state.invitations.map(invitation => {
+                    if (invitation._id === action.payload._id) return {...action.payload}
+                    return invitation;
+                })]
+            }
+
+        case INVITATIONS_ACTION_TYPES.ACCEPT_INVITATION_FAIL:
+            return {
+                ...state,
+                invitationError: action.payload,
+                invitationLoading: false
+            }
+
+
+        case INVITATIONS_ACTION_TYPES.REVOKE_INVITATION_REQUEST:
+            return {
+                ...state,
+                invitationError: null,
+                invitationLoading: true
+            }
+
+        case INVITATIONS_ACTION_TYPES.REVOKE_INVITATION_SUCCESS:
+            return {
+                ...state,
+                invitationError: null,
+                invitationLoading: false,
+                invitations: [...state.invitations.map(invitation => {
+                    if (invitation._id === action.payload._id) return {...action.payload}
+                    return invitation;
+                })]
+            }
+
+        case INVITATIONS_ACTION_TYPES.REVOKE_INVITATION_FAIL:
+            return {
+                ...state,
+                invitationError: action.payload,
+                invitationLoading: false
+            }
         default:
             return state;
     }
