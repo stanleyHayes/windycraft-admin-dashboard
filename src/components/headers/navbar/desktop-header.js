@@ -62,6 +62,7 @@ const DesktopHeader = () => {
                     </Grid>
 
                     <Grid
+                        item={true}
                         alignItems="center"
                         container={true}
                         lg={9}

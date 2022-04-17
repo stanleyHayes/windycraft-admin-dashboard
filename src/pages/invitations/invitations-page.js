@@ -18,13 +18,11 @@ import {
 } from "@mui/material";
 import {Add, Delete, Edit} from "@mui/icons-material";
 import {useEffect, useState} from "react";
-import AddFAQDialog from "../../components/dialogs/add/add-faq-dialog";
 import {useDispatch, useSelector} from "react-redux";
 import {selectInvitations} from "../../redux/invitations/invitation-reducer";
 import moment from "moment";
 import InviteAdminDialog from "../../components/dialogs/new/admin-invitation-dialog";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
-import {FAQ_ACTION_CREATORS} from "../../redux/faqs/faq-action-creators";
 import {INVITATION_ACTION_CREATORS} from "../../redux/invitations/invitation-action-creators";
 
 const InvitationsPage = () => {
@@ -32,11 +30,7 @@ const InvitationsPage = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const {invitations, invitationLoading, invitationError} = useSelector(selectInvitations);
 
-    const handleDeleteFAQ = () => {
-    }
-
-    const handleAddFAQ = faq => {
-
+    const handleDeleteInvitation = () => {
     }
 
     const {token} = useSelector(selectAuth);
@@ -125,7 +119,7 @@ const InvitationsPage = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {invitations.map((invitation, index) => {
+                                {invitations && invitations.map((invitation, index) => {
                                         return (
                                             <TableRow hover={true} key={index}>
                                                 <TableCell>{index + 1}</TableCell>
@@ -145,7 +139,7 @@ const InvitationsPage = () => {
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete
-                                                                onClick={() => handleDeleteFAQ(invitation)}/>
+                                                                onClick={() => handleDeleteInvitation(invitation)}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>

@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     invitations: [],
     invitationLoading: false,
     invitationError: null,
-    totalInvitations: 0
+    totalInvitations: 0,
+    page: 0
 };
 
 const invitationReducer = (state = INITIAL_STATE, action) => {
@@ -27,6 +28,47 @@ const invitationReducer = (state = INITIAL_STATE, action) => {
             }
 
         case INVITATIONS_ACTION_TYPES.GET_INVITATIONS_FAIL:
+            return {
+                ...state,
+                invitationError: action.payload,
+                invitationLoading: false
+            }
+
+        case INVITATIONS_ACTION_TYPES.PREVIOUS_PAGE:
+            return {
+                ...state,
+                page: state.page - 1
+            }
+
+        case INVITATIONS_ACTION_TYPES.NEXT_PAGE:
+            return {
+                ...state,
+                page: state.page + 1
+            }
+        case INVITATIONS_ACTION_TYPES.GO_TO_PAGE:
+            return {
+                ...state,
+                page: action.payload
+            }
+
+
+        case INVITATIONS_ACTION_TYPES.CREATE_INVITATION_REQUEST:
+            return {
+                ...state,
+                invitationError: null,
+                invitationLoading: true
+            }
+
+        case INVITATIONS_ACTION_TYPES.CREATE_INVITATION_SUCCESS:
+            return {
+                ...state,
+                invitationError: null,
+                invitationLoading: false,
+                invitations: [...state.invitations, action.payload],
+                totalInvitations: state.totalInvitations + 1
+            }
+
+        case INVITATIONS_ACTION_TYPES.CREATE_INVITATION_FAIL:
             return {
                 ...state,
                 invitationError: action.payload,

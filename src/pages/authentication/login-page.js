@@ -143,6 +143,7 @@ const SignInPage = () => {
                                     error={Boolean(error.email)}
                                     helperText={error.email}
                                     type="email"
+                                    color="secondary"
                                     placeholder="Enter email"
                                     size="medium"
                                     onChange={handleChange}
@@ -182,6 +183,7 @@ const SignInPage = () => {
                                         fullWidth={true}
                                         name="password"
                                         required={true}
+                                        color="secondary"
                                         placeholder="Enter password"
                                         variant="outlined"
                                         error={Boolean(error.password)}

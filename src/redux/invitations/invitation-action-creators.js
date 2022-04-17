@@ -2,16 +2,35 @@ import axios from "axios";
 import {CONSTANTS} from "../../utils/constants/constants";
 import {INVITATIONS_ACTION_TYPES} from "./invitation-action-types";
 
+const nextPage = () => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.NEXT_PAGE
+    }
+}
+
+const previousPage = () => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.PREVIOUS_PAGE
+    }
+}
+
+const goToPage = page => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.GO_TO_PAGE,
+        payload: page
+    }
+}
+
 const createInvitationRequest = () => {
     return {
         type: INVITATIONS_ACTION_TYPES.CREATE_INVITATION_REQUEST
     }
 }
 
-const createInvitationSuccess = (invitation, message) => {
+const createInvitationSuccess = (data) => {
     return {
         type: INVITATIONS_ACTION_TYPES.CREATE_INVITATION_SUCCESS,
-        payload: {message, invitation}
+        payload: data
     }
 }
 
@@ -22,17 +41,21 @@ const createInvitationFailure = message => {
     }
 }
 
-const createInvitation = (quote) => {
+const createInvitation = (invitation, token, handleClose) => {
     return async dispatch => {
         try {
             dispatch(createInvitationRequest());
             const response = await axios({
                 method: 'POST',
                 url: `${CONSTANTS.URL_BASE_SERVER}/invitations`,
-                data: quote
+                data: invitation,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-            const {message} = response.data;
-            dispatch(createInvitationSuccess(message));
+            const {data} = response.data;
+            dispatch(createInvitationSuccess(data));
+            handleClose();
         } catch (e) {
             const {message} = e.response.data;
             dispatch(createInvitationFailure(message));
@@ -205,10 +228,135 @@ const deleteInvitation = (ID, token) => {
     }
 }
 
+
+const revokeInvitationRequest = () => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.GET_INVITATIONS_REQUEST
+    }
+}
+
+const revokeInvitationSuccess = (data, count) => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.GET_INVITATIONS_SUCCESS,
+        payload: {data, count}
+    }
+}
+
+const revokeInvitationFailure = message => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.GET_INVITATIONS_FAIL,
+        payload: message
+    }
+}
+
+const revokeInvitation = (ID, token) => {
+    return async dispatch => {
+        try {
+            dispatch(revokeInvitationRequest());
+            const response = await axios({
+                method: 'PUT',
+                url: `${CONSTANTS.URL_BASE_SERVER}/invitations/${ID}/revoke`,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const {data, count} = response.data;
+            dispatch(revokeInvitationSuccess(data, count));
+        } catch (e) {
+            const {message} = e.response.data;
+            dispatch(revokeInvitationFailure(message));
+        }
+    }
+}
+
+
+const acceptInvitationRequest = () => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.ACCEPT_INVITATION_REQUEST
+    }
+}
+
+const acceptInvitationSuccess = (invitation) => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.ACCEPT_INVITATION_SUCCESS,
+        payload: invitation
+    }
+}
+
+const acceptInvitationFailure = message => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.ACCEPT_INVITATION_FAIL,
+        payload: message
+    }
+}
+
+const acceptInvitation = (invitation, ID) => {
+    return async dispatch => {
+        try {
+            dispatch(acceptInvitationRequest());
+            const response = await axios({
+                method: 'PUT',
+                url: `${CONSTANTS.URL_BASE_SERVER}/invitations/${ID}/accept`,
+                data: invitation,
+            });
+            const {message, data} = response.data;
+            dispatch(acceptInvitationSuccess(data, message));
+        } catch (e) {
+            const {message} = e.response.data;
+            dispatch(acceptInvitationFailure(message));
+        }
+    }
+}
+
+
+const rejectInvitationRequest = () => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.REJECT_INVITATION_REQUEST
+    }
+}
+
+const rejectInvitationSuccess = (invitation) => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.REJECT_INVITATION_SUCCESS,
+        payload: invitation
+    }
+}
+
+const rejectInvitationFailure = message => {
+    return {
+        type: INVITATIONS_ACTION_TYPES.REJECT_INVITATION_FAIL,
+        payload: message
+    }
+}
+
+const rejectInvitation = (ID) => {
+    return async dispatch => {
+        try {
+            dispatch(rejectInvitationRequest());
+            const response = await axios({
+                method: 'PUT',
+                url: `${CONSTANTS.URL_BASE_SERVER}/invitations/${ID}/reject`,
+            });
+            const {message, data} = response.data;
+            dispatch(rejectInvitationSuccess(data, message));
+        } catch (e) {
+            const {message} = e.response.data;
+            dispatch(rejectInvitationFailure(message));
+        }
+    }
+}
+
+
 export const INVITATION_ACTION_CREATORS = {
     createInvitation,
     deleteInvitation,
     updateInvitation,
     getInvitations,
-    getInvitation
+    getInvitation,
+    nextPage,
+    previousPage,
+    goToPage,
+    revokeInvitation,
+    acceptInvitation,
+    rejectInvitation
 };

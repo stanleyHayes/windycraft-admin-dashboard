@@ -1,5 +1,5 @@
 import {Avatar, Button, Grid, MenuItem, Toolbar, Typography, Menu} from "@mui/material";
-import {KeyboardArrowDown, Menu as MUIIcon} from "@mui/icons-material";
+import {ExitToApp, Face, KeyboardArrowDown, LockOutlined, Menu as MUIIcon} from "@mui/icons-material";
 import {UI_ACTION_CREATORS} from "../../../redux/ui/ui-action-creators";
 import {Link} from "react-router-dom";
 import {makeStyles} from "@mui/styles";
@@ -75,16 +75,35 @@ const MobileHeader = () => {
                     <Menu elevation={1} open={menuOpen} onClose={handleMenuClose} anchorEl={anchorEl}>
                         <MenuItem>
                             <Link to="/profile" className={classes.dropDownLink}>
-                                <Button color="secondary" variant="text" size="large">Profile</Button>
+                                <Button
+                                    sx={{textTransform: 'capitalize'}}
+                                    startIcon={<Face/>}
+                                    color="secondary"
+                                    variant="text"
+                                    size="large">
+                                    Profile
+                                </Button>
                             </Link>
                         </MenuItem>
                         <MenuItem>
                             <Link to="/change-password" className={classes.dropDownLink}>
-                                <Button color="secondary" variant="text" size="large">Change Password</Button>
+                                <Button
+                                    sx={{textTransform: 'capitalize'}}
+                                    startIcon={<LockOutlined/>}
+                                    color="secondary"
+                                    variant="text"
+                                    size="large">
+                                    Change Password
+                                </Button>
                             </Link>
                         </MenuItem>
                         <MenuItem>
-                            <Button color="secondary" variant="text" size="large">
+                            <Button
+                                sx={{textTransform: 'capitalize'}}
+                                startIcon={<ExitToApp/>}
+                                color="secondary"
+                                variant="text"
+                                size="large">
                                 Logout
                             </Button>
                         </MenuItem>

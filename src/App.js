@@ -27,6 +27,7 @@ import CreateAdminPage from "./pages/admins/create-admin-page";
 import AdminDetailPage from "./pages/admins/admin-detail-page";
 import UpdateAdminPage from "./pages/admins/update-admin-page";
 import EditProfilePage from "./pages/account/edit-profile-page";
+import InvitationResponsePage from "./pages/invitations/invitation-response-page";
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
                 <Route exact={true} path="/team" element={<TeamPage/>}/>
                 <Route exact={true} path="/clients" element={<ClientsPage/>}/>
                 <Route exact={true} path="/invitations" element={<InvitationsPage/>}/>
+                <Route exact={true} path="/invitations/:invitationID/:otp" element={<InvitationResponsePage/>}/>
                 <Route exact={true} path="/admins" element={<AdminsPage/>}/>
                 <Route exact={true} path="/admin/new" element={<CreateAdminPage/>}/>
                 <Route exact={true} path="/admins/:adminID" element={<AdminDetailPage/>}/>

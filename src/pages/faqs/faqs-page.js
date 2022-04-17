@@ -12,7 +12,7 @@ import {
     TableHead, TableRow,
     Typography
 } from "@mui/material";
-import {Add, Delete, Edit, Visibility} from "@mui/icons-material";
+import {Add, Delete, Edit} from "@mui/icons-material";
 import {useEffect, useState} from "react";
 import AddFAQDialog from "../../components/dialogs/add/add-faq-dialog";
 import {useDispatch, useSelector} from "react-redux";
@@ -29,6 +29,7 @@ const FAQPage = () => {
     const {faqs, faqLoading, faqError} = useSelector(selectFAQs);
 
     const handleDeleteFAQ = () => {
+
     }
 
 
@@ -89,10 +90,12 @@ const FAQPage = () => {
                         <TableContainer component={Paper}>
                             <Table size="medium">
                                 <TableHead>
-                                    <TableCell>#</TableCell>
-                                    <TableCell>Question</TableCell>
-                                    <TableCell>Answer</TableCell>
-                                    <TableCell>Actions</TableCell>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell>Question</TableCell>
+                                        <TableCell>Answer</TableCell>
+                                        <TableCell>Actions</TableCell>
+                                    </TableRow>
                                 </TableHead>
                             </Table>
                         </TableContainer>
@@ -115,7 +118,7 @@ const FAQPage = () => {
                             </TableHead>
                             <TableBody>
                                 {
-                                    faqs.map((faq, index) => {
+                                    faqs && faqs.map((faq, index) => {
                                             return (
                                                 <TableRow hover={true} key={index}>
                                                     <TableCell>{index + 1}</TableCell>
