@@ -8,10 +8,10 @@ const createFAQRequest = () => {
     }
 }
 
-const createFAQSuccess = (faq, message) => {
+const createFAQSuccess = (data) => {
     return {
         type: FAQS_ACTION_TYPES.CREATE_FAQ_SUCCESS,
-        payload: {message, faq}
+        payload:  data
     }
 }
 
@@ -22,7 +22,7 @@ const createFAQFailure = message => {
     }
 }
 
-const createFAQ = (faq, token) => {
+const createFAQ = (faq, token, handleClose) => {
     return async dispatch => {
         try {
             dispatch(createFAQRequest());
@@ -36,6 +36,7 @@ const createFAQ = (faq, token) => {
             });
             const {message, data} = response.data;
             dispatch(createFAQSuccess(data, message));
+            handleClose();
         } catch (e) {
             const {message} = e.response.data;
             dispatch(createFAQFailure(message));

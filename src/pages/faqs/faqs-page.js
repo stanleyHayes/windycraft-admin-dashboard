@@ -20,7 +20,6 @@ import {selectFAQs} from "../../redux/faqs/faq-reducer";
 import {FAQ_ACTION_CREATORS} from "../../redux/faqs/faq-action-creators";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
 import {brown, red} from "@mui/material/colors";
-import UpdateServiceDialog from "../../components/dialogs/update/update-service-dialog";
 import UpdateFAQDialog from "../../components/dialogs/update/update-faq-dialog";
 
 const FAQPage = () => {

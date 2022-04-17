@@ -1,4 +1,4 @@
-import {QUOTE_ACTION_TYPES} from "../quotes/quote-action-types";
+import {CLIENTS_ACTION_TYPES } from "./client-action-types";
 
 const INITIAL_STATE = {
     clients: [],
@@ -11,14 +11,14 @@ const clientReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
 
 
-        case QUOTE_ACTION_TYPES.GET_QUOTES_REQUEST:
+        case CLIENTS_ACTION_TYPES.GET_CLIENTS_REQUEST:
             return {
                 ...state,
                 clientError: null,
                 clientsLoading: true
             }
 
-        case QUOTE_ACTION_TYPES.GET_QUOTES_SUCCESS:
+        case CLIENTS_ACTION_TYPES.GET_CLIENTS_SUCCESS:
             return {
                 ...state,
                 clientError: null,
@@ -27,13 +27,35 @@ const clientReducer = (state = INITIAL_STATE, action) => {
                 totalClients: action.payload.count
             }
 
-        case QUOTE_ACTION_TYPES.GET_QUOTES_FAIL:
+        case CLIENTS_ACTION_TYPES.GET_CLIENTS_FAIL:
             return {
                 ...state,
                 clientError: action.payload,
                 clientLoading: false
             }
 
+        case CLIENTS_ACTION_TYPES.CREATE_CLIENT_REQUEST:
+            return {
+                ...state,
+                clientError: null,
+                clientLoading: true
+            }
+
+        case CLIENTS_ACTION_TYPES.CREATE_CLIENT_SUCCESS:
+            return {
+                ...state,
+                clientError: null,
+                clientLoading: false,
+                clients: [...state.clients, action.payload],
+                totalClients: state.clients.length + 1
+            }
+
+        case CLIENTS_ACTION_TYPES.CREATE_CLIENT_FAIL:
+            return {
+                ...state,
+                clientError: action.payload,
+                clientLoading: false
+            }
         default:
             return state;
     }

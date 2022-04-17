@@ -1,9 +1,7 @@
 import {AUTH_ACTION_TYPES} from "./auth-action-types";
 
 const INITIAL_STATE = {
-    authData: {
-
-    },
+    authData: {},
     authLoading: false,
     authError: null,
     token: null
@@ -124,16 +122,14 @@ const authReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 authError: null,
                 authLoading: false,
-                token: action.payload.token,
-                authData: action.payload.data
+                authData: action.payload
             }
 
         case AUTH_ACTION_TYPES.UPDATE_PROFILE_FAIL:
             return {
                 ...state,
                 authError: action.payload,
-                authLoading: false,
-                authData: null
+                authLoading: false
             }
 
 

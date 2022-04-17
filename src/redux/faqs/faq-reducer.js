@@ -46,7 +46,7 @@ const faqReducer = (state = INITIAL_STATE, action) => {
                 faqError: null,
                 faqLoading: false,
                 faqs: [...state.faqs, action.payload],
-                totalServices: state.faqs.length + 1
+                totalFAQs: state.faqs.length + 1
             }
 
         case FAQS_ACTION_TYPES.CREATE_FAQ_FAIL:

@@ -1,27 +1,27 @@
 import Layout from "../../components/layout/layout";
 import {
-    Button,
+    Alert,
     Card,
-    CardContent,
+    CardContent, CircularProgress,
     Container,
     Divider,
-    Grid,
+    Grid, LinearProgress,
     Stack, TextField,
     Typography
 } from "@mui/material";
-import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
+import validator from "validator";
+import {AUTH_ACTION_CREATORS} from "../../redux/authentication/auth-action-creators";
+import {LoadingButton} from "@mui/lab";
 
 const EditProfile = () => {
 
-    const {authData} = useSelector(selectAuth);
+    const {authData, token, authLoading, authError} = useSelector(selectAuth);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (authData) setUser(authData);
-    }, [authData]);
-
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({...authData});
     const [error, setError] = useState({});
     const {
         name,
@@ -40,14 +40,51 @@ const EditProfile = () => {
         event.preventDefault();
 
         if (!name) {
-            setError({error, [name]: 'Field required'});
+            setError({error, name: 'Field required'});
             return;
         } else {
-            setError({error, [name]: 'Field required'});
+            setError({error, name: null});
         }
 
-        console.log(user);
+        if (!email) {
+            setError({error, email: 'Field required'});
+            return;
+        } else {
+            setError({error, email: null});
+        }
+
+
+        if (!validator.isEmail(email)) {
+            setError({error, email: 'Invalid email'});
+            return;
+        } else {
+            setError({error, email: null});
+        }
+
+        if (!phone) {
+            setError({error, phone: 'Field required'});
+            return;
+        } else {
+            setError({error, phone: null});
+        }
+
+
+        if (!validator.isMobilePhone(phone)) {
+            setError({error, phone: 'Invalid phone'});
+            return;
+        } else {
+            setError({error, phone: null});
+        }
+
+        dispatch(AUTH_ACTION_CREATORS.updateProfile({
+            name,
+            email,
+            username,
+            phone,
+            emergencyPhoneNumber
+        }, token));
     }
+
     return (
         <Layout>
             <Container>
@@ -71,7 +108,11 @@ const EditProfile = () => {
                     justifyContent="flex-start">
                     <Grid item={true} xs={12} md={6}>
                         <Card elevation={0}>
+                            {authLoading && <LinearProgress variant="query" color="secondary"/>}
                             <CardContent>
+                                {authError && (
+                                    <Alert severity="error">{authError}</Alert>
+                                )}
                                 <Stack my={3} spacing={2} direction="column">
                                     <TextField
                                         label="Name"
@@ -137,12 +178,10 @@ const EditProfile = () => {
                                     <TextField
                                         label="Emergency Phone"
                                         fullWidth={true}
-                                        name="emergencyPhone"
+                                        name="emergencyPhoneNumber"
                                         required={true}
                                         variant="outlined"
                                         value={emergencyPhoneNumber}
-                                        error={Boolean(error.emergencyPhoneNumber)}
-                                        helperText={error.emergencyPhoneNumber}
                                         type="tel"
                                         size="medium"
                                         onChange={handleUserChange}
@@ -150,7 +189,11 @@ const EditProfile = () => {
 
                                 </Stack>
 
-                                <Button
+                                <LoadingButton
+                                    startIcon={authLoading ? <CircularProgress color="secondary"/> : null}
+                                    loading={authLoading}
+                                    loadingIndicator={<CircularProgress color="secondary"/>}
+                                    loadingPosition="start"
                                     onClick={handleSubmit}
                                     sx={{
                                         backgroundColor: 'primary.main',
@@ -161,7 +204,7 @@ const EditProfile = () => {
                                     fullWidth={true}
                                     variant="outlined">
                                     Update Profile
-                                </Button>
+                                </LoadingButton>
                             </CardContent>
                         </Card>
                     </Grid>

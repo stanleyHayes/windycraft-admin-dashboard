@@ -16,7 +16,7 @@ import {FAQ_ACTION_CREATORS} from "../../../redux/faqs/faq-action-creators";
 import {selectAuth} from "../../../redux/authentication/auth-reducer";
 import {selectFAQs} from "../../../redux/faqs/faq-reducer";
 
-const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
+const AddFAQDialog = ({open, handleClose}) => {
     const [faq, setFAQ] = useState({});
     const [error, setError] = useState({});
 
@@ -29,23 +29,23 @@ const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
     const dispatch = useDispatch();
     const {token} = useSelector(selectAuth);
     const handleAddClick = () => {
-        if(!question){
+        if (!question) {
             setError({error, question: 'Field Required'});
             return;
-        }else {
+        } else {
             setError({error, question: null});
         }
 
-        if(!answer){
+        if (!answer) {
             setError({error, answer: 'Field Required'});
             return;
-        }else {
+        } else {
             setError({error, answer: null});
         }
-        dispatch(FAQ_ACTION_CREATORS.createFAQ(faq, token, handleClose))
+        dispatch(FAQ_ACTION_CREATORS.createFAQ(faq, token, handleClose));
     }
 
-    const {faqs, faqLoading, faqError} = useSelector(selectFAQs);
+    const {faqLoading, faqError} = useSelector(selectFAQs);
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={false}>

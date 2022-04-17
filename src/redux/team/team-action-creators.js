@@ -8,10 +8,10 @@ const createTeamRequest = () => {
     }
 }
 
-const createTeamSuccess = (team,message) => {
+const createTeamSuccess = (team) => {
     return {
         type: TEAMS_ACTION_TYPES.CREATE_TEAM_SUCCESS,
-        payload: {message, team}
+        payload: team
     }
 }
 
@@ -22,20 +22,21 @@ const createTeamFailure = message => {
     }
 }
 
-const createTeam = (team, token) => {
+const createTeam = (team, token, handleClose) => {
     return async dispatch => {
         try {
             dispatch(createTeamRequest());
             const response = await axios({
                 method: 'POST',
-                url: `${CONSTANTS.URL_BASE_SERVER}/teams`,
+                url: `${CONSTANTS.URL_BASE_SERVER}/team-members`,
                 data: team,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message} = response.data;
-            dispatch(createTeamSuccess(message));
+            const {data} = response.data;
+            dispatch(createTeamSuccess(data));
+            handleClose();
         } catch (e) {
             const {message} = e.response.data;
             dispatch(createTeamFailure(message));
@@ -50,7 +51,7 @@ const getTeamRequest = () => {
     }
 }
 
-const getTeamSuccess = (team,message) => {
+const getTeamSuccess = (team, message) => {
     return {
         type: TEAMS_ACTION_TYPES.GET_TEAM_SUCCESS,
         payload: {message, team}
@@ -70,12 +71,12 @@ const getTeam = (ID, token) => {
             dispatch(getTeamRequest());
             const response = await axios({
                 method: 'GET',
-                url: `${CONSTANTS.URL_BASE_SERVER}/teams/${ID}`,
+                url: `${CONSTANTS.URL_BASE_SERVER}/team-members/${ID}`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message,data} = response.data;
+            const {message, data} = response.data;
             dispatch(getTeamSuccess(data, message));
         } catch (e) {
             const {message} = e.response.data;
@@ -91,10 +92,10 @@ const getTeamsRequest = () => {
     }
 }
 
-const getTeamsSuccess = (teams, count, message) => {
+const getTeamsSuccess = (data, count) => {
     return {
         type: TEAMS_ACTION_TYPES.GET_TEAMS_SUCCESS,
-        payload: {message, teams, count}
+        payload: {data, count}
     }
 }
 
@@ -111,13 +112,13 @@ const getTeams = token => {
             dispatch(getTeamsRequest());
             const response = await axios({
                 method: 'GET',
-                url: `${CONSTANTS.URL_BASE_SERVER}/teams`,
+                url: `${CONSTANTS.URL_BASE_SERVER}/team-members`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data, count} = response.data;
-            dispatch(getTeamsSuccess(data, count, message));
+            const {data, count} = response.data;
+            dispatch(getTeamsSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getTeamsFailure(message));
@@ -152,7 +153,7 @@ const updateTeam = (value, ID, token) => {
             dispatch(updateTeamRequest());
             const response = await axios({
                 method: 'PUT',
-                url: `${CONSTANTS.URL_BASE_SERVER}/teams/${ID}`,
+                url: `${CONSTANTS.URL_BASE_SERVER}/team-members/${ID}`,
                 data: value,
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -194,7 +195,7 @@ const deleteTeam = (ID, token) => {
             dispatch(deleteTeamRequest());
             const response = await axios({
                 method: 'DELETE',
-                url: `${CONSTANTS.URL_BASE_SERVER}/teams/${ID}`,
+                url: `${CONSTANTS.URL_BASE_SERVER}/team-members/${ID}`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

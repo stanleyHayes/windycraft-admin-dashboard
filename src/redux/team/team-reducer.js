@@ -23,7 +23,7 @@ const teamReducer = (state = INITIAL_STATE, action) => {
                 teamError: null,
                 teamLoading: false,
                 teams: action.payload.data,
-                totalTestimonials: action.payload.count
+                totalTeams: action.payload.count
             }
 
         case TEAMS_ACTION_TYPES.GET_TEAMS_FAIL:
@@ -32,6 +32,30 @@ const teamReducer = (state = INITIAL_STATE, action) => {
                 teamError: action.payload,
                 teamLoading: false
             }
+
+        case TEAMS_ACTION_TYPES.CREATE_TEAM_REQUEST:
+            return {
+                ...state,
+                teamError: null,
+                teamLoading: true
+            }
+
+        case TEAMS_ACTION_TYPES.CREATE_TEAM_SUCCESS:
+            return {
+                ...state,
+                teamError: null,
+                teamLoading: false,
+                teams: [...state.teams, action.payload],
+                totalTeams: state.totalTeams + 1
+            }
+
+        case TEAMS_ACTION_TYPES.CREATE_TEAM_FAIL:
+            return {
+                ...state,
+                teamError: action.payload,
+                teamLoading: false
+            }
+
 
         default:
             return state;

@@ -29,7 +29,6 @@ const TeamPage = () => {
         dispatch(TEAMS_ACTION_CREATORS.getTeams(token));
     }, [dispatch, token]);
 
-
     return (
         <Layout>
             {teamLoading && <LinearProgress color="secondary" variant="query"/>}
@@ -81,7 +80,7 @@ const TeamPage = () => {
                         </Box>
                     ): (
                         <Grid container={true} spacing={2}>
-                            {teams.map((team, index) => {
+                            {teams && teams.map((team, index) => {
                                 return (
                                     <Grid key={index} item={true} xs={12} md={4}>
                                         <Team team={team}/>

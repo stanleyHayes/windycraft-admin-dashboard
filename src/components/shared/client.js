@@ -6,7 +6,7 @@ const Client = ({client}) => {
         <Card elevation={0}>
             <CardMedia
                 sx={{height: 250, objectPosition: 'center', objectFit: 'cover'}}
-                src={client.image}
+                src={client.logo}
                 component="img"/>
             <CardContent>
                 <Typography align="center" variant="h6">{client.name}</Typography>

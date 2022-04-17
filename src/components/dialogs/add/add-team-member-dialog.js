@@ -1,17 +1,36 @@
-import {Box, Button, Dialog, DialogActions, DialogContent, Stack, TextField, Typography} from "@mui/material";
+import {
+    Alert, AlertTitle,
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    Grid,
+    LinearProgress,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
 import {useState} from "react";
 import ImageUploader from "react-images-upload";
-import {orange} from "@mui/material/colors";
+import {useDispatch, useSelector} from "react-redux";
+import {selectAuth} from "../../../redux/authentication/auth-reducer";
+import {selectTeams} from "../../../redux/team/team-reducer";
+import {TEAMS_ACTION_CREATORS} from "../../../redux/team/team-action-creators";
 
-const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
+const AddFAQDialog = ({open, handleClose}) => {
     const [teamMember, setTeamMember] = useState({});
     const [error, setError] = useState({});
 
-    const {name, position, facebook, twitter, instagram} = teamMember;
+    const {name, role, facebook, twitter, instagram} = teamMember;
 
     const handleValueChange = (event) => {
         setTeamMember({...teamMember, [event.target.name]: event.target.value});
     }
+
+    const {teamLoading, teamError} = useSelector(selectTeams);
+    const {token} = useSelector(selectAuth);
+    const dispatch = useDispatch();
 
     const handleAddClick = () => {
         if (!name) {
@@ -21,21 +40,26 @@ const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
             setError({error, name: null});
         }
 
-        if (!position) {
-            setError({error, position: 'Field Required'});
+        if (!role) {
+            setError({error, role: 'Field Required'});
             return;
         } else {
-            setError({error, position: null});
+            setError({error, role: null});
         }
+        dispatch(TEAMS_ACTION_CREATORS.createTeam(teamMember, token, handleClose));
 
-        handleValueAdd(teamMember)
+    }
 
-        handleClose();
+
+    const handleImageSelect = (files, pictures) => {
+        setTeamMember({...teamMember, image: pictures[0]});
     }
 
     return (
-        <Dialog open={open} onClose={handleClose} fullWidth={true}>
+        <Dialog open={open} onClose={handleClose} fullWidth={false}>
+            {teamLoading && <LinearProgress variant="query" color="secondary"/>}
             <DialogContent>
+                {teamError && <Alert severity="error"><AlertTitle>{teamError}</AlertTitle></Alert>}
                 <Typography
                     sx={{textTransform: 'uppercase'}}
                     align="center"
@@ -48,14 +72,24 @@ const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
 
                         <Box>
                             <ImageUploader
+                                onChange={handleImageSelect}
+                                fileContainerStyle={{
+                                    backgroundColor: '#222222'
+                                }}
+                                labelStyles={{color: '#f9a34f'}}
                                 withIcon={true}
+                                label="Accepted jpg|png|jpeg"
                                 withLabel={true}
                                 withPreview={true}
-                                buttonText="Choose Client Logo"
+                                buttonText="Select image"
                                 imgExtension={['.jpg', '.png', '.jpeg']}
                                 singleImage={true}
                                 name="image"
-                                buttonStyles={{backgroundColor: orange[400]}}
+                                buttonStyles={{
+                                    backgroundColor: '#000000',
+                                    color: '#f9a34f',
+                                    borderRadius: 8
+                                }}
                             />
                         </Box>
 
@@ -76,13 +110,13 @@ const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
                         <TextField
                             fullWidth={true}
                             margin="none"
-                            label="Position"
-                            name="position"
+                            label="Role"
+                            name="role"
                             variant="outlined"
-                            error={Boolean(error.position)}
-                            helperText={error.position}
+                            error={Boolean(error.role)}
+                            helperText={error.role}
                             onChange={handleValueChange}
-                            value={position}
+                            value={role}
                             size="small"
                             required={true}
                         />
@@ -122,13 +156,39 @@ const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
                             value={instagram}
                             size="small"
                         />
-
+                    </Stack>
+                </form>
+            </DialogContent>
+            <DialogActions>
+                <Grid container={true} spacing={1} alignItems="center">
+                    <Grid item={true} xs={12} md={6}>
                         <Button
+                            sx={{
+                                textTransform: 'capitalize',
+                                color: 'secondary.main',
+                                borderWidth: 2,
+                                borderColor: 'secondary.main',
+                                backgroundColor: 'primary.main',
+                                '&:hover': {
+                                    borderColor: 'secondary.light',
+                                    backgroundColor: 'secondary.dark',
+                                }
+                            }}
+                            fullWidth={true}
+                            onClick={handleClose}
+                            size="large"
+                            variant="outlined">Close</Button>
+                    </Grid>
+                    <Grid item={true} xs={12} md={6}>
+                        <Button
+                            onSubmit={handleAddClick}
                             fullWidth={true}
                             onClick={handleAddClick}
                             size="large"
                             sx={{
-                                color: 'white',
+                                textTransform: 'capitalize',
+                                color: 'black',
+                                fontWeight: 'bold',
                                 backgroundColor: 'secondary.main',
                                 '&:hover': {
                                     borderColor: 'secondary.light',
@@ -136,24 +196,8 @@ const AddFAQDialog = ({open, handleClose, handleValueAdd}) => {
                                 }
                             }}
                             variant="outlined">Add</Button>
-                    </Stack>
-                </form>
-            </DialogContent>
-            <DialogActions>
-                <Button
-                    sx={{
-                        color: 'text.primary',
-                        borderWidth: 1,
-                        borderColor: 'secondary.main',
-                        backgroundColor: 'primary.main',
-                        '&:hover': {
-                            borderColor: 'secondary.light',
-                            backgroundColor: 'secondary.dark',
-                        }
-                    }}
-                    onClick={handleClose}
-                    size="small"
-                    variant="outlined">Close</Button>
+                    </Grid>
+                </Grid>
             </DialogActions>
         </Dialog>
     )

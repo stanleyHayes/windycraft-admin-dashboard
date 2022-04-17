@@ -1,40 +1,62 @@
-import {Box, Button, Dialog, DialogActions, DialogContent, Stack, TextField, Typography} from "@mui/material";
+import {
+    Alert, AlertTitle,
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    Grid,
+    LinearProgress,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
 import {useState} from "react";
 import ImageUploader from "react-images-upload";
+import {CLIENTS_ACTION_CREATORS} from "../../../redux/clients/client-action-creators";
+import {useDispatch, useSelector} from "react-redux";
+import {selectClients} from "../../../redux/clients/client-reducer";
+import {selectAuth} from "../../../redux/authentication/auth-reducer";
 
-const AddClientDialog = ({open, handleClose, handleValueAdd}) => {
-    const [faq, setFAQ] = useState({});
+const AddClientDialog = ({open, handleClose}) => {
+    const [client, setClient] = useState({});
     const [error, setError] = useState({});
 
-    const {name, image} = faq;
+    const {name, logo} = client;
 
     const handleValueChange = (event) => {
-        setFAQ({...faq, [event.target.name]: event.target.value});
+        setClient({...client, [event.target.name]: event.target.value});
     }
+    const {clientLoading, clientError} = useSelector(selectClients);
+    const {token} = useSelector(selectAuth);
+    const dispatch = useDispatch();
 
     const handleAddClick = () => {
         if (!name) {
-            setError({error, question: 'Field Required'});
+            setError({error, name: 'Field Required'});
             return;
         } else {
-            setError({error, question: null});
+            setError({error, name: null});
         }
 
-        if (!image) {
-            setError({error, answer: 'Field Required'});
+        if (!logo) {
+            setError({error, logo: 'Field Required'});
             return;
         } else {
-            setError({error, answer: null});
+            setError({error, logo: null});
         }
+        dispatch(CLIENTS_ACTION_CREATORS.createClient(client, token, handleClose));
+    }
 
-        handleValueAdd(faq)
-
-        handleClose();
+    const handleImageSelect = (files, pictures) => {
+        setClient({...client, logo: pictures[0]});
     }
 
     return (
-        <Dialog open={open} onClose={handleClose} fullWidth={true}>
+        <Dialog open={open} onClose={handleClose} fullWidth={false}>
+            {clientLoading && <LinearProgress variant="query" color="secondary"/>}
             <DialogContent>
+                {clientError && <Alert severity="error"><AlertTitle>{clientError}</AlertTitle></Alert>}
                 <Typography
                     sx={{textTransform: 'uppercase'}}
                     align="center"
@@ -47,13 +69,24 @@ const AddClientDialog = ({open, handleClose, handleValueAdd}) => {
 
                         <Box>
                             <ImageUploader
+                                onChange={handleImageSelect}
+                                fileContainerStyle={{
+                                    backgroundColor: '#222222'
+                                }}
+                                labelStyles={{color: '#f9a34f'}}
                                 withIcon={true}
+                                label="Accepted jpg|png|jpeg"
                                 withLabel={true}
                                 withPreview={true}
                                 buttonText="Choose Client Logo"
                                 imgExtension={['.jpg', '.png', '.jpeg']}
                                 singleImage={true}
-                                name="image"
+                                name="logo"
+                                buttonStyles={{
+                                    backgroundColor: '#000000',
+                                    color: '#f9a34f',
+                                    borderRadius: 8
+                                }}
                             />
                         </Box>
 
@@ -68,14 +101,41 @@ const AddClientDialog = ({open, handleClose, handleValueAdd}) => {
                             onChange={handleValueChange}
                             value={name}
                             size="small"
+                            color="secondary"
                         />
-
+                    </Stack>
+                </form>
+            </DialogContent>
+            <DialogActions>
+                <Grid container={true} spacing={1} alignItems="center">
+                    <Grid item={true} xs={12} md={6}>
                         <Button
+                            sx={{
+                                textTransform: 'capitalize',
+                                color: 'secondary.main',
+                                borderWidth: 2,
+                                borderColor: 'secondary.main',
+                                backgroundColor: 'primary.main',
+                                '&:hover': {
+                                    borderColor: 'secondary.light',
+                                    backgroundColor: 'secondary.dark',
+                                }
+                            }}
+                            fullWidth={true}
+                            onClick={handleClose}
+                            size="large"
+                            variant="outlined">Close</Button>
+                    </Grid>
+                    <Grid item={true} xs={12} md={6}>
+                        <Button
+                            onSubmit={handleAddClick}
                             fullWidth={true}
                             onClick={handleAddClick}
                             size="large"
                             sx={{
-                                color: 'white',
+                                textTransform: 'capitalize',
+                                color: 'black',
+                                fontWeight: 'bold',
                                 backgroundColor: 'secondary.main',
                                 '&:hover': {
                                     borderColor: 'secondary.light',
@@ -83,24 +143,8 @@ const AddClientDialog = ({open, handleClose, handleValueAdd}) => {
                                 }
                             }}
                             variant="outlined">Add</Button>
-                    </Stack>
-                </form>
-            </DialogContent>
-            <DialogActions>
-                <Button
-                    sx={{
-                        color: 'text.primary',
-                        borderWidth: 1,
-                        borderColor: 'secondary.main',
-                        backgroundColor: 'primary.main',
-                        '&:hover': {
-                            borderColor: 'secondary.light',
-                            backgroundColor: 'secondary.dark',
-                        }
-                    }}
-                    onClick={handleClose}
-                    size="small"
-                    variant="outlined">Close</Button>
+                    </Grid>
+                </Grid>
             </DialogActions>
         </Dialog>
     )

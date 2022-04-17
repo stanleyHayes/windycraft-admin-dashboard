@@ -8,10 +8,10 @@ const createClientRequest = () => {
     }
 }
 
-const createClientSuccess = (client, message) => {
+const createClientSuccess = (client) => {
     return {
         type: CLIENTS_ACTION_TYPES.CREATE_CLIENT_SUCCESS,
-        payload: {message, client}
+        payload: client
     }
 }
 
@@ -22,7 +22,7 @@ const createClientFailure = message => {
     }
 }
 
-const createClient = (client, token) => {
+const createClient = (client, token, handleClose) => {
     return async dispatch => {
         try {
             dispatch(createClientRequest());
@@ -34,8 +34,9 @@ const createClient = (client, token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data} = response.data;
-            dispatch(createClientSuccess(data,message));
+            const {data} = response.data;
+            dispatch(createClientSuccess(data));
+            handleClose();
         } catch (e) {
             const {message} = e.response.data;
             dispatch(createClientFailure(message));
@@ -50,7 +51,7 @@ const getClientRequest = () => {
     }
 }
 
-const getClientSuccess = (client,message) => {
+const getClientSuccess = (client, message) => {
     return {
         type: CLIENTS_ACTION_TYPES.GET_CLIENT_SUCCESS,
         payload: {message, client}
@@ -75,7 +76,7 @@ const getClient = (ID, token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message,data} = response.data;
+            const {message, data} = response.data;
             dispatch(getClientSuccess(data, message));
         } catch (e) {
             const {message} = e.response.data;
@@ -94,7 +95,7 @@ const getClientsRequest = () => {
 const getClientsSuccess = (data, count) => {
     return {
         type: CLIENTS_ACTION_TYPES.GET_CLIENTS_SUCCESS,
-        payload: { data, count}
+        payload: {data, count}
     }
 }
 
@@ -116,7 +117,7 @@ const getClients = token => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const { data, count} = response.data;
+            const {data, count} = response.data;
             dispatch(getClientsSuccess(data, count));
         } catch (e) {
             const {message} = e.response.data;

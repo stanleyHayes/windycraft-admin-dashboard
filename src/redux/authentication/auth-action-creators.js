@@ -167,10 +167,10 @@ const updateProfileRequest = () => {
     }
 }
 
-const updateProfileSuccess = (data, token) => {
+const updateProfileSuccess = (data) => {
     return {
         type: AUTH_ACTION_TYPES.UPDATE_PROFILE_SUCCESS,
-        payload: {data, token}
+        payload: data
     }
 }
 
@@ -181,19 +181,22 @@ const updateProfileFail = message => {
     }
 }
 
-const updateProfile = user => {
+const updateProfile = (user, token) => {
     return async dispatch => {
         try {
             dispatch(updateProfileRequest());
             const response = await axios({
-                method: 'POST',
-                url: `${CONSTANTS.URL_BASE_SERVER}/auth/update-password`,
-                data: user
+                method: 'PUT',
+                url: `${CONSTANTS.URL_BASE_SERVER}/auth/profile`,
+                data: user,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-            const {data, message} = response.data;
-            dispatch(updateProfileSuccess(data, message));
+            const {data} = response.data;
+            dispatch(updateProfileSuccess(data));
         } catch (e) {
-            const {message} = e.response.data.error;
+            const {message} = e.response.data;
             dispatch(updateProfileFail(message));
         }
     }

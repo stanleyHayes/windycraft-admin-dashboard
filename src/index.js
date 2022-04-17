@@ -9,6 +9,7 @@ import {Provider} from "react-redux";
 import {ThemeProvider} from "@mui/material/styles";
 import {CssBaseline} from "@mui/material";
 
+
 const variant = localStorage.getItem(CONSTANTS.WINDY_CRAFT_ADMIN_THEME_KEY) ? JSON.parse(localStorage.getItem(CONSTANTS.WINDY_CRAFT_ADMIN_THEME_KEY)) : 'dark';
 ReactDOM.render(
   <React.StrictMode>

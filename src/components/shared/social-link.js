@@ -1,11 +1,13 @@
 import {Link} from "@mui/material";
-import {Facebook, Instagram, LinkedIn, Twitter} from "@mui/icons-material";
+import {Facebook, Instagram, Twitter} from "@mui/icons-material";
 
 const SocialLink = ({account}) => {
 
+    console.log(account)
     return (
-        <Link href={account.link}>
-            {account.platform === 'facebook' ? (
+        <Link
+            href={account.facebook ? account.facebook : account.twitter ? account.twitter : account.instagram ? account.instagram : ''}>
+            {account.facebook && (
                 <Facebook
                     sx={{
                         fontSize: 36,
@@ -15,16 +17,9 @@ const SocialLink = ({account}) => {
                         padding: .8
                     }}
                 />
-            ) : account.platform === 'linkedin' ? (
-                <LinkedIn
-                    sx={{
-                        fontSize: 36,
-                        borderRadius: '50%',
-                        backgroundColor: 'secondary.main',
-                        color: 'primary.main',
-                        padding: .8
-                    }}/>
-            ) : account.platform === 'twitter' ? (
+            )}
+
+            {account.twitter && (
                 <Twitter
                     sx={{
                         fontSize: 36,
@@ -34,15 +29,17 @@ const SocialLink = ({account}) => {
                         padding: .8
                     }}
                 />
-            ) : <Instagram
-                sx={{
-                    fontSize: 36,
-                    borderRadius: '50%',
-                    backgroundColor: 'secondary.main',
-                    color: 'primary.main',
-                    padding: .8
-                }}
-            />}
+            )}
+            {account.instagram && (
+                <Instagram
+                    sx={{
+                        fontSize: 36,
+                        borderRadius: '50%',
+                        backgroundColor: 'secondary.main',
+                        color: 'primary.main',
+                        padding: .8
+                    }}
+                />)}
         </Link>
     )
 }

@@ -1,6 +1,6 @@
-import {Button, Card, CardContent, CardMedia, Divider, Grid, Typography} from "@mui/material";
-import SocialLink from "./social-link";
+import {Button, Card, CardContent, CardMedia, Divider, Grid, Link, Typography} from "@mui/material";
 import {grey, red} from "@mui/material/colors";
+import {Facebook, Instagram, Twitter} from "@mui/icons-material";
 
 const Team = ({team}) => {
     return (
@@ -9,7 +9,7 @@ const Team = ({team}) => {
                 sx={{height: 250, objectFit: 'cover', objectPosition: 'center'}}
                 component="img"
                 src={team.image}
-                alt={team.title}/>
+                alt={team.role}/>
             <CardContent
                 sx={{
                     padding: 4
@@ -20,16 +20,60 @@ const Team = ({team}) => {
                     align="center"
                     variant="body2"
                     mb={2}>
-                    {team.position}
+                    {team.role}
                 </Typography>
                 <Grid container={true} justifyContent="center" spacing={1}>
-                    {team.accounts.map(account => {
-                        return (
-                            <Grid key={account.platform} item={true}>
-                                <SocialLink account={account}/>
-                            </Grid>
-                        )
-                    })}
+                    {team?.socialMediaAccounts?.facebook && (
+                        <Grid item={true}>
+                            <Link
+                                target="_parent"
+                                href={team?.socialMediaAccounts?.facebook}>
+                                <Facebook
+                                    sx={{
+                                        fontSize: 36,
+                                        borderRadius: '50%',
+                                        backgroundColor: 'secondary.main',
+                                        color: 'primary.main',
+                                        padding: .8
+                                    }}
+                                />
+                            </Link>
+                        </Grid>
+                    )}
+                    {team?.socialMediaAccounts?.twitter && (
+                        <Grid item={true}>
+                            <Link
+                                target="_parent"
+                                href={team?.socialMediaAccounts?.twitter}>
+                                <Twitter
+                                    sx={{
+                                        fontSize: 36,
+                                        borderRadius: '50%',
+                                        backgroundColor: 'secondary.main',
+                                        color: 'primary.main',
+                                        padding: .8
+                                    }}
+                                />
+                            </Link>
+                        </Grid>
+                    )}
+                    {team?.socialMediaAccounts?.instagram && (
+                        <Grid item={true}>
+                            <Link
+                                target="_parent"
+                                href={team?.socialMediaAccounts?.instagram}>
+                                <Instagram
+                                    sx={{
+                                        fontSize: 36,
+                                        borderRadius: '50%',
+                                        backgroundColor: 'secondary.main',
+                                        color: 'primary.main',
+                                        padding: .8
+                                    }}
+                                />
+                            </Link>
+                        </Grid>
+                    )}
                 </Grid>
             </CardContent>
             <Divider variant="fullWidth" light={true}/>
