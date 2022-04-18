@@ -23,6 +23,7 @@ const AdminDetailPage = () => {
         dispatch(ADMIN_ACTION_CREATORS.getAdmin(adminID, token));
     }, [adminID, dispatch, token]);
 
+    console.log(adminDetail)
     return (
         <Layout>
             {adminLoading && <LinearProgress color="secondary" variant="query"/>}

@@ -1,9 +1,8 @@
 import {
     Box,
     Button,
-    Checkbox,
     Container, FormControl,
-    FormControlLabel, IconButton, InputAdornment, InputLabel, LinearProgress,
+     IconButton, InputAdornment, InputLabel, LinearProgress,
     OutlinedInput,
     Stack,
     TextField,
@@ -24,7 +23,6 @@ import {LoadingButton} from "@mui/lab";
 
 const SignInPage = () => {
     const [user, setUser] = useState({email: "", password: ""});
-    const [rememberPassword, setRememberPassword] = useState(false);
     const [visiblePassword, setVisiblePassword] = useState(false);
     const [error, setError] = useState({});
     const {email, password} = user;

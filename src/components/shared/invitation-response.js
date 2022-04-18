@@ -7,10 +7,6 @@ const InvitationResponse = ({invitationID}) => {
 
    const dispatch = useDispatch();
 
-   const handleRejectClick = () => {
-
-   }
-
     const {invitationLoading, invitationError} = useSelector(selectInvitations);
 
     return (
