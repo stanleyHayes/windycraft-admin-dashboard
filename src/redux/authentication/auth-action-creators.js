@@ -22,7 +22,7 @@ const signInFail = message => {
     }
 }
 
-const signIn = (user, navigate) => {
+const signIn = (user, navigate, location) => {
     return async dispatch => {
         try {
             dispatch(signInRequest());
@@ -33,9 +33,13 @@ const signIn = (user, navigate) => {
             });
             const {data, token, message} = response.data;
             dispatch(signInSuccess(data, token, message));
-            navigate('/');
             localStorage.setItem(CONSTANTS.WINDY_CRAFT_ADMIN_TOKEN_KEY, token);
             localStorage.setItem(CONSTANTS.WINDY_CRAFT_ADMIN_AUTH_KEY, JSON.stringify(data));
+            if(location?.state?.path){
+                navigate(location.state.path, {replace: true})
+            }else {
+                navigate('/', {replace: true});
+            }
         } catch (e) {
             const {message} = e.response.data;
             dispatch(signInFail(message));
@@ -205,38 +209,79 @@ const updateProfile = (user, token) => {
 
 const logoutRequest = () => {
     return {
-        type: AUTH_ACTION_TYPES.LOGOUT_FAIL
+        type: AUTH_ACTION_TYPES.LOGOUT_REQUEST
     }
 }
 
-const logoutSuccess = (data, token) => {
+const logoutSuccess = () => {
     return {
-        type: AUTH_ACTION_TYPES.LOGOUT_SUCCESS,
-        payload: {data, token}
+        type: AUTH_ACTION_TYPES.LOGOUT_SUCCESS
     }
 }
 
 const logoutFail = message => {
     return {
-        type: AUTH_ACTION_TYPES.SIGN_IN_FAIL,
+        type: AUTH_ACTION_TYPES.LOGOUT_FAIL,
         payload: message
     }
 }
 
-const logout = user => {
+const logout = (token, navigate) => {
     return async dispatch => {
         try {
             dispatch(logoutRequest());
-            const response = await axios({
+            await axios({
                 method: 'POST',
                 url: `${CONSTANTS.URL_BASE_SERVER}/auth/logout`,
-                data: user
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-            const {data, message} = response.data;
-            dispatch(logoutSuccess(data, message));
+            dispatch(logoutSuccess());
+            localStorage.clear();
+            navigate('/auth/login');
         } catch (e) {
-            const {message} = e.response.data.error;
+            const {message} = e.response.data;
             dispatch(logoutFail(message));
+        }
+    }
+}
+
+
+const logoutAllRequest = () => {
+    return {
+        type: AUTH_ACTION_TYPES.LOGOUT_ALL_REQUEST
+    }
+}
+
+const logoutAllSuccess = message => {
+    return {
+        type: AUTH_ACTION_TYPES.LOGOUT_ALL_SUCCESS,
+        payload: message
+    }
+}
+
+const logoutAllFail = message => {
+    return {
+        type: AUTH_ACTION_TYPES.LOGOUT_ALL_FAIL,
+        payload: message
+    }
+}
+
+const logoutAll = navigate => {
+    return async dispatch => {
+        try {
+            dispatch(logoutAllRequest());
+            const response = await axios({
+                method: 'POST',
+                url: `${CONSTANTS.URL_BASE_SERVER}/auth/logoutAll`
+            });
+            const {message} = response.data;
+            dispatch(logoutAllSuccess(message));
+            navigate('/auth/login');
+        } catch (e) {
+            const {message} = e.response.data;
+            dispatch(logoutAllFail(message));
         }
     }
 }
@@ -262,7 +307,7 @@ const getProfileFail = message => {
     }
 }
 
-const getProfile = (token) => {
+const getProfile = (token, navigate) => {
     return async dispatch => {
         try {
             dispatch(getProfileRequest());
@@ -273,10 +318,12 @@ const getProfile = (token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {data, message} = response.data;
-            dispatch(getProfileSuccess(data, message));
+            const {data} = response.data;
+            dispatch(getProfileSuccess(data, token));
         } catch (e) {
-            const {message} = e.response.data.error;
+            const {message} = e.response.data;
+            localStorage.clear();
+            navigate('/auth/login');
             dispatch(getProfileFail(message));
         }
     }
@@ -330,5 +377,6 @@ export const AUTH_ACTION_CREATORS = {
     changePassword,
     updateProfile,
     resetPassword,
-    forgotPassword
+    forgotPassword,
+    logoutAll
 };

@@ -3,7 +3,7 @@ import {makeStyles} from "@mui/styles";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectAuth} from "../../../redux/authentication/auth-reducer";
-import {KeyboardArrowDown} from "@mui/icons-material";
+import {Face, KeyboardArrowDown, Lock} from "@mui/icons-material";
 import {useState} from "react";
 
 const DesktopHeader = () => {
@@ -99,12 +99,26 @@ const DesktopHeader = () => {
                                 anchorEl={anchorEl}>
                                 <MenuItem>
                                     <Link to="/profile" className={classes.dropDownLink}>
-                                        <Button color="secondary" variant="text" size="large">Profile</Button>
+                                        <Button
+                                            sx={{textTransform: 'capitalize'}}
+                                            startIcon={<Face color="secondary"/>}
+                                            color="secondary"
+                                            variant="text"
+                                            size="large">
+                                            Profile
+                                        </Button>
                                     </Link>
                                 </MenuItem>
                                 <MenuItem>
                                     <Link to="/change-password" className={classes.dropDownLink}>
-                                        <Button color="secondary" variant="text" size="large">Change Password</Button>
+                                        <Button
+                                            sx={{textTransform: 'capitalize'}}
+                                            startIcon={<Lock color="secondary"/>}
+                                            color="secondary"
+                                            variant="text"
+                                            size="large">
+                                            Change Password
+                                        </Button>
                                     </Link>
                                 </MenuItem>
                             </Menu>
@@ -117,7 +131,10 @@ const DesktopHeader = () => {
                                     variant="outlined"
                                     sx={{
                                         borderWidth: 2,
-                                        textTransform: 'capitalize'
+                                        textTransform: 'capitalize',
+                                        '&:hover':{
+                                            borderWidth: 2
+                                        }
                                     }}>
                                     Logout
                                 </Button>

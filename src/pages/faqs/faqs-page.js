@@ -43,15 +43,16 @@ const FAQPage = () => {
     }, [dispatch, token]);
 
 
-    return (<Layout>
+    return (
+        <Layout>
             {faqLoading && <LinearProgress color="secondary" variant="query"/>}
             <Container sx={{py: 4, mt: {md: 8}}}>
                 {faqError && (<Alert severity="error" variant="standard">
-                        <AlertTitle>Error</AlertTitle>
-                        <Typography variant="h6" align="center">
-                            {faqError}
-                        </Typography>
-                    </Alert>)}
+                    <AlertTitle>Error</AlertTitle>
+                    <Typography variant="h6" align="center">
+                        {faqError}
+                    </Typography>
+                </Alert>)}
                 <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md="auto">
                         <Typography variant="h4">FAQ</Typography>
@@ -80,24 +81,7 @@ const FAQPage = () => {
                 <Divider variant="fullWidth" sx={{my: 2}}/>
 
                 {faqs && faqs.length === 0 ? (<Box>
-                        <TableContainer component={Paper}>
-                            <Table size="medium">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>#</TableCell>
-                                        <TableCell>Question</TableCell>
-                                        <TableCell>Answer</TableCell>
-                                        <TableCell>Actions</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                            </Table>
-                        </TableContainer>
-                        <Box sx={{backgroundColor: 'background.paper'}} py={5}>
-                            <Typography variant="body2" align="center">
-                                No FAQs available
-                            </Typography>
-                        </Box>
-                    </Box>) : (<TableContainer component={Paper}>
+                    <TableContainer component={Paper}>
                         <Table size="medium">
                             <TableHead>
                                 <TableRow>
@@ -107,37 +91,54 @@ const FAQPage = () => {
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
-                                {faqs && faqs.map((faq, index) => {
-                                    return (<TableRow hover={true} key={index}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{faq.question}</TableCell>
-                                            <TableCell>{faq.answer}</TableCell>
-                                            <TableCell>
-                                                <Grid
-                                                    container={true}
-                                                    justifyContent="space-between"
-                                                    alignItems="center">
-                                                    <Grid item={true}>
-                                                        <Edit
-                                                            onClick={() => setSelectedFAQ(faq)}
-                                                            sx={{
-                                                                color: brown['400'], fontSize: 20, cursor: 'pointer'
-                                                            }}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete
-                                                            sx={{
-                                                                color: red['400'], fontSize: 20, cursor: 'pointer'
-                                                            }}/>
-                                                    </Grid>
-                                                </Grid>
-                                            </TableCell>
-                                        </TableRow>)
-                                })}
-                            </TableBody>
                         </Table>
-                    </TableContainer>)}
+                    </TableContainer>
+                    <Box sx={{backgroundColor: 'background.paper'}} py={5}>
+                        <Typography variant="body2" align="center">
+                            No FAQs available
+                        </Typography>
+                    </Box>
+                </Box>) : (<TableContainer component={Paper}>
+                    <Table size="medium">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>#</TableCell>
+                                <TableCell>Question</TableCell>
+                                <TableCell>Answer</TableCell>
+                                <TableCell>Actions</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {faqs && faqs.map((faq, index) => {
+                                return (<TableRow hover={true} key={index}>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>{faq.question}</TableCell>
+                                    <TableCell>{faq.answer}</TableCell>
+                                    <TableCell>
+                                        <Grid
+                                            container={true}
+                                            justifyContent="space-between"
+                                            alignItems="center">
+                                            <Grid item={true}>
+                                                <Edit
+                                                    onClick={() => setSelectedFAQ(faq)}
+                                                    sx={{
+                                                        color: brown['400'], fontSize: 20, cursor: 'pointer'
+                                                    }}/>
+                                            </Grid>
+                                            <Grid item={true}>
+                                                <Delete
+                                                    sx={{
+                                                        color: red['400'], fontSize: 20, cursor: 'pointer'
+                                                    }}/>
+                                            </Grid>
+                                        </Grid>
+                                    </TableCell>
+                                </TableRow>)
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>)}
 
                 {dialogOpen && <AddFAQDialog
                     open={dialogOpen}

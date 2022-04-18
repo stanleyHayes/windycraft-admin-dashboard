@@ -158,6 +158,31 @@ const authReducer = (state = INITIAL_STATE, action) => {
             }
 
 
+        case AUTH_ACTION_TYPES.LOGOUT_ALL_REQUEST:
+            return {
+                ...state,
+                authError: null,
+                authLoading: true
+            }
+
+        case AUTH_ACTION_TYPES.LOGOUT_ALL_SUCCESS:
+            return {
+                ...state,
+                authError: null,
+                authLoading: false,
+                token: null,
+                authData: null
+            }
+
+        case AUTH_ACTION_TYPES.LOGOUT_ALL_FAIL:
+            return {
+                ...state,
+                authError: action.payload,
+                authLoading: false,
+                authData: null
+            }
+
+
         case AUTH_ACTION_TYPES.GET_PROFILE_REQUEST:
             return {
                 ...state,

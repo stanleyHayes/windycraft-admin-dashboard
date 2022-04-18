@@ -18,54 +18,14 @@ import {
     Send,
     SendOutlined, VerifiedUser, VerifiedUserOutlined
 } from "@mui/icons-material";
-import {makeStyles} from "@mui/styles";
 
 const DesktopSidebarContent = () => {
 
     const {activePath} = useSelector(selectUI);
 
-    const useStyles = makeStyles(theme => {
-        return {
-            container: {
-                '&::-webkit-scrollbar': {
-                    width: 0
-                },
-                '&::-webkit-scrollbar-track': {
-                    backgroundColor: 'red'
-                },
-                '&::-webkit-scrollbar-button': {
-                    backgroundColor: 'green'
-                },
-                '&::-webkit-scrollbar-thumb': {
-                    borderRadius: 32,
-                    backgroundColor: 'secondary.main',
-                    minHeight: 24,
-                    width: 5
-                },
-                '&::-webkit-scrollbar-track-piece': {},
-                '&::-webkit-scrollbar-corner': {},
-                backgroundColor: 'primary.main',
-                height: '100vh',
-                minHeight: '100vh',
-                overflowY: 'scroll',
-                position: 'fixed',
-                top: 65,
-                bottom: 0,
-            }
-        }
-    });
-
-    const classes = useStyles();
-
     return (
-        <Box className={classes.container}>
-            <Stack
-                direction="column"
-                divider={
-                    <Divider
-                        variant="fullWidth"
-                        sx={{}}/>
-                }>
+        <Box>
+            <Stack direction="column" divider={<Divider variant="fullWidth" sx={{}}/>}>
                 <DesktopSidebarLinkItem
                     icon={
                         activePath === '/' ?

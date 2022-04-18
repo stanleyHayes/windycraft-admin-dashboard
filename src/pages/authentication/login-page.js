@@ -9,7 +9,7 @@ import {
     TextField,
     Typography,
     Alert,
-    AlertTitle
+    AlertTitle, CircularProgress
 } from "@mui/material";
 import {useState} from "react";
 import {Link} from "react-router-dom";
@@ -19,8 +19,8 @@ import validator from "validator";
 import {useDispatch, useSelector} from "react-redux";
 import {AUTH_ACTION_CREATORS} from "../../redux/authentication/auth-action-creators";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
-import {red} from "@mui/material/colors";
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
+import {LoadingButton} from "@mui/lab";
 
 const SignInPage = () => {
     const [user, setUser] = useState({email: "", password: ""});
@@ -51,6 +51,7 @@ const SignInPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -75,7 +76,7 @@ const SignInPage = () => {
         } else {
             setError({error, password: null});
         }
-        dispatch(AUTH_ACTION_CREATORS.signIn({email, password}, navigate));
+        dispatch(AUTH_ACTION_CREATORS.signIn({email, password}, navigate, location));
     }
 
     const {authLoading, authError} = useSelector(selectAuth);
@@ -121,10 +122,7 @@ const SignInPage = () => {
                         {
                             authError && (
                                 <Alert sx={{my: 3}} severity="error" color="error" variant="standard">
-                                    <AlertTitle>Auth Error</AlertTitle>
-                                    <Typography variant="h6" align="center" color={red[600]}>
-                                        {authError}
-                                    </Typography>
+                                    <AlertTitle>{authError}</AlertTitle>
                                 </Alert>
                             )
                         }
@@ -150,24 +148,11 @@ const SignInPage = () => {
                                 />
 
                                 <Stack direction="row" justifyContent="space-between" alignItems="center">
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                color="secondary"
-                                                onChange={event => setRememberPassword(event.target.checked)}
-                                                size="small" value={rememberPassword}/>}
-                                        label={
-                                            <Typography
-                                                sx={{fontSize: 12}}
-                                                variant="body2">
-                                                Remember Password
-                                            </Typography>}
-                                    />
 
                                     <Link className={classes.link} to="/auth/forgot-password">
                                         <Button
                                             color="secondary"
-                                            sx={{fontSize: 12, textTransform: 'capitalize'}}
+                                            sx={{textTransform: 'capitalize'}}
                                             variant="text" size="small">
                                             Forgot Password
                                         </Button>
@@ -207,7 +192,7 @@ const SignInPage = () => {
                                 </FormControl>
                             </Stack>
 
-                            <Button
+                            <LoadingButton
                                 sx={{
                                     fontWeight: 'bold',
                                     textTransform: 'capitalize',
@@ -225,6 +210,10 @@ const SignInPage = () => {
                                     py: 1.5
                                 }}
                                 size="large"
+                                startIcon={authLoading && <CircularProgress/>}
+                                loadingPosition="start"
+                                loading={authLoading}
+                                loadingIndicator={<CircularProgress/>}
                                 onSubmit={handleSubmit}
                                 onClick={handleSubmit}
                                 fullWidth={true}
@@ -232,13 +221,13 @@ const SignInPage = () => {
                                 disabled={authLoading}
                                 variant="outlined">
                                 Login
-                            </Button>
-
+                            </LoadingButton>
                         </form>
                     </Container>
                 </Box>
                 <Box
                     sx={{
+                        display: {xs: 'none', md: 'block'},
                         flex: 1,
                         backgroundColor: 'background.default',
                         minHeight: '100%',

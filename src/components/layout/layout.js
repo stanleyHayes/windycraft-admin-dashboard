@@ -19,14 +19,18 @@ const Layout = ({children}) => {
                 sx={{
                     display: 'flex',
                     flexDirection: {md: 'row'},
-                    minHeight: '93vh',
+                    maxWidth: '100vw',
+                    overflow: "hidden",
                     backgroundColor: 'background.default',
                 }}>
 
                 <Box
                     sx={{
                         display: {xs: 'none', md: 'block'},
-                        minHeight: '100vh',
+                        maxHeight: '92.8vh',
+                        overflowY: 'scroll',
+                        overflowX: 'hidden',
+                        mt: 8.3
                     }}>
                     <DesktopDrawerContent/>
                 </Box>
@@ -37,7 +41,10 @@ const Layout = ({children}) => {
                         overflowY: 'scroll',
                         paddingBottom: 4,
                         flexGrow: 1,
-                        backgroundColor: 'background.default'
+                        width: '100%',
+                        backgroundColor: 'background.default',
+                        overflowX: "hidden",
+                        maxHeight: '100vh'
                     }}>
                     <Header/>
                     {children}
