@@ -107,6 +107,7 @@ const DrawerContent = () => {
                     label="Services"
                     path="/services"
                 />
+
                 <SideBarLinkItem
                     icon={
                         activePath === '/' ?
@@ -230,6 +231,25 @@ const DrawerContent = () => {
                     label="Team"
                     path="/team"
                     activePath={activePath}
+                />
+
+
+                <SideBarLinkItem
+                    activePath={activePath}
+                    icon={
+                        activePath === '/quotes' ?
+                            <Send sx={{
+                                color: "text.primary",
+                                borderRadius: 1,
+                                padding: 0.4,
+                                width: 24,
+                                height: 24,
+                                backgroundColor: '#F9A34F40'
+                            }}/> :
+                            <SendOutlined sx={{color: 'white'}}/>
+                    }
+                    label="Quotes"
+                    path="/quotes"
                 />
 
                 <SideBarLinkItem

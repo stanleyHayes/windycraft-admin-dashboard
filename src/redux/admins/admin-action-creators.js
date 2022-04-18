@@ -50,10 +50,10 @@ const getAdminRequest = () => {
     }
 }
 
-const getAdminSuccess = (client, message) => {
+const getAdminSuccess = (data) => {
     return {
         type: ADMIN_ACTION_TYPES.GET_ADMIN_SUCCESS,
-        payload: {message, client}
+        payload: data
     }
 }
 
@@ -75,8 +75,8 @@ const getAdmin = (ID, token) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            const {message, data} = response.data;
-            dispatch(getAdminSuccess(data, message));
+            const {data} = response.data;
+            dispatch(getAdminSuccess(data));
         } catch (e) {
             const {message} = e.response.data;
             dispatch(getAdminFailure(message));

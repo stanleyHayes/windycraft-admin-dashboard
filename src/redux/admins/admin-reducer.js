@@ -32,6 +32,29 @@ const adminReducer = (state = INITIAL_STATE, action) => {
                 adminError: action.payload,
                 adminLoading: false
             }
+
+
+        case ADMIN_ACTION_TYPES.GET_ADMIN_REQUEST:
+            return {
+                ...state,
+                adminError: null,
+                adminLoading: true
+            }
+
+        case ADMIN_ACTION_TYPES.GET_ADMIN_SUCCESS:
+            return {
+                ...state,
+                adminError: null,
+                adminLoading: false,
+                adminDetail: action.payload
+            }
+
+        case ADMIN_ACTION_TYPES.GET_ADMIN_FAIL:
+            return {
+                ...state,
+                adminError: action.payload,
+                adminLoading: false
+            }
         default:
             return state;
     }

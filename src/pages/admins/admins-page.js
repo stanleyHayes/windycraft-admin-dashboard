@@ -108,7 +108,7 @@ const AdminsPage = () => {
                     )
                 }
 
-                <Grid sx={{my: 4, mt: {xs: 8, md: 4}}} container={true} justifyContent="space-between" spacing={2}
+                <Grid sx={{my: 2}} container={true} justifyContent="space-between" spacing={2}
                       alignItems="center">
                     <Grid item={true} xs={12} md={3}>
                         <Typography variant="h4">
@@ -129,6 +129,7 @@ const AdminsPage = () => {
                                     required={true}
                                     variant="outlined"
                                     value={query}
+                                    color="secondary"
                                     type="email"
                                     size="small"
                                     onChange={event => setQuery(event.target.value)}
@@ -180,9 +181,11 @@ const AdminsPage = () => {
                                     color="primary"
                                     fullWidth={true}
                                     sx={{
+                                        borderColor: 'secondary.main',
                                         color: 'secondary.main',
                                         textTransform: 'capitalize',
-                                        borderWidth: 2
+                                        borderWidth: 2,
+                                        borderStyle: 'solid'
                                 }}
                                     variant="contained">
                                     Create
@@ -226,7 +229,7 @@ const AdminsPage = () => {
                                                 <TableCell
                                                     align="center">{renderStatus(admin.status)}</TableCell>
                                                 <TableCell align="center">
-                                                    {moment(admin.updatedAt).fromNow()}
+                                                    {moment(admin.createdAt).fromNow()}
                                                 </TableCell>
                                                 <TableCell>
                                                     <Grid
@@ -236,7 +239,7 @@ const AdminsPage = () => {
                                                         spacing={1}>
                                                         <Grid item={true}>
                                                             <Visibility
-                                                                onClick={() => navigate(`/admins/${admin._id}/detail`)}
+                                                                onClick={() => navigate(`/admins/${admin._id}`)}
                                                                 sx={{pointer: 'cursor'}}
                                                                 fontSize="small"
                                                                 color="primary"

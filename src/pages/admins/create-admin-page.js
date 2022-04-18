@@ -126,7 +126,7 @@ const CreateAdminPage = () => {
         email,
         username,
         password,
-        phoneNumber,
+        phone,
         emergencyPhoneNumber,
     } = admin;
 
@@ -198,6 +198,17 @@ const CreateAdminPage = () => {
     const classes = useStyles();
 
     const navigate = useNavigate();
+
+    const handleSubmit = event => {
+        if(!name){
+            setError({error, name: 'Field required'});
+            return;
+        }else{
+            setError({error, name: null});
+        }
+
+        console.log(admin);
+    }
 
     return (
         <Layout>
@@ -302,7 +313,7 @@ const CreateAdminPage = () => {
                                         name="phone"
                                         required={true}
                                         variant="outlined"
-                                        value={phoneNumber}
+                                        value={phone}
                                         error={Boolean(error.phone)}
                                         helperText={error.phone}
                                         type="tel"
@@ -354,6 +365,7 @@ const CreateAdminPage = () => {
                                     </FormControl>
 
                                     <Button
+                                        onClick={handleSubmit}
                                         sx={{
                                             color: 'secondary.main',
                                             textTransform: 'capitalize'
@@ -1007,7 +1019,7 @@ const CreateAdminPage = () => {
                                                     <Checkbox
                                                         name="testimonialDelete"
                                                         onChange={handleTestimonialPermissionChange}
-                                                        checked={quoteDelete}
+                                                        checked={testimonialDelete}
                                                     />
                                                 }
                                                 label={<Typography variant="body2">Delete</Typography>}

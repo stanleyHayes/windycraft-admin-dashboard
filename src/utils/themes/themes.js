@@ -15,7 +15,31 @@ const lightTheme = createTheme({
               src: local('GoogleSansRegular'), local('GoogleSansRegular'), url(${GoogleSansRegular}) format('truetype');
               unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
             }
-            `
+            `,
+            body: {
+                scrollbarColor: "#222222 #222222",
+                "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+                    backgroundColor: "#222222",
+                },
+                "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+                    borderRadius: 8,
+                    backgroundColor: "#222222",
+                    minHeight: 24,
+                    border: "3px solid #FCF9F2",
+                },
+                "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus": {
+                    backgroundColor: "#222222",
+                },
+                "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active": {
+                    backgroundColor: "#222222",
+                },
+                "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover": {
+                    backgroundColor: "#222222",
+                },
+                "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
+                    backgroundColor: "#222222",
+                },
+            },
         }
     },
     palette: {
@@ -55,7 +79,31 @@ const darkTheme = createTheme({
               src: local('EuclidCircularA'), local('GoogleSansRegular'), url(${GoogleSansRegular}) format('truetype');
               unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
             }
-            `
+            `,
+            body: {
+                scrollbarColor: "#222222 #222222",
+                "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+                    backgroundColor: "#222222",
+                },
+                "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+                    borderRadius: 8,
+                    backgroundColor: "#222222",
+                    minHeight: 24,
+                    border: "3px solid #222222",
+                },
+                "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus": {
+                    backgroundColor: "#222222",
+                },
+                "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active": {
+                    backgroundColor: "#222222",
+                },
+                "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover": {
+                    backgroundColor: "#222222",
+                },
+                "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
+                    backgroundColor: "#222222",
+                },
+            },
         }
     },
     palette: {

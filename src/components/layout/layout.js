@@ -1,80 +1,45 @@
 import {Box, SwipeableDrawer} from "@mui/material";
-import {makeStyles} from "@mui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {selectUI} from "../../redux/ui/ui-reducer";
 import {UI_ACTION_CREATORS} from "../../redux/ui/ui-action-creators";
 import DesktopDrawerContent from "../drawer-content/desktop-drawer-content";
 import Header from "../headers/header/header";
 import DrawerContent from "../drawer-content/drawer-content";
-
+import React from "react";
 
 const Layout = ({children}) => {
-
-    const useStyles = makeStyles(theme => {
-        return {
-            root: {
-                display: 'flex',
-                minHeight: '100vh',
-                flexDirection: 'column'
-            },
-            header: {},
-            footer: {},
-            content: {
-                flex: 1,
-                paddingTop: 32,
-                '&::-webkit-scrollbar': {
-                    width: 0
-                },
-                '&::-webkit-scrollbar-track': {
-                    backgroundColor: 'red'
-                },
-                '&::-webkit-scrollbar-button': {
-                    backgroundColor: 'green'
-                },
-                '&::-webkit-scrollbar-thumb': {
-                    borderRadius: 32,
-                    backgroundColor: 'secondary.main',
-                    minHeight: 24,
-                    width: 2
-                },
-                '&::-webkit-scrollbar-track-piece': {},
-                '&::-webkit-scrollbar-corner': {},
-                minHeight: '100vh',
-                overflowY: 'scroll',
-                paddingBottom: 32,
-                flexGrow: 1,
-            }
-        }
-    });
-
-    const classes = useStyles();
 
     const {isToggled} = useSelector(selectUI);
 
     const dispatch = useDispatch();
 
     return (
-        <Box className={classes.root}>
-            <Box sx={{marginTop: {lg: 8}}}>
-                <Header/>
-            </Box>
+        <React.Fragment>
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: {xs: 'column', md: 'row'},
+                    flexDirection: {md: 'row'},
                     minHeight: '93vh',
-                    maxHeight: '100vh',
                     backgroundColor: 'background.default',
-                    paddingTop: {xs: 6.5, md: 0.1},
                 }}>
+
                 <Box
                     sx={{
                         display: {xs: 'none', md: 'block'},
-                        maxHeight: '100vh', height: '100vh'
+                        minHeight: '100vh',
                     }}>
                     <DesktopDrawerContent/>
                 </Box>
-                <Box className={classes.content}>
+
+                <Box
+                    sx={{
+                        paddingTop: 8,
+                        overflowY: 'scroll',
+                        paddingBottom: 4,
+                        flexGrow: 1,
+                        backgroundColor: 'background.default'
+                    }}>
+                    <Header/>
                     {children}
                 </Box>
             </Box>
@@ -85,7 +50,7 @@ const Layout = ({children}) => {
                 onOpen={() => dispatch(UI_ACTION_CREATORS.openSidebar())}>
                 <DrawerContent/>
             </SwipeableDrawer>
-        </Box>
+        </React.Fragment>
     )
 }
 

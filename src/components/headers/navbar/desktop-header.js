@@ -49,8 +49,7 @@ const DesktopHeader = () => {
 
 
     return (
-        <Toolbar variant="regular"
-                 sx={{borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: '#e5e5e5'}}>
+        <Toolbar variant="regular">
             <Container>
                 <Grid container={true} alignItems="center" justifyContent="space-around">
                     <Grid item={true} lg={3}>
