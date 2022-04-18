@@ -12,7 +12,7 @@ const SideBarLinkItem = ({path, icon, label, activePath}) => {
                 textDecoration: 'none',
                 display: 'block',
                 paddingTop: 4,
-                paddingBottom: 4
+                paddingBottom: 4,
             }
         }
     });
@@ -33,6 +33,7 @@ const SideBarLinkItem = ({path, icon, label, activePath}) => {
                     borderRightWidth: activePath === path ? 5 : 0,
                     borderRightColor: activePath === path ? 'secondary.main': false,
                     borderRightStyle: activePath === path ? 'solid' : false,
+                    borderRadius: 2,
                     padding: 0.5
                 }}
                 container={true} justifyContent="space-between" alignItems="center">
@@ -40,16 +41,14 @@ const SideBarLinkItem = ({path, icon, label, activePath}) => {
                     <Stack direction="row" spacing={2} alignItems="center">
                         <Box
                             sx={{
-                                fontSize: 24,
-                                borderRadius: 0.2,
-                                backgroundColor: 'rgba(249,163,79,0.25)',
-                                color: 'primary.main',
+                                fontSize: 20,
+                                borderRadius: 2,
+                                color: activePath === path ? 'secondary.main' : 'white',
                                 padding: .4,
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center'
-                            }}
-                        >
+                            }}>
                             {icon}
                         </Box>
                         <Typography

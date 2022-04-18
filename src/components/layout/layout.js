@@ -55,7 +55,9 @@ const Layout = ({children}) => {
                 open={isToggled}
                 onClose={() => dispatch(UI_ACTION_CREATORS.closeSidebar())}
                 onOpen={() => dispatch(UI_ACTION_CREATORS.openSidebar())}>
-                <DrawerContent/>
+                <Box sx={{backgroundColor: 'primary.main', minHeight: '100vh'}}>
+                    <DrawerContent/>
+                </Box>
             </SwipeableDrawer>
         </React.Fragment>
     )

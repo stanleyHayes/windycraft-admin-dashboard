@@ -1,4 +1,4 @@
-import {Button, Container, Grid, Stack} from "@mui/material";
+import {Button, Container, Divider, Grid, Stack} from "@mui/material";
 import {
     Close,
     Dashboard,
@@ -32,9 +32,9 @@ const DrawerContent = () => {
         <Container
             sx={{
                 width: '90vw',
-                height: '100vh',
+                minHeight: '100vh',
                 paddingTop: 2,
-                paddingBottom: 8,
+                paddingBottom: 2,
                 backgroundColor: 'primary.main'
             }}>
             <Grid container={true} justifyContent="flex-end">
@@ -52,6 +52,7 @@ const DrawerContent = () => {
             <Stack
                 mt={2}
                 direction="column"
+                divider={<Divider sx={{color: '#F9A34F40'}} variant="fullWidth" />}
                 spacing={1}>
                 <SideBarLinkItem
                     activePath={activePath}
@@ -59,7 +60,7 @@ const DrawerContent = () => {
                         activePath === '/' ?
                             <Dashboard
                                 sx={{
-                                    color: "text.primary",
+                                    color: "secondary.main",
                                     borderRadius: 1,
                                     padding: 0.4,
                                     width: 24,
@@ -77,7 +78,7 @@ const DrawerContent = () => {
                     icon={
                         activePath === '/admins' ?
                             <VerifiedUser sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -93,9 +94,9 @@ const DrawerContent = () => {
                 <SideBarLinkItem
                     activePath={activePath}
                     icon={
-                        activePath === '/' ?
+                        activePath === '/services' ?
                             <Send sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -110,9 +111,9 @@ const DrawerContent = () => {
 
                 <SideBarLinkItem
                     icon={
-                        activePath === '/' ?
+                        activePath === '/faq' ?
                             <Group sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -127,9 +128,9 @@ const DrawerContent = () => {
                 />
                 <SideBarLinkItem
                     icon={
-                        activePath === '/' ?
+                        activePath === '/messages' ?
                             <Groups sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -147,7 +148,7 @@ const DrawerContent = () => {
                     icon={
                         activePath === '/invitations' ?
                             <Group sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -165,7 +166,7 @@ const DrawerContent = () => {
                     icon={
                         activePath === '/values' ?
                             <Group sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -181,9 +182,9 @@ const DrawerContent = () => {
 
                 <SideBarLinkItem
                     icon={
-                        activePath === '/' ?
+                        activePath === '/testimonials' ?
                             <Payment sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -198,9 +199,9 @@ const DrawerContent = () => {
                 />
                 <SideBarLinkItem
                     icon={
-                        activePath === '/' ?
+                        activePath === '/profile' ?
                             <Face sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -216,10 +217,10 @@ const DrawerContent = () => {
 
                 <SideBarLinkItem
                     icon={
-                        activePath === '/' ?
+                        activePath === '/team' ?
                             <MultipleStop
                                 sx={{
-                                    color: "text.primary",
+                                    color: "secondary.main",
                                     borderRadius: 1,
                                     padding: 0.4,
                                     width: 24,
@@ -239,7 +240,7 @@ const DrawerContent = () => {
                     icon={
                         activePath === '/quotes' ?
                             <Send sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
@@ -254,9 +255,9 @@ const DrawerContent = () => {
 
                 <SideBarLinkItem
                     icon={
-                        activePath === '/' ?
+                        activePath === '/clients' ?
                             <MultipleStop sx={{
-                                color: "text.primary",
+                                color: "secondary.main",
                                 borderRadius: 1,
                                 padding: 0.4,
                                 width: 24,
