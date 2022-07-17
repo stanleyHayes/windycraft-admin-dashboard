@@ -1,10 +1,17 @@
-import {Button, Dialog, DialogActions, DialogContent, Grid, Typography} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, Grid, Stack, Typography} from "@mui/material";
+import {WarningAmber} from "@mui/icons-material";
+import {LoadingButton} from "@mui/lab";
 
-const DeleteConformationDialog = ({open, handleClose, message}) => {
+const DeleteConformationDialog = ({open, handleClose, message, positiveAction}) => {
+    const handleClick = () => {
+        positiveAction();
+    }
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogContent>
-
+                <Stack spacing={2} direction="row" alignItems="center" justifyContent="center">
+                    <WarningAmber color="secondary"/>
+                </Stack>
                 <Typography variant="body1">{message}</Typography>
             </DialogContent>
             <DialogActions>
@@ -19,13 +26,13 @@ const DeleteConformationDialog = ({open, handleClose, message}) => {
                         </Button>
                     </Grid>
                     <Grid item={true} xs={6}>
-                        <Button
+                        <LoadingButton
                             fullWidth={true}
-                            onClick={handleClose}
+                            onClick={handleClick}
                             size="large"
                             variant="outlined">
                             Delete
-                        </Button>
+                        </LoadingButton>
                     </Grid>
                 </Grid>
             </DialogActions>

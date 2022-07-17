@@ -10,6 +10,7 @@ const Splash = () => {
                 sx={{
                     backgroundColor: 'background.default',
                     height: '100vh',
+                    maxHeight: '100vh',
                     justifyContent: 'center',
                     alignItems: 'center',
                     display: 'flex'

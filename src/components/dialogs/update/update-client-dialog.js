@@ -13,22 +13,21 @@ import {
 } from "@mui/material";
 import {useState} from "react";
 import ImageUploader from "react-images-upload";
+import {CLIENTS_ACTION_CREATORS} from "../../../redux/clients/client-action-creators";
 import {useDispatch, useSelector} from "react-redux";
+import {selectClients} from "../../../redux/clients/client-reducer";
 import {selectAuth} from "../../../redux/authentication/auth-reducer";
-import {selectTeams} from "../../../redux/team/team-reducer";
-import {TEAMS_ACTION_CREATORS} from "../../../redux/team/team-action-creators";
 
-const AddTeamMemberDialog = ({open, handleClose}) => {
-    const [updateTeamMember, setUpdateTeamMember] = useState({});
+const UpdateClientDialog = ({open, handleClose, client}) => {
+    const [updateClient, setUpdateClient] = useState({...client});
     const [error, setError] = useState({});
 
-    const {name, role, facebook, twitter, instagram} = updateTeamMember;
+    const {name, logo} = updateClient;
 
     const handleValueChange = (event) => {
-        setUpdateTeamMember({...updateTeamMember, [event.target.name]: event.target.value});
+        setUpdateClient({...updateClient, [event.target.name]: event.target.value});
     }
-
-    const {teamLoading, teamError} = useSelector(selectTeams);
+    const {clientLoading, clientError} = useSelector(selectClients);
     const {token} = useSelector(selectAuth);
     const dispatch = useDispatch();
 
@@ -40,32 +39,30 @@ const AddTeamMemberDialog = ({open, handleClose}) => {
             setError({error, name: null});
         }
 
-        if (!role) {
-            setError({error, role: 'Field Required'});
+        if (!logo) {
+            setError({error, logo: 'Field Required'});
             return;
         } else {
-            setError({error, role: null});
+            setError({error, logo: null});
         }
-        dispatch(TEAMS_ACTION_CREATORS.createTeam(updateTeamMember, token, handleClose));
-
+        dispatch(CLIENTS_ACTION_CREATORS.createClient(updateClient, token, handleClose));
     }
 
-
     const handleImageSelect = (files, pictures) => {
-        setUpdateTeamMember({...updateTeamMember, image: pictures[0]});
+        setUpdateClient({...updateClient, logo: pictures[0]});
     }
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={false}>
-            {teamLoading && <LinearProgress variant="query" color="secondary"/>}
+            {clientLoading && <LinearProgress variant="query" color="secondary"/>}
             <DialogContent>
-                {teamError && <Alert severity="error"><AlertTitle>{teamError}</AlertTitle></Alert>}
+                {clientError && <Alert severity="error"><AlertTitle>{clientError}</AlertTitle></Alert>}
                 <Typography
                     sx={{textTransform: 'uppercase'}}
                     align="center"
                     variant="h5"
                     gutterBottom={true}>
-                    New Team Member
+                    Update Client
                 </Typography>
                 <form>
                     <Stack direction="column" spacing={2}>
@@ -81,10 +78,11 @@ const AddTeamMemberDialog = ({open, handleClose}) => {
                                 label="Accepted jpg|png|jpeg"
                                 withLabel={true}
                                 withPreview={true}
-                                buttonText="Select image"
+                                buttonText="Choose Client Logo"
                                 imgExtension={['.jpg', '.png', '.jpeg']}
                                 singleImage={true}
-                                name="image"
+                                name="logo"
+                                defaultImage={client.logo}
                                 buttonStyles={{
                                     backgroundColor: '#000000',
                                     color: '#f9a34f',
@@ -103,58 +101,8 @@ const AddTeamMemberDialog = ({open, handleClose}) => {
                             helperText={error.name}
                             onChange={handleValueChange}
                             value={name}
-                            size="medium"
-                            required={true}
-                        />
-
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Role"
-                            name="role"
-                            variant="outlined"
-                            error={Boolean(error.role)}
-                            helperText={error.role}
-                            onChange={handleValueChange}
-                            value={role}
-                            size="medium"
-                            required={true}
-                        />
-
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Facebook"
-                            name="facebook"
-                            variant="outlined"
-                            helperText="Facebook username"
-                            onChange={handleValueChange}
-                            value={facebook}
-                            size="medium"
-                        />
-
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Twitter"
-                            name="twitter"
-                            variant="outlined"
-                            helperText="Twitter handle"
-                            onChange={handleValueChange}
-                            value={twitter}
-                            size="medium"
-                        />
-
-                        <TextField
-                            fullWidth={true}
-                            margin="none"
-                            label="Instagram"
-                            name="instagram"
-                            variant="outlined"
-                            helperText="Instagram handle"
-                            onChange={handleValueChange}
-                            value={instagram}
-                            size="medium"
+                            size="small"
+                            color="secondary"
                         />
                     </Stack>
                 </form>
@@ -203,4 +151,4 @@ const AddTeamMemberDialog = ({open, handleClose}) => {
     )
 }
 
-export default AddTeamMemberDialog;
+export default UpdateClientDialog;

@@ -37,14 +37,14 @@ const faqReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 faqError: null,
-                faqLoading: true
+                faqsLoading: true
             }
 
         case FAQS_ACTION_TYPES.CREATE_FAQ_SUCCESS:
             return {
                 ...state,
                 faqError: null,
-                faqLoading: false,
+                faqsLoading: false,
                 faqs: [...state.faqs, action.payload],
                 totalFAQs: state.faqs.length + 1
             }
@@ -53,7 +53,7 @@ const faqReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 faqError: action.payload,
-                faqLoading: false
+                faqsLoading: false
             }
         default:
             return state;

@@ -21,6 +21,7 @@ const Layout = ({children}) => {
                     flexDirection: {md: 'row'},
                     maxWidth: '100vw',
                     overflow: "hidden",
+                    maxHeight: '100vh',
                     backgroundColor: 'background.default',
                 }}>
 

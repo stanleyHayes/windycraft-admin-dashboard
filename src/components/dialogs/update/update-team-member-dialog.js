@@ -18,18 +18,18 @@ import {selectAuth} from "../../../redux/authentication/auth-reducer";
 import {selectTeams} from "../../../redux/team/team-reducer";
 import {TEAMS_ACTION_CREATORS} from "../../../redux/team/team-action-creators";
 
-const AddTeamMemberDialog = ({open, handleClose}) => {
-    const [updateTeamMember, setUpdateTeamMember] = useState({});
+const UpdateTeamMemberDialog = ({open, handleClose, teamMember}) => {
+    const [updateTeamMember, setUpdateTeamMember] = useState({...teamMember});
     const [error, setError] = useState({});
 
-    const {name, role, facebook, twitter, instagram} = updateTeamMember;
+    const {name, role, socialMediaAccounts: {facebook, twitter, instagram}} = updateTeamMember;
 
     const handleValueChange = (event) => {
         setUpdateTeamMember({...updateTeamMember, [event.target.name]: event.target.value});
     }
 
     const {teamLoading, teamError} = useSelector(selectTeams);
-    const {token} = useSelector(selectAuth);
+    const {authToken} = useSelector(selectAuth);
     const dispatch = useDispatch();
 
     const handleAddClick = () => {
@@ -46,8 +46,7 @@ const AddTeamMemberDialog = ({open, handleClose}) => {
         } else {
             setError({error, role: null});
         }
-        dispatch(TEAMS_ACTION_CREATORS.createTeam(updateTeamMember, token, handleClose));
-
+        dispatch(TEAMS_ACTION_CREATORS.createTeam(updateTeamMember, authToken, handleClose));
     }
 
 
@@ -203,4 +202,4 @@ const AddTeamMemberDialog = ({open, handleClose}) => {
     )
 }
 
-export default AddTeamMemberDialog;
+export default UpdateTeamMemberDialog;

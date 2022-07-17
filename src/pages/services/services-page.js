@@ -21,7 +21,7 @@ import AddServiceDialog from "../../components/dialogs/add/add-service-dialog";
 import {useDispatch, useSelector} from "react-redux";
 import {selectServices} from "../../redux/services/service-reducer";
 import moment from "moment";
-import {brown,  red} from "@mui/material/colors";
+import {brown, orange, red} from "@mui/material/colors";
 import {SERVICE_ACTION_CREATORS} from "../../redux/services/service-action-creators";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
 import UpdateServiceDialog from "../../components/dialogs/update/update-service-dialog";
@@ -38,10 +38,6 @@ const ServicesPage = () => {
     useEffect(() => {
         dispatch(SERVICE_ACTION_CREATORS.getServices(token));
     }, [dispatch, token]);
-
-    const handleSelectedService = service => {
-
-    }
 
     return (
         <Layout>
@@ -130,17 +126,23 @@ const ServicesPage = () => {
                                                                 <Edit
                                                                     onClick={() => setSelectedService(service)}
                                                                     sx={{
-                                                                        color: brown['400'],
-                                                                        fontSize: 20,
-                                                                        cursor: 'pointer'
+                                                                        fontSize: 24,
+                                                                        cursor: 'pointer',
+                                                                        backgroundColor: orange[100],
+                                                                        padding: 0.4,
+                                                                        borderRadius: 1,
+                                                                        color: orange[700]
                                                                     }}/>
                                                             </Grid>
                                                             <Grid item={true}>
                                                                 <Delete
                                                                     sx={{
-                                                                        color: red['400'],
-                                                                        fontSize: 20,
-                                                                        cursor: 'pointer'
+                                                                        color: red['700'],
+                                                                        fontSize: 24,
+                                                                        borderRadius: 1,
+                                                                        cursor: 'pointer',
+                                                                        backgroundColor: red[100],
+                                                                        padding: 0.4,
                                                                     }}/>
                                                             </Grid>
                                                         </Grid>

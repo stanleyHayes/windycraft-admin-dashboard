@@ -1,20 +1,27 @@
 import Layout from "../../components/layout/layout";
 import {
     Alert,
-    AlertTitle, Box,
+    AlertTitle,
+    Box,
     Button,
     Container,
     Divider,
     Grid,
-    LinearProgress, Paper, Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow,
+    LinearProgress,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow, Tooltip,
     Typography
 } from "@mui/material";
 import {Add, Delete, Edit} from "@mui/icons-material";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectValues} from "../../redux/values/value-reducer";
-import {brown, red} from "@mui/material/colors";
+import {brown, orange, red} from "@mui/material/colors";
 import AddValueDialog from "../../components/dialogs/add/add-value-dialog";
 import UpdateValueDialog from "../../components/dialogs/update/update-value-dialog";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
@@ -33,8 +40,7 @@ const ValuesPage = () => {
         dispatch(VALUES_ACTION_CREATORS.getValues(token));
     }, [dispatch, token]);
 
-    return (
-        <Layout>
+    return (<Layout>
             {valueLoading && <LinearProgress variant="query" color="secondary"/>}
             <Container sx={{py: 4}}>
                 {valueError && <Alert severity="error"><AlertTitle>{valueError}</AlertTitle></Alert>}
@@ -50,8 +56,7 @@ const ValuesPage = () => {
                                 backgroundColor: 'secondary.main',
                                 color: 'primary.main',
                                 '&:hover': {
-                                    backgroundColor: 'secondary.dark',
-                                    color: 'primary.main'
+                                    backgroundColor: 'secondary.dark', color: 'primary.main'
                                 }
                             }}
                             onClick={() => setDialogOpen(true)}
@@ -65,8 +70,7 @@ const ValuesPage = () => {
                 </Grid>
                 <Divider variant="fullWidth" sx={{my: 2}}/>
 
-                {values && values.length === 0 ? (
-                    <Box>
+                {values && values.length === 0 ? (<Box>
                         <TableContainer elevation={0} component={Paper}>
                             <Table size="medium">
                                 <TableHead>
@@ -84,9 +88,7 @@ const ValuesPage = () => {
                                 No services available
                             </Typography>
                         </Box>
-                    </Box>
-                ) : (
-                    <TableContainer elevation={0} component={Paper}>
+                    </Box>) : (<TableContainer elevation={0} component={Paper}>
                         <Table size="medium">
                             <TableHead>
                                 <TableRow>
@@ -99,8 +101,7 @@ const ValuesPage = () => {
                             <TableBody>
 
                                 {values && values.map((value, index) => {
-                                    return (
-                                        <TableRow hover={true} key={index}>
+                                    return (<TableRow hover={true} key={index}>
                                             <TableCell>{index + 1}</TableCell>
                                             <TableCell>{value.title}</TableCell>
                                             <TableCell>{value.description}</TableCell>
@@ -108,53 +109,55 @@ const ValuesPage = () => {
                                                 <Grid
                                                     container={true}
                                                     justifyContent="flex-start"
+                                                    spacing={0.2}
                                                     alignItems="center">
                                                     <Grid item={true}>
+                                                        <Tooltip title="Update Value">
                                                         <Edit
                                                             onClick={() => setSelectedValue(value)}
                                                             sx={{
-                                                                color: brown['400'],
-                                                                fontSize: 20,
+                                                                color: orange['700'],
+                                                                backgroundColor: orange[100],
+                                                                padding: 0.4,
+                                                                borderRadius: 1,
+                                                                fontSize: 24,
                                                                 cursor: 'pointer'
                                                             }}/>
+                                                        </Tooltip>
                                                     </Grid>
                                                     <Grid item={true}>
-                                                        <Delete
-                                                            sx={{
-                                                                color: red['400'],
-                                                                fontSize: 20,
-                                                                cursor: 'pointer'
-                                                            }}/>
+                                                        <Tooltip title="Delete Value">
+                                                            <Delete
+                                                                sx={{
+                                                                    color: red['700'],
+                                                                    backgroundColor: red[100],
+                                                                    padding: 0.4,
+                                                                    borderRadius: 1,
+                                                                    fontSize: 24,
+                                                                    cursor: 'pointer'
+                                                                }}/>
+                                                        </Tooltip>
                                                     </Grid>
                                                 </Grid>
                                             </TableCell>
-                                        </TableRow>
-                                    )
+                                        </TableRow>)
                                 })}
                             </TableBody>
                         </Table>
-                    </TableContainer>
-                )}
+                    </TableContainer>)}
 
-                {
-                    dialogOpen &&
-                    <AddValueDialog
-                        open={dialogOpen}
-                        handleClose={() => setDialogOpen(false)}
-                    />
-                }
+                {dialogOpen && <AddValueDialog
+                    open={dialogOpen}
+                    handleClose={() => setDialogOpen(false)}
+                />}
 
-                {
-                    Boolean(selectedValue) &&
-                    <UpdateValueDialog
-                        selectedValue={selectedValue}
-                        open={Boolean(selectedValue)}
-                        handleClose={() => setSelectedValue(null)}
-                    />
-                }
+                {Boolean(selectedValue) && <UpdateValueDialog
+                    selectedValue={selectedValue}
+                    open={Boolean(selectedValue)}
+                    handleClose={() => setSelectedValue(null)}
+                />}
             </Container>
-        </Layout>
-    )
+        </Layout>)
 }
 
 export default ValuesPage;

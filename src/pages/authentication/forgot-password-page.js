@@ -1,17 +1,58 @@
-import {Box, Button, Card, CardContent, Container, Grid, Stack, TextField, Typography} from "@mui/material";
+import {
+    Alert,
+    AlertTitle,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CircularProgress,
+    Container,
+    Grid,
+    LinearProgress,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
 import {useState} from "react";
 import {ChevronLeft} from "@mui/icons-material";
 import {useNavigate} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import validator from "validator";
+import {AUTH_ACTION_CREATORS} from "../../redux/authentication/auth-action-creators";
+import {LoadingButton} from "@mui/lab";
+import {selectAuth} from "../../redux/authentication/auth-reducer";
 
 const ForgotPasswordPage = () => {
 
     const [email, setEmail] = useState("");
     const [error, setError] = useState(null);
 
-    const navigate = useNavigate();
+    const {authLoading, authError} = useSelector(selectAuth);
 
-    return (
-        <Box
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        if (!email) {
+            setError('Email required');
+            return;
+        } else {
+            setError(null);
+        }
+
+        if (!validator.isEmail(email)) {
+            setError('Invalid email');
+            return;
+        } else {
+            setError(null);
+        }
+
+        dispatch(AUTH_ACTION_CREATORS.forgotPassword({email}));
+        setEmail(null);
+    }
+
+    return (<Box
             sx={{
                 minHeight: '100vh',
                 display: 'flex',
@@ -22,13 +63,15 @@ const ForgotPasswordPage = () => {
                 <Grid container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={6} lg={4}>
                         <Card elevation={1} variant="elevation">
+                            {authLoading && <LinearProgress variant="query" color="secondary"/>}
                             <CardContent>
+                                {authError && (<Alert sx={{my: 3}} severity="error" color="error" variant="standard">
+                                        <AlertTitle>{authError}</AlertTitle>
+                                    </Alert>)}
                                 <Button
                                     onClick={() => navigate(-1)}
                                     sx={{
-                                        fontWeight: 'bold',
-                                        textTransform: 'capitalize',
-                                        color: 'white'
+                                        fontWeight: 'bold', textTransform: 'capitalize', color: 'white'
                                     }}
                                     color="secondary"
                                     mb={4}
@@ -37,7 +80,7 @@ const ForgotPasswordPage = () => {
                                 </Button>
 
                                 <Typography
-                                    sx={{color: 'white', fontWeight: 'bold'}}
+                                    sx={{color: 'secondary.main', fontWeight: 'bold'}}
                                     gutterBottom={true}
                                     align="center"
                                     variant="h4">
@@ -57,36 +100,54 @@ const ForgotPasswordPage = () => {
                                         fullWidth={true}
                                         name="email"
                                         required={true}
+                                        color="secondary"
                                         variant="outlined"
                                         value={email}
                                         error={Boolean(error)}
                                         helperText={error}
                                         type="email"
                                         size="medium"
-                                        defaultValue=""
                                         onChange={event => setEmail(event.target.value)}
                                     />
                                 </Stack>
 
-                                <Button
+                                <LoadingButton
                                     sx={{
+                                        fontWeight: 'bold',
+                                        textTransform: 'capitalize',
                                         backgroundColor: 'primary.main',
                                         color: 'secondary.main',
-                                        textTransform: 'capitalize'
+                                        '&:hover': {
+                                            color: 'secondary.main'
+                                        },
+                                        '&:focus': {
+                                            color: 'secondary.main'
+                                        },
+                                        '&:active': {
+                                            color: 'secondary.main'
+                                        },
+                                        py: 1.5
                                     }}
                                     size="large"
+                                    startIcon={authLoading && <CircularProgress color="secondary" size="small"/>}
+                                    loadingPosition="start"
+                                    loading={authLoading}
+                                    loadingIndicator={<CircularProgress size="small" color="secondary"/>}
+                                    onSubmit={handleSubmit}
+                                    onClick={handleSubmit}
                                     fullWidth={true}
+                                    disableElevation={true}
+                                    disabled={authLoading}
                                     variant="outlined">
                                     Get Reset Link
-                                </Button>
+                                </LoadingButton>
                             </CardContent>
                         </Card>
                     </Grid>
                 </Grid>
             </Container>
 
-        </Box>
-    )
+        </Box>)
 }
 
 export default ForgotPasswordPage;

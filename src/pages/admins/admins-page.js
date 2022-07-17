@@ -22,11 +22,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {Alert, AlertTitle} from "@mui/lab";
 import moment from "moment";
 import {Edit, Visibility} from "@mui/icons-material";
-import {green, grey, red} from "@mui/material/colors";
+import {green, grey, orange, red} from "@mui/material/colors";
 import {selectAdmin} from "../../redux/admins/admin-reducer";
 import User from "../../components/shared/user";
 import {useNavigate} from "react-router";
-import InviteAdminDialog from "../../components/dialogs/new/admin-invitation-dialog";
+import InviteAdminDialog from "../../components/dialogs/add/admin-invitation-dialog";
 import {ADMIN_ACTION_CREATORS} from "../../redux/admins/admin-action-creators";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
 
@@ -186,7 +186,7 @@ const AdminsPage = () => {
                                         textTransform: 'capitalize',
                                         borderWidth: 2,
                                         borderStyle: 'solid'
-                                }}
+                                    }}
                                     variant="contained">
                                     Create
                                 </Button>
@@ -214,7 +214,7 @@ const AdminsPage = () => {
                             </TableHead>
                             <TableBody>
                                 {
-                                    admins  && admins.map((admin, index) => {
+                                    admins && admins.map((admin, index) => {
                                         return (
                                             <TableRow
                                                 hover={true}
@@ -240,17 +240,27 @@ const AdminsPage = () => {
                                                         <Grid item={true}>
                                                             <Visibility
                                                                 onClick={() => navigate(`/admins/${admin._id}`)}
-                                                                sx={{pointer: 'cursor'}}
-                                                                fontSize="small"
-                                                                color="primary"
+                                                                sx={{
+                                                                    pointer: 'cursor',
+                                                                    borderRadius: 1,
+                                                                    backgroundColor: orange[100],
+                                                                    padding: 0.4,
+                                                                    color: orange[700]
+                                                                }}
+                                                                fontSize="medium"
                                                             />
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Edit
                                                                 onClick={() => navigate(`/admins/${admin._id}/update`)}
-                                                                sx={{pointer: 'cursor'}}
-                                                                fontSize="small"
-                                                                color="primary"
+                                                                sx={{
+                                                                    pointer: 'cursor',
+                                                                    borderRadius: 1,
+                                                                    backgroundColor: orange[100],
+                                                                    padding: 0.4,
+                                                                    color: orange[700]
+                                                                }}
+                                                                fontSize="medium"
                                                             />
                                                         </Grid>
                                                     </Grid>

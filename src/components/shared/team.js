@@ -1,12 +1,17 @@
 import {Button, Card, CardContent, CardMedia, Divider, Grid, Link, Typography} from "@mui/material";
 import {grey, red} from "@mui/material/colors";
 import {Facebook, Instagram, Twitter} from "@mui/icons-material";
+import {useState} from "react";
+import UpdateTeamMemberDialog from "../dialogs/update/update-team-member-dialog";
 
 const Team = ({team}) => {
+
+    const [open, setOpen] = useState(false);
+
     return (
         <Card elevation={0}>
             <CardMedia
-                sx={{height: 250, objectFit: 'cover', objectPosition: 'center'}}
+                sx={{height: 250, objectFit: 'cover', objectPosition: 'top'}}
                 component="img"
                 src={team.image}
                 alt={team.role}/>
@@ -93,6 +98,7 @@ const Team = ({team}) => {
                 </Grid>
                 <Grid item={true} xs={6}>
                     <Button
+                        onClick={() => setOpen(true)}
                         sx={{
                             textTransform: 'capitalize',
                             color: "secondary.main",
@@ -106,6 +112,15 @@ const Team = ({team}) => {
                     </Button>
                 </Grid>
             </Grid>
+
+            {
+                open &&
+                <UpdateTeamMemberDialog
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                    teamMember={team}
+                />
+            }
         </Card>
     )
 }

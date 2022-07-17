@@ -107,13 +107,13 @@ const resetPasswordFail = message => {
     }
 }
 
-const resetPassword = user => {
+const resetPassword = (user, token) => {
     return async dispatch => {
         try {
             dispatch(resetPasswordRequest());
             const response = await axios({
                 method: 'POST',
-                url: `${CONSTANTS.URL_BASE_SERVER}/auth/reset-password`,
+                url: `${CONSTANTS.URL_BASE_SERVER}/auth/reset-password/${token}`,
                 data: user
             });
             const {data, message} = response.data;

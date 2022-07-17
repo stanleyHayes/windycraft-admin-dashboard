@@ -13,7 +13,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow,
+    TableRow, Tooltip,
     Typography
 } from "@mui/material";
 import {Add, Delete, Edit} from "@mui/icons-material";
@@ -21,17 +21,15 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectInvitations} from "../../redux/invitations/invitation-reducer";
 import moment from "moment";
-import InviteAdminDialog from "../../components/dialogs/new/admin-invitation-dialog";
+import InviteAdminDialog from "../../components/dialogs/add/admin-invitation-dialog";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
 import {INVITATION_ACTION_CREATORS} from "../../redux/invitations/invitation-action-creators";
+import {orange} from "@mui/material/colors";
 
 const InvitationsPage = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const {invitations, invitationLoading, invitationError} = useSelector(selectInvitations);
-
-    const handleDeleteInvitation = () => {
-    }
 
     const {token} = useSelector(selectAuth);
 
@@ -132,14 +130,34 @@ const InvitationsPage = () => {
                                                 <TableCell>
                                                     <Grid
                                                         container={true}
-                                                        justifyContent="flex-end"
+                                                        justifyContent="space-between"
                                                         alignItems="center">
                                                         <Grid item={true}>
-                                                            <Edit/>
+                                                            <Tooltip title="Edit Invitation">
+                                                                <Edit
+                                                                    sx={{
+                                                                        color: orange['700'],
+                                                                        backgroundColor: orange[100],
+                                                                        padding: 0.4,
+                                                                        borderRadius: 1,
+                                                                        fontSize: 20,
+                                                                        cursor: 'pointer'
+                                                                    }}/>
+                                                            </Tooltip>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete
-                                                                onClick={() => handleDeleteInvitation(invitation)}/>
+                                                            <Tooltip title="Revoke Invitation">
+                                                                <Delete
+                                                                    sx={{
+                                                                        color: orange['700'],
+                                                                        backgroundColor: orange[100],
+                                                                        padding: 0.4,
+                                                                        borderRadius: 1,
+                                                                        fontSize: 20,
+                                                                        cursor: 'pointer'
+                                                                    }}
+                                                                />
+                                                            </Tooltip>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>

@@ -13,13 +13,6 @@ const TeamPage = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
 
-    const handleDeleteTeamMember = () => {
-    }
-
-    const handleAddTeamMember = () => {
-
-    }
-
     const {teams, teamLoading, teamError} = useSelector(selectTeams);
 
     const {token} = useSelector(selectAuth);

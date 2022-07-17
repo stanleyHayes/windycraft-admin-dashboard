@@ -13,7 +13,7 @@ import {
     TableHead,
     TableRow,
     ToggleButton,
-    ToggleButtonGroup,
+    ToggleButtonGroup, Tooltip,
     Typography
 } from "@mui/material";
 import {
@@ -26,12 +26,10 @@ import {
     Visibility
 } from "@mui/icons-material";
 import {useEffect, useState} from "react";
-import moment from "moment";
-import {brown, green, red} from "@mui/material/colors";
+import {brown, green, orange, red} from "@mui/material/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {selectTestimonials} from "../../redux/testimonials/testimonial-reducer";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
-import {MESSAGE_ACTION_CREATORS} from "../../redux/messages/messages-action-creators";
 import {TESTIMONIALS_ACTION_CREATORS} from "../../redux/testimonials/testimonial-action-creators";
 
 const TestimonialsPage = () => {
@@ -135,16 +133,47 @@ const TestimonialsPage = () => {
                                                     <TableCell>
                                                         <Grid
                                                             container={true}
-                                                            justifyContent="space-between"
+                                                            spacing={0.4}
+                                                            justifyContent="flex-start"
                                                             alignItems="center">
                                                             <Grid item={true}>
-                                                                <Visibility sx={{color: green['400']}}/>
+                                                                <Tooltip title="Enable Testimonial">
+                                                                    <Visibility
+                                                                        sx={{
+                                                                            color: orange['700'],
+                                                                            backgroundColor: orange[100],
+                                                                            padding: 0.4,
+                                                                            borderRadius: 1,
+                                                                            fontSize: 24,
+                                                                            cursor: 'pointer'
+                                                                        }}/>
+                                                                </Tooltip>
                                                             </Grid>
                                                             <Grid item={true}>
-                                                                <Edit sx={{color: brown['400']}}/>
+                                                                <Tooltip title="Enable Testimonial">
+                                                                    <Edit
+                                                                        sx={{
+                                                                            color: orange['700'],
+                                                                            backgroundColor: orange[100],
+                                                                            padding: 0.4,
+                                                                            borderRadius: 1,
+                                                                            fontSize: 24,
+                                                                            cursor: 'pointer'
+                                                                        }}/>
+                                                                </Tooltip>
                                                             </Grid>
                                                             <Grid item={true}>
-                                                                <Delete sx={{color: red['400']}}/>
+                                                                <Tooltip title="Enable Testimonial">
+                                                                    <Delete
+                                                                        sx={{
+                                                                            color: orange['700'],
+                                                                            backgroundColor: orange[100],
+                                                                            padding: 0.4,
+                                                                            borderRadius: 1,
+                                                                            fontSize: 24,
+                                                                            cursor: 'pointer'
+                                                                        }}/>
+                                                                </Tooltip>
                                                             </Grid>
                                                         </Grid>
                                                     </TableCell>

@@ -124,7 +124,7 @@ const DesktopHeader = () => {
                             </Menu>
                         </Grid>
                         <Grid item={true}>
-                            <Link className={classes.link} to="/login">
+                            <Link className={classes.link} to="/auth/login">
                                 <Button
                                     color="secondary"
                                     size="medium"

@@ -14,7 +14,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow,
+    TableRow, Tooltip,
     Typography
 } from "@mui/material";
 import {Add, Delete, Edit} from "@mui/icons-material";
@@ -24,14 +24,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectFAQs} from "../../redux/faqs/faq-reducer";
 import {FAQ_ACTION_CREATORS} from "../../redux/faqs/faq-action-creators";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
-import {brown, red} from "@mui/material/colors";
+import {orange, red} from "@mui/material/colors";
 import UpdateFAQDialog from "../../components/dialogs/update/update-faq-dialog";
 
 const FAQPage = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedFAQ, setSelectedFAQ] = useState(false);
-    const {faqs, faqLoading, faqError} = useSelector(selectFAQs);
+    const {faqs, faqsLoading, faqError} = useSelector(selectFAQs);
 
 
     const {token} = useSelector(selectAuth);
@@ -45,13 +45,10 @@ const FAQPage = () => {
 
     return (
         <Layout>
-            {faqLoading && <LinearProgress color="secondary" variant="query"/>}
+            {faqsLoading && <LinearProgress color="secondary" variant="query"/>}
             <Container sx={{py: 4, mt: {md: 8}}}>
                 {faqError && (<Alert severity="error" variant="standard">
-                    <AlertTitle>Error</AlertTitle>
-                    <Typography variant="h6" align="center">
-                        {faqError}
-                    </Typography>
+                    <AlertTitle>{faqError}</AlertTitle>
                 </Alert>)}
                 <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md="auto">
@@ -120,17 +117,31 @@ const FAQPage = () => {
                                             justifyContent="space-between"
                                             alignItems="center">
                                             <Grid item={true}>
+                                                <Tooltip title="Edit FAQ">
                                                 <Edit
                                                     onClick={() => setSelectedFAQ(faq)}
                                                     sx={{
-                                                        color: brown['400'], fontSize: 20, cursor: 'pointer'
+                                                        fontSize: 20,
+                                                        cursor: 'pointer',
+                                                        backgroundColor: orange[100],
+                                                        padding: 0.4,
+                                                        borderRadius: 1,
+                                                        color: orange[700]
                                                     }}/>
+                                                </Tooltip>
                                             </Grid>
                                             <Grid item={true}>
+                                                <Tooltip title="Delete FAQ">
                                                 <Delete
                                                     sx={{
-                                                        color: red['400'], fontSize: 20, cursor: 'pointer'
+                                                        fontSize: 20,
+                                                        cursor: 'pointer',
+                                                        backgroundColor: red[100],
+                                                        padding: 0.4,
+                                                        borderRadius: 1,
+                                                        color: red[700]
                                                     }}/>
+                                                </Tooltip>
                                             </Grid>
                                         </Grid>
                                     </TableCell>

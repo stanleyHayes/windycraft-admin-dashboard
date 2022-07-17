@@ -12,14 +12,14 @@ import {
     TableHead,
     TableRow,
     ToggleButton,
-    ToggleButtonGroup,
+    ToggleButtonGroup, Tooltip,
     Typography
 } from "@mui/material";
-import {Delete, Edit, MarkChatRead, MarkChatReadOutlined, MarkChatUnread, Visibility} from "@mui/icons-material";
+import {Delete, Edit, MarkChatRead, MarkChatReadOutlined, MarkChatUnread, Reply, Visibility} from "@mui/icons-material";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectMessages} from "../../redux/messages/messages-reducer";
-import {brown, green, red} from "@mui/material/colors";
+import {brown, green, orange, red} from "@mui/material/colors";
 import {selectAuth} from "../../redux/authentication/auth-reducer";
 import {FAQ_ACTION_CREATORS} from "../../redux/faqs/faq-action-creators";
 import {MESSAGE_ACTION_CREATORS} from "../../redux/messages/messages-action-creators";
@@ -30,13 +30,6 @@ const MessagesPage = () => {
     const {messages, messageLoading, messageError} = useSelector(selectMessages);
     const handleStatusChange = (event, status) => {
         setStatus(status);
-    }
-
-    const handleDeleteMessage = () => {
-    }
-
-    const handleAddServiceMessage = () => {
-
     }
 
     const {token} = useSelector(selectAuth);
@@ -121,33 +114,51 @@ const MessagesPage = () => {
                             <TableBody>
                                 {
                                     messages.map((message, index) => {
-                                        return (
-                                            <TableRow hover={true} key={index}>
-                                                <TableCell>{index + 1}</TableCell>
-                                                <TableCell>{`${message.firstName} ${message.lastName}`}</TableCell>
-                                                <TableCell>{message.message}</TableCell>
-                                                <TableCell>{message.subject}</TableCell>
-                                                <TableCell>{message.responded ? 'Yes' : 'No'}</TableCell>
-                                                <TableCell>
-                                                    <Grid
-                                                        container={true}
-                                                        justifyContent="space-between"
-                                                        alignItems="center">
-                                                        <Grid item={true}>
-                                                            <Visibility sx={{color: green['400']}}/>
+                                            return (
+                                                <TableRow hover={true} key={index}>
+                                                    <TableCell>{index + 1}</TableCell>
+                                                    <TableCell>{`${message.firstName} ${message.lastName}`}</TableCell>
+                                                    <TableCell>{message.message}</TableCell>
+                                                    <TableCell>{message.subject}</TableCell>
+                                                    <TableCell>{message.responded ? 'Yes' : 'No'}</TableCell>
+                                                    <TableCell>
+                                                        <Grid
+                                                            container={true}
+                                                            justifyContent="space-between"
+                                                            alignItems="center">
+                                                            <Grid item={true}>
+                                                                <Tooltip title="View Message">
+                                                                    <Visibility
+                                                                        sx={{
+                                                                            color: orange['700'],
+                                                                            backgroundColor: orange[100],
+                                                                            padding: 0.4,
+                                                                            borderRadius: 1,
+                                                                            fontSize: 20,
+                                                                            cursor: 'pointer'
+                                                                        }}
+                                                                    />
+                                                                </Tooltip>
+                                                            </Grid>
+                                                            <Grid item={true}>
+                                                                <Tooltip title="Reply message">
+                                                                    <Reply
+                                                                        sx={{
+                                                                            cursor: 'pointer',
+                                                                            color: orange['700'],
+                                                                            backgroundColor: orange[100],
+                                                                            padding: 0.4,
+                                                                            borderRadius: 1,
+                                                                            fontSize: 20
+                                                                        }}/>
+                                                                </Tooltip>
+                                                            </Grid>
                                                         </Grid>
-                                                        <Grid item={true}>
-                                                            <Edit sx={{color: brown['400']}}/>
-                                                        </Grid>
-                                                        <Grid item={true}>
-                                                            <Delete sx={{color: red['400']}}/>
-                                                        </Grid>
-                                                    </Grid>
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    }
-                                )}
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }
+                                    )}
                             </TableBody>
                         </Table>
                     </TableContainer>

@@ -30,87 +30,72 @@ import RequireAuth from "./components/shared/require-auth";
 
 function App() {
 
-    return (
-        <ThemeProvider theme={THEMES.darkTheme}>
-            <CssBaseline/>
-            <Routes>
-                <Route exact={true} path="/" element={
-                    <RequireAuth>
-                        <DashboardPage/>
-                    </RequireAuth>}/>
-                <Route exact={true} path="/services" element={
-                    <RequireAuth>
-                        <ServicesPage/>
-                    </RequireAuth>}/>
-                <Route exact={true} path="/auth/forgot-password" element={<ForgotPasswordPage/>}/>
-                <Route exact={true} path="/auth/login" element={<LoginPage/>}/>
-                <Route exact={true} path="/auth/reset-password" element={<RequireAuth>
-                    <ResetPasswordPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/faqs" element={<RequireAuth>
-                    <FAQPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/profile" element={<RequireAuth>
-                    <ProfilePage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/edit-profile" element={<RequireAuth>
-                    <EditProfilePage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/messages" element={<RequireAuth>
-                    <MessagesPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/quotes" element={<RequireAuth>
-                    <QuotesPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/testimonials" element={<RequireAuth>
-                    <TestimonialsPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/values" element={<RequireAuth>
-                    <ValuesPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/account" element={<RequireAuth>
-                    <AccountPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/change-password" element={<RequireAuth>
-                    <ChangePasswordPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/team" element={<RequireAuth>
-                    <TeamPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/clients" element={<RequireAuth>
-                    <ClientsPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/invitations" element={<RequireAuth>
-                    <InvitationsPage/>
-                </RequireAuth>}/>
-                <Route exact={true} path="/invitations/:invitationID/:code" element={<InvitationResponsePage/>}/>
-                <Route exact={true} path="/admins" element={
-                    <RequireAuth>
-                        <AdminsPage/>
-                    </RequireAuth>
-                }/>
-                <Route exact={true} path="/admin/new" element={
-                    <RequireAuth>
-                        <CreateAdminPage/>
-                    </RequireAuth>
-                }/>
-                <Route exact={true} path="/admins/:adminID" element={
-                    <RequireAuth>
-                        <AdminDetailPage/>
-                    </RequireAuth>
-                }/>
-                <Route exact={true} path="/admins/:adminID/update" element={
-                    <RequireAuth>
-                        <UpdateAdminPage/>
-                    </RequireAuth>
-                }/>
-                <Route exact={true} path="*" element={
-                    <RequireAuth>
-                        <NotFoundPage/>
-                    </RequireAuth>
-                }/>
-            </Routes>
-        </ThemeProvider>);
+    return (<ThemeProvider theme={THEMES.darkTheme}>
+        <CssBaseline/>
+        <Routes>
+            <Route exact={true} path="/" element={<RequireAuth>
+                <DashboardPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/services" element={<RequireAuth>
+                <ServicesPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/auth/forgot-password" element={<ForgotPasswordPage/>}/>
+            <Route exact={true} path="/auth/login" element={<LoginPage/>}/>
+            <Route exact={true} path="/auth/reset-password/:token" element={<ResetPasswordPage/>}/>
+            <Route exact={true} path="/faqs" element={<RequireAuth>
+                <FAQPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/profile" element={<RequireAuth>
+                <ProfilePage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/edit-profile" element={<RequireAuth>
+                <EditProfilePage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/messages" element={<RequireAuth>
+                <MessagesPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/quotes" element={<RequireAuth>
+                <QuotesPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/testimonials" element={<RequireAuth>
+                <TestimonialsPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/values" element={<RequireAuth>
+                <ValuesPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/account" element={<RequireAuth>
+                <AccountPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/change-password" element={<RequireAuth>
+                <ChangePasswordPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/team" element={<RequireAuth>
+                <TeamPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/clients" element={<RequireAuth>
+                <ClientsPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/invitations" element={<RequireAuth>
+                <InvitationsPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/invitations/:invitationID/:code" element={<InvitationResponsePage/>}/>
+            <Route exact={true} path="/admins" element={<RequireAuth>
+                <AdminsPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/admin/new" element={<RequireAuth>
+                <CreateAdminPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/admins/:adminID" element={<RequireAuth>
+                <AdminDetailPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="/admins/:adminID/update" element={<RequireAuth>
+                <UpdateAdminPage/>
+            </RequireAuth>}/>
+            <Route exact={true} path="*" element={<RequireAuth>
+                <NotFoundPage/>
+            </RequireAuth>}/>
+        </Routes>
+    </ThemeProvider>);
 }
 
 export default App;
